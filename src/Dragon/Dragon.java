@@ -177,10 +177,8 @@ public class Dragon{
         if (o == null || getClass() != o.getClass()) return false;
         Dragon dragon = (Dragon) o;
         return age == dragon.age &&
-                id.equals(dragon.id) &&
                 name.equals(dragon.name) &&
                 coordinates.equals(dragon.coordinates) &&
-                creationDate.equals(dragon.creationDate) &&
                 Objects.equals(description, dragon.description) &&
                 Objects.equals(wingspan, dragon.wingspan) &&
                 type == dragon.type &&

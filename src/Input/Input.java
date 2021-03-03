@@ -1,10 +1,14 @@
 package Input;
 
 import Dragon.*;
-import Exceptions.IdException;
 import Exceptions.WrongIdFormatException;
 import Exceptions.WrongInputFormatException;
+import Exceptions.WrongPathRightsException;
 
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 /**
@@ -152,13 +156,26 @@ abstract public class Input {
      * @return {@code path} scanned from input.
      * @throws WrongInputFormatException if path has wrong format.
      */
-    public String inputFilePath() throws WrongInputFormatException{
+    public Path inputFilePath() throws WrongInputFormatException, WrongPathRightsException, InvalidPathException{
         String path;
         path = sc.next();
         if (sc.nextLine().equals("")) {
-            return path;
+            isValidPath(path);
+            return Paths.get(path);
         }
         throw new WrongInputFormatException();
+    }
+
+    private void isValidPath(String a) throws WrongPathRightsException, InvalidPathException{
+        Path path = Paths.get(a);
+
+        if (Files.isDirectory(path)) {
+            throw new WrongPathRightsException("path is a directory");
+        }
+        if (!Files.isReadable(path)) {
+            throw new WrongPathRightsException("Can not read file: " + path.getFileName());
+        }
+
     }
 
     /**

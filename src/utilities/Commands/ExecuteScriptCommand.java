@@ -1,12 +1,18 @@
 package utilities.Commands;
 
 import Exceptions.WrongInputFormatException;
+import Exceptions.WrongPathRightsException;
 import Input.FileInput;
 import Input.Input;
 import utilities.DragonCollection;
 import utilities.Process;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Command "ExecuteCommand". Executes script.
@@ -24,19 +30,26 @@ public class ExecuteScriptCommand extends Command{
      */
     @Override
     public void execute() {
-        String file;
+        Path path;
         try {
-            file = input.inputFilePath();
+            path = input.inputFilePath();
         } catch (WrongInputFormatException e) {
             System.out.println("Wrong script path format");
             return;
+        } catch (WrongPathRightsException e) {
+            System.out.println(e.getMessage());
+            return;
+        } catch (InvalidPathException e) {
+            System.out.println("Invalid path");
+            return;
         }
+
 
         Input inp;
         try {
-            inp = new FileInput(file);
-        } catch (FileNotFoundException e) {
-            System.out.println("file not found");
+            inp = new FileInput(path);
+        } catch (IOException e) {
+            System.out.println("Unexpected error happened while reading a file");
             return;
         }
 

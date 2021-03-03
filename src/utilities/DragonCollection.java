@@ -4,11 +4,9 @@ import Exceptions.NoSuchIdException;
 import Exceptions.NoSuchKillerException;
 import Dragon.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.time.ZonedDateTime;
@@ -41,7 +39,7 @@ public class DragonCollection {
     public DragonCollection(File path) {
         this.path = path;
         initDate = LocalDateTime.now();
-        collection = new PriorityQueue<Dragon>((Comparator<Dragon>) (o1, o2) -> o1.getName().compareTo(o2.getName()));
+        collection = new PriorityQueue<Dragon>();
         history = new LinkedList<>();
         parseFrom(path);
     }
@@ -56,9 +54,6 @@ public class DragonCollection {
 
         try {
             fileLines = pars.parseFromFile(path);
-        } catch(FileNotFoundException e) {
-            System.out.println("File not found! Try again");
-            return;
         } catch(IOException e) {
             System.out.println("Reading error!");
             return;

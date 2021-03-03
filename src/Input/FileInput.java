@@ -5,6 +5,8 @@ import Exceptions.WrongInputFormatException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Scanner;
 
 /**
@@ -18,8 +20,8 @@ public class FileInput extends Input {
      * @param path path to file with data.
      * @throws FileNotFoundException if file not found.
      */
-    public FileInput(String path) throws FileNotFoundException {
-        sc = new Scanner(new FileInputStream(path));
+    public FileInput(Path path) throws IOException {
+        sc = new Scanner(path);
     }
 
     /**

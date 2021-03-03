@@ -5,8 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.regex.Pattern;
 
 /**
  * Defines methods for parsing from csv files.
@@ -21,19 +19,21 @@ public class Parser {
      */
     public ArrayList<String> parseFromFile(File filePath) throws IOException {
 
-        ArrayList<String> fileLines = new ArrayList<String>();
+        ArrayList<String> fileLines = new ArrayList<>();
         InputStreamReader isr = new InputStreamReader(new FileInputStream(filePath));
         int c;
-        String text = "";
+        StringBuilder text = new StringBuilder();
         do {
             c = isr.read();
             if ((char) c == '\n') {
-                fileLines.add(text.trim());
-                text = "";
+                fileLines.add(text.toString().trim());
+                text = new StringBuilder();
                 continue;
             }
-            text += (char) c;
+            text.append((char) c);
         } while (c != -1);
+
+        isr.close();
 
         return fileLines;
     }
@@ -45,7 +45,7 @@ public class Parser {
      */
     public ArrayList<String> getItems(String fileLine) {
         String[] splitedText = fileLine.split(",", 18);
-        ArrayList<String> columnList = new ArrayList<String>();
+        ArrayList<String> columnList = new ArrayList<>();
         for (String s : splitedText) {
             //Если колонка начинается на кавычки или заканчиваеться на кавычки
             if (IsColumnPart(s)) {

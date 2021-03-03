@@ -39,7 +39,7 @@ public class ConsoleInput extends Input{
      */
     public Long inputXCord() {
         long cordX;
-        System.out.print("Enter the X coordinate: ");
+        System.out.print("Enter the X coordinate: (x <= 302) ");
         while(true) {
             if (sc.hasNextLong()) {
                 cordX = sc.nextLong();

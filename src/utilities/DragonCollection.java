@@ -1,14 +1,13 @@
 package utilities;
 
-import Exceptions.NoSuchIdException;
-import Exceptions.NoSuchKillerException;
-import Dragon.*;
+import exceptions.NoSuchIdException;
+import exceptions.NoSuchKillerException;
+import dragon.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.PriorityQueue;
+import java.util.*;
 import java.time.ZonedDateTime;
 
 /**
@@ -32,6 +31,8 @@ public class DragonCollection {
      */
     private File path;
 
+    private HashSet<Path> scripts;
+
     /**
      * Constructs collection and fills it from given file.
      * @param path path to file with collection.
@@ -41,7 +42,16 @@ public class DragonCollection {
         initDate = LocalDateTime.now();
         collection = new PriorityQueue<Dragon>();
         history = new LinkedList<>();
+        scripts = new HashSet<Path>();
         parseFrom(path);
+    }
+
+    public void addToPathSet(Path way) {
+        scripts.add(way);
+    }
+
+    public HashSet<Path> getScripts() {
+        return scripts;
     }
 
     /**
@@ -75,7 +85,7 @@ public class DragonCollection {
             String personName = columnList.get(9).equals("") ? null : columnList.get(9) ;
             String date = columnList.get(10).equals("") ? null : columnList.get(10);
             Color eye = columnList.get(11).equals("") ? null : Color.valueOf(columnList.get(11));
-            Color hair = columnList.get(12).equals("") ? null : Color.valueOf(columnList.get(12));;
+            Color hair = columnList.get(12).equals("") ? null : Color.valueOf(columnList.get(12));
             Country nation = columnList.get(13).equals("") ? null : Country.valueOf(columnList.get(13));
             int locX = columnList.get(14).equals("") ? 0 : Integer.parseInt(columnList.get(14));
             long locY = columnList.get(15).equals("") ? 0 : Long.parseLong(columnList.get(15));

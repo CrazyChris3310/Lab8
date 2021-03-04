@@ -1,7 +1,7 @@
 package utilities;
 
-import utilities.Commands.*;
-import Input.*;
+import utilities.commands.*;
+import input.*;
 
 import java.util.HashMap;
 

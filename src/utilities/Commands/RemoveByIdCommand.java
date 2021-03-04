@@ -24,7 +24,7 @@ public class RemoveByIdCommand extends Command{
             id = input.inputId();
             drg.removeFromQueue(id);
         } catch (IdException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 }

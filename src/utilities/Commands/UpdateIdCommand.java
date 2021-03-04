@@ -30,7 +30,7 @@ public class UpdateIdCommand extends Command{
             dragon.setCreationDate(creation);
             drg.add(dragon);
         } catch (IdException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         } catch (WrongInputFormatException e) {
             System.out.println("Wrong Data given!");
         }

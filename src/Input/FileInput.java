@@ -3,7 +3,6 @@ package Input;
 import Dragon.*;
 import Exceptions.WrongInputFormatException;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -74,7 +73,6 @@ public class FileInput extends Input {
      * @throws WrongInputFormatException if age isn't valid
      */
     public int inputAge() throws WrongInputFormatException {
-        int dragAge;
         String temp = sc.nextLine();
         if (temp.matches("[1-9]\\d*"))
             return Integer.parseInt(temp);
@@ -122,7 +120,6 @@ public class FileInput extends Input {
      */
     public DragonType inputType() throws WrongInputFormatException {
         String temp = sc.nextLine();
-        DragonType type;
 
         if (temp.toUpperCase().matches("AIR|UNDERGROUND|FIRE|WATER"))
             return DragonType.valueOf(temp.toUpperCase());
@@ -183,7 +180,6 @@ public class FileInput extends Input {
     @Override
     public Color inputKilHairColor() throws WrongInputFormatException {
         String temp;
-        Color hair;
 
         temp = sc.nextLine();
         if (temp.toUpperCase().matches("WHITE|RED|ORANGE|YELLOW|GREEN|BLACK")) {
@@ -270,7 +266,7 @@ public class FileInput extends Input {
     @Override
     public boolean needKiller() throws WrongInputFormatException {
         String ans = sc.nextLine();
-        if (ans.matches("y|n"))
+        if (ans.matches("[yn]"))
             switch(ans) {
                 case "y": return true;
                 case "n": return false;

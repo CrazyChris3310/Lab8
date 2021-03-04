@@ -14,7 +14,7 @@ import java.util.Scanner;
 /**
  * Class {@code Input} defines methods to work with an input from various sources.
  */
-abstract public class Input {
+abstract public class Input{
 
     Scanner sc;
 
@@ -184,7 +184,7 @@ abstract public class Input {
      * @throws WrongIdFormatException if id has wrong format
      */
     public Long inputId() throws WrongIdFormatException {
-        Long id;
+        long id;
         if (sc.hasNextLong()) {
             id = sc.nextLong();
             if (sc.nextLine().equals("") && id > 0) {

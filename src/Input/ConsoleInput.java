@@ -309,7 +309,7 @@ public class ConsoleInput extends Input{
         System.out.print("Is there a killer? (y/n) ");
         while(true) {
             ans = sc.nextLine();
-            if (ans.matches("y|n"))
+            if (ans.matches("[yn]"))
                 switch(ans) {
                     case "y": return true;
                     case "n": return false;

@@ -23,6 +23,7 @@ public class AddCommand extends Command{
         try {
             input.nextLine();
             Dragon dragon = input.inputDragon();
+            dragon.setId(drg.getMaxId() + 1);
             drg.add(dragon);
         } catch (WrongInputFormatException e) {
             System.out.println("Wrong Data given!");

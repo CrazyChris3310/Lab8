@@ -18,9 +18,6 @@ public class Dragon implements Comparable<Dragon>{
     private DragonType type; //Поле может быть null
     private Person killer; //Поле может быть null
 
-    private static Long nextDragonId = 1L;
-
-
     /**
      * Construct dragon with given parameters from the csv file.
      * @param id dragon's id.
@@ -44,8 +41,6 @@ public class Dragon implements Comparable<Dragon>{
         this.wingspan = wingspan;
         this.type = type;
         this.killer = killer;
-        if (id >= nextDragonId)
-            nextDragonId = id + 1;
     }
 
     /**
@@ -60,7 +55,6 @@ public class Dragon implements Comparable<Dragon>{
      */
     public Dragon(String name, Coordinates coordinates, int age, String description,
                   Long wingspan, DragonType type, Person killer) {
-        this.id = nextDragonId++;
         this.name = name;
         this.coordinates = coordinates;
         this.age = age;

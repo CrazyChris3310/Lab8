@@ -54,6 +54,14 @@ public class DragonCollection {
         return scripts;
     }
 
+    public Long getMaxId() {
+        try {
+            return Collections.max(collection, Comparator.comparingLong(Dragon::getId)).getId();
+        } catch (NoSuchElementException e) {
+            return 0L;
+        }
+    }
+
     /**
      * Method parses data from file into collection.
      * @param path path where collection is stored.

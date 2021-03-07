@@ -39,12 +39,6 @@ public class ExecuteScriptCommand extends Command{
             return;
         }
 
-        if (drg.getScripts().contains(path)) {
-            System.out.println("To prevent stack overflow error script was stopped");
-            return;
-        }
-        drg.addToPathSet(path);
-
         Input inp;
         try {
             inp = new FileInput(path);
@@ -53,8 +47,16 @@ public class ExecuteScriptCommand extends Command{
             return;
         }
 
+        if (drg.getScripts().contains(path)) {
+            System.out.println("To prevent stack overflow error script was stopped");
+            return;
+        }
+        drg.addToPathSet(path);
+
         Process fileReader = new Process(drg,inp);
         fileReader.defineFileCommand();
+
+        drg.getScripts().remove(path);
     }
 
 }

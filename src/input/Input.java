@@ -4,7 +4,10 @@ import dragon.*;
 import exceptions.WrongIdFormatException;
 import exceptions.WrongInputFormatException;
 import exceptions.WrongPathRightsException;
+import utilities.Func;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
@@ -18,117 +21,371 @@ abstract public class Input{
 
     Scanner sc;
 
-    /**
-     * Input name.
-     * @return dragon's name.
-     * @throws WrongInputFormatException if data is wrong.
-     */
-    abstract public String inputDragonName() throws WrongInputFormatException;
+//    /**
+//     * Input name.
+//     * @return dragon's name.
+//     * @throws WrongInputFormatException if data is wrong.
+//     */
+//    abstract public String inputDragonName() throws WrongInputFormatException;
+//
+//    /**
+//     * Input X coordinate.
+//     * @return dragon's X coordinate.
+//     * @throws WrongInputFormatException if data is wrong.
+//     */
+//    abstract public Long inputXCord() throws WrongInputFormatException;
+//
+//    /**
+//     * Input Y coordinate.
+//     * @return dragon's Y coordinate.
+//     * @throws WrongInputFormatException if data is wrong.
+//     */
+//    abstract public float inputYCord() throws WrongInputFormatException;
+//
+//    /**
+//     * Input age.
+//     * @return dragon's age.
+//     * @throws WrongInputFormatException if data is wrong.
+//     */
+//    abstract public int inputAge() throws WrongInputFormatException;
+//
+//    /**
+//     * Input description.
+//     * @return dragon's description.
+//     * @throws WrongInputFormatException if data is wrong.
+//     */
+//    abstract public String inputDescription() throws WrongInputFormatException;
+//
+//    /**
+//     * Input wingspan.
+//     * @return dragon's wingspan.
+//     * @throws WrongInputFormatException if data is wrong.
+//     */
+//    abstract public Long inputWingspan() throws WrongInputFormatException;
+//
+//    /**
+//     * Input type of the dragon.
+//     * @return dragon's type.
+//     * @throws WrongInputFormatException if data is wrong.
+//     */
+//    abstract public DragonType inputType() throws WrongInputFormatException;
+//
+//    /**
+//     * Input name.
+//     * @return killer's name.
+//     * @throws WrongInputFormatException if data is wrong.
+//     */
+//    abstract public String inputKillerName() throws WrongInputFormatException;
+//
+//    /**
+//     * Input date.
+//     * @return killer's date of birth.
+//     * @throws WrongInputFormatException if data is wrong.
+//     */
+//    abstract public String inputKilBirthday() throws WrongInputFormatException;
+//
+//    /**
+//     * Input eye color.
+//     * @return killer's eye color.
+//     * @throws WrongInputFormatException if data is wrong.
+//     */
+//    abstract public Color inputKilEyeColor() throws WrongInputFormatException;
+//
+//    /**
+//     * Input hair color.
+//     * @return killer's hair color.
+//     * @throws WrongInputFormatException if data is wrong.
+//     */
+//    abstract public Color inputKilHairColor() throws WrongInputFormatException;
+//
+//    /**
+//     * Input nationality.
+//     * @return killer's nationality.
+//     * @throws WrongInputFormatException if data is wrong.
+//     */
+//    abstract public Country inputKilNation() throws WrongInputFormatException;
+//
+//    /**
+//     * Input X location.
+//     * @return killer's X location.
+//     * @throws WrongInputFormatException if data is wrong.
+//     */
+//    abstract public int inputKilXLoc() throws WrongInputFormatException;
+//
+//    /**
+//     * Input Y location.
+//     * @return killer's Y location.
+//     * @throws WrongInputFormatException if data is wrong.
+//     */
+//    abstract public Long inputKilYLoc() throws WrongInputFormatException;
+//
+//    /**
+//     * Input Z location.
+//     * @return killer's Z location.
+//     * @throws WrongInputFormatException if data is wrong.
+//     */
+//    abstract public long inputKilZLoc() throws WrongInputFormatException;
+//
+//    /**
+//     * Define whether the killer is needed.
+//     * @return true if killer is needed, false otherwise.
+//     * @throws WrongInputFormatException if data is wrong.
+//     */
+//    abstract public boolean needKiller() throws WrongInputFormatException;
+
+    abstract public <T> T input(String question, String errorMessage, Func<T> rule) throws WrongInputFormatException;
 
     /**
-     * Input X coordinate.
+     * Method asks to input name of dragon.
+     * @return name of the dragon.
+     */
+    public String inputDragonName() throws WrongInputFormatException {
+
+        Func<String> interfc = (str) -> {
+            if (str.equals("") || str.equals("\n"))
+                throw new WrongInputFormatException();
+            return str;
+        };
+
+//        System.out.print("Enter the name: ");
+        return input("Enter the name: ", "Wrong name! Try again: ", interfc);
+    }
+
+    /**
+     * Method asks to input X coordinate.
      * @return dragon's X coordinate.
-     * @throws WrongInputFormatException if data is wrong.
      */
-    abstract public Long inputXCord() throws WrongInputFormatException;
+    public Long inputXCord() throws WrongInputFormatException {
+//        System.out.print("Enter the X coordinate: (x <= 302) ");
+
+        Func<Long> interfc = (str) -> {
+            long res = Long.parseLong(str);
+            if (res > 302)
+                throw new WrongInputFormatException();
+            return res;
+        };
+
+        return input("Enter the X coordinate: (x <= 302) ", "Wrong Coordinate! Try again: ", interfc);
+    }
 
     /**
-     * Input Y coordinate.
+     * Method asks to input Y coordinate.
      * @return dragon's Y coordinate.
-     * @throws WrongInputFormatException if data is wrong.
      */
-    abstract public float inputYCord() throws WrongInputFormatException;
+    public float inputYCord() throws WrongInputFormatException {
+//        System.out.print("Enter the Y coordinate: ");
+
+        return input("Enter the Y coordinate: ", "Wrong Y Coordinate! Try again: ", Float::parseFloat);
+    }
 
     /**
-     * Input age.
-     * @return dragon's age.
-     * @throws WrongInputFormatException if data is wrong.
+     * Method asks to input dragon's age.
+     * @return age of the dragon.
      */
-    abstract public int inputAge() throws WrongInputFormatException;
+    public int inputAge() throws WrongInputFormatException {
+
+//        System.out.print("Enter the dragon's age: ");
+
+        Func<Integer> interfc = (str) -> {
+            int res = Integer.parseInt(str);
+            if (res <= 0)
+                throw new WrongInputFormatException();
+            return res;
+        };
+        return input("Enter the dragon's age: ", "Wrong age Format! Try again: ", interfc);
+    }
+
 
     /**
-     * Input description.
-     * @return dragon's description.
-     * @throws WrongInputFormatException if data is wrong.
+     * Method asks to input dragon's description.
+     * @return description of the dragon.
      */
-    abstract public String inputDescription() throws WrongInputFormatException;
+    public String inputDescription() throws WrongInputFormatException {
+
+//        System.out.print("Enter the dragon's description: ");
+        return input("Enter the dragon's description: ", "", (str) -> str);
+    }
+
 
     /**
-     * Input wingspan.
-     * @return dragon's wingspan.
-     * @throws WrongInputFormatException if data is wrong.
+     * Method asks to input dragon's wingspan.
+     * @return wingspan of the dragon.
      */
-    abstract public Long inputWingspan() throws WrongInputFormatException;
+    public Long inputWingspan() throws WrongInputFormatException {
+
+//        System.out.print("Enter the dragon's wingspan: ");
+
+        Func<Long> iterfc = (str) -> {
+            if (str.equals(""))
+                return null;
+            long span = Long.parseLong(str);
+            if (span <= 0)
+                throw new WrongInputFormatException();
+            return span;
+        };
+
+        return input("Enter the dragon's wingspan: ", "Wrong wingspan! Try again: ", iterfc);
+    }
 
     /**
-     * Input type of the dragon.
-     * @return dragon's type.
-     * @throws WrongInputFormatException if data is wrong.
+     * Method asks to input dragon's type.
+     * @return type of dragon.
      */
-    abstract public DragonType inputType() throws WrongInputFormatException;
+    public DragonType inputType() throws WrongInputFormatException {
+
+//        System.out.print("Enter the dragon's type: (AIR, UNDERGROUND, FIRE, WATER) ");
+        Func<DragonType> interfc = (str) -> {
+            if (str.toUpperCase().matches("AIR|UNDERGROUND|FIRE|WATER")) {
+                return DragonType.valueOf(str.toUpperCase());
+            }
+            throw new WrongInputFormatException();
+        };
+        return input("Enter the dragon's type: (AIR, UNDERGROUND, FIRE, WATER) ",
+                "Wrong type format! Try again: ", interfc);
+    }
 
     /**
-     * Input name.
-     * @return killer's name.
-     * @throws WrongInputFormatException if data is wrong.
+     * Method asks to input name of a person who killed dragon.
+     * @return name of the killer.
      */
-    abstract public String inputKillerName() throws WrongInputFormatException;
+    public String inputKillerName() throws WrongInputFormatException {
+
+//        System.out.print("Enter the killer's name: ");
+
+        Func<String> interfc = (str) -> {
+            if (str.equals("") || str.equals("\n"))
+                throw new WrongInputFormatException();
+            return str;
+        };
+        return input("Enter the killer's name: ", "Wrong name! Try again: ", interfc);
+    }
 
     /**
-     * Input date.
-     * @return killer's date of birth.
-     * @throws WrongInputFormatException if data is wrong.
+     * Method asks to input date of birth of dragon's killer.
+     * @return killer's birthday.
      */
-    abstract public String inputKilBirthday() throws WrongInputFormatException;
+    public String inputKilBirthday() throws WrongInputFormatException {
+//        System.out.print("Enter the killer's birthday: (YYYY-MM-DD hh:mm:ss) ");
+
+        Func<String> interfc = (str) -> {
+            if (str.matches("\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01]) " +
+                    "(0[0-9]|1[0-9]|2[0-4]):([0-5]\\d):([0-5]\\d)"))
+                return str;
+            throw new WrongInputFormatException();
+        };
+        return input("Enter the killer's birthday: (YYYY-MM-DD hh:mm:ss) ",
+                "Wrong date format! Try again: ", interfc);
+
+    }
 
     /**
-     * Input eye color.
-     * @return killer's eye color.
-     * @throws WrongInputFormatException if data is wrong.
+     * Method asks to input killer's eye color.
+     * @return color of killer's eyes.
      */
-    abstract public Color inputKilEyeColor() throws WrongInputFormatException;
+    public Color inputKilEyeColor() throws WrongInputFormatException {
+
+//        System.out.print("Enter the killer's eye color: (WHITE, RED, ORANGE, YELLOW, GREEN, BLACK) ");
+
+        Func<Color> interfc = (str) -> {
+            if (str.toUpperCase().matches("WHITE|RED|ORANGE|YELLOW|GREEN|BLACK")) {
+                return Color.valueOf(str.toUpperCase());
+            }
+            throw new WrongInputFormatException();
+        };
+        return input("Enter the killer's eye color: (WHITE, RED, ORANGE, YELLOW, GREEN, BLACK) ",
+                "Wrong color format! Try again: ", interfc);
+    }
 
     /**
-     * Input hair color.
-     * @return killer's hair color.
-     * @throws WrongInputFormatException if data is wrong.
+     * Method asks to input killer's hair color.
+     * @return color of killer's hair.
      */
-    abstract public Color inputKilHairColor() throws WrongInputFormatException;
+    public Color inputKilHairColor() throws WrongInputFormatException {
+
+//        System.out.print("Enter the killer's hair color: (WHITE, RED, ORANGE, YELLOW, GREEN, BLACK) ");
+
+        Func<Color> interfc = (str) -> {
+            if (str.toUpperCase().matches("WHITE|RED|ORANGE|YELLOW|GREEN|BLACK")) {
+                return Color.valueOf(str.toUpperCase());
+            }
+            throw new WrongInputFormatException();
+        };
+        return input("Enter the killer's hair color: (WHITE, RED, ORANGE, YELLOW, GREEN, BLACK) ",
+                "Wrong color format! Try again: ", interfc);
+
+    }
 
     /**
-     * Input nationality.
-     * @return killer's nationality.
-     * @throws WrongInputFormatException if data is wrong.
+     * Method asks to input Z location of killer.
+     * @return Z location.
      */
-    abstract public Country inputKilNation() throws WrongInputFormatException;
+    public long inputKilZLoc() throws WrongInputFormatException {
+
+//        System.out.print("Enter the killer's Z location: ");
+        return input("Enter the killer's Z location: ", "Wrong coordinate! Try again: ",
+                Long::parseLong);
+    }
 
     /**
-     * Input X location.
-     * @return killer's X location.
-     * @throws WrongInputFormatException if data is wrong.
+     * Method asks to input Y location of killer.
+     * @return Y location.
      */
-    abstract public int inputKilXLoc() throws WrongInputFormatException;
+    public Long inputKilYLoc() throws WrongInputFormatException {
+
+//        System.out.print("Enter the killer's Y location: ");
+        return input("Enter the killer's Y location: ", "Wrong coordinate! Try again: ",
+                Long::parseLong);
+    }
 
     /**
-     * Input Y location.
-     * @return killer's Y location.
-     * @throws WrongInputFormatException if data is wrong.
+     * Method asks to input X location of killer.
+     * @return X location.
      */
-    abstract public Long inputKilYLoc() throws WrongInputFormatException;
+    public int inputKilXLoc() throws WrongInputFormatException {
+
+//        System.out.print("Enter the killer's X location: ");
+        return input("Enter the killer's X location: ", "Wrong coordinate! Try again: ",
+                Integer::parseInt);
+    }
 
     /**
-     * Input Z location.
-     * @return killer's Z location.
-     * @throws WrongInputFormatException if data is wrong.
+     * Method asks to input country where killer was born.
+     * @return killer's nation.
      */
-    abstract public long inputKilZLoc() throws WrongInputFormatException;
+    public Country inputKilNation() throws WrongInputFormatException {
+
+//        System.out.print("Enter the killer's nationality: (ITALY, NORTH_KOREA, USA, INDIA, VATICAN) ");
+
+        Func<Country> interfc = (str) -> {
+            if (str.toUpperCase().matches("ITALY|USA|VATICAN|NORTH_KOREA|INDIA"))
+                return Country.valueOf(str.toUpperCase());
+            throw new WrongInputFormatException();
+        };
+
+        return input("Enter the killer's nationality: (ITALY, NORTH_KOREA, USA, INDIA, VATICAN) ",
+                "Wrong country format! Try again: ", interfc);
+    }
 
     /**
-     * Define whether the killer is needed.
-     * @return true if killer is needed, false otherwise.
-     * @throws WrongInputFormatException if data is wrong.
+     * Method asks whether user needs to input killer or not.
+     * @return true if killer defined, false in other case.
      */
-    abstract public boolean needKiller() throws WrongInputFormatException;
+    public boolean needKiller() throws WrongInputFormatException {
+
+//        System.out.print("Is there a killer? (y/n) ");
+
+        Func<Boolean> interfc = (str) -> {
+            if (str.matches("[yn]"))
+                switch (str) {
+                    case "y": return true;
+                    case "n": return false;
+                }
+            throw new WrongInputFormatException();
+        };
+
+        return input("Is there a killer? (y/n) ","Wrong answer format! Try again: ", interfc);
+
+    }
 
     /**
      * Method inputs a dragon with all its attributes.

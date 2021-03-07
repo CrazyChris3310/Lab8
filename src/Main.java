@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.NoSuchElementException;
 
 public class Main {
     public static void main(String[] args) {
@@ -44,6 +45,7 @@ public class Main {
             return;
         }
         Process proc = new Process(dragons, new ConsoleInput());
+
         proc.defineCommand();
     }
 }

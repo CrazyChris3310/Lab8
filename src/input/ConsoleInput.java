@@ -1,9 +1,9 @@
 package input;
 
 import dragon.*;
+import exceptions.WrongInputFormatException;
 import utilities.Func;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -26,18 +26,10 @@ public class ConsoleInput extends Input{
      */
     @Override
     public String inputDragonName() {
-//        String dragName;
-//        System.out.print("Enter the name: ");
-//        dragName = sc.nextLine();
-//        while (dragName.equals("") || dragName.equals("\n")) {
-//            System.out.println("Wrong name! Try again: ");
-//            dragName = sc.nextLine();
-//        }
-//        return dragName;
 
         Func<String> interfc = (str) -> {
             if (str.equals("") || str.equals("\n"))
-                return null;
+                throw new WrongInputFormatException();
             return str;
         };
 
@@ -50,25 +42,12 @@ public class ConsoleInput extends Input{
      * @return dragon's X coordinate.
      */
     public Long inputXCord() {
-        long cordX;
         System.out.print("Enter the X coordinate: (x <= 302) ");
-//        while(true) {
-//            if (sc.hasNextLong()) {
-//                cordX = sc.nextLong();
-//                if (sc.nextLine().equals("") && cordX <= 302) break;
-//            }
-//            else {
-//                sc.nextLine();
-//            }
-//            System.out.print("Wrong coordinate! Try again: ");
-//        }
-//        return cordX;
 
         Func<Long> interfc = (str) -> {
-            long res;
-            res = Long.parseLong(str);
+            long res = Long.parseLong(str);
             if (res > 302)
-                return null;
+                throw new WrongInputFormatException();
             return res;
         };
 
@@ -83,11 +62,7 @@ public class ConsoleInput extends Input{
     public float inputYCord() {
         System.out.print("Enter the Y coordinate: ");
 
-        Func<Float> interfc = (str) -> {
-            return Float.parseFloat(str);
-        };
-
-        return input("Wrong Y Coordinate", interfc);
+        return input("Wrong Y Coordinate! Try again: ", Float::parseFloat);
     }
 
     /**
@@ -95,24 +70,14 @@ public class ConsoleInput extends Input{
      * @return age of the dragon.
      */
     public int inputAge() {
-//        int dragAge;
-//        String temp;
-//        System.out.print("Enter the dragon's age: ");
-//        while(true) {
-//            temp = sc.nextLine();
-//            if (temp.matches("[1-9]\\d*")) {
-//                dragAge = Integer.parseInt(temp);
-//                break;
-//            }
-//            System.out.print("Wrong age format! Try again: ");
-//        }
+
+        System.out.print("Enter the dragon's age: ");
 
         Func<Integer> interfc = (str) -> {
-            int res;
-            res = Integer.parseInt(str);
-            if (res > 0)
-                return res;
-            return null;
+            int res = Integer.parseInt(str);
+            if (res <= 0)
+                throw new WrongInputFormatException();
+            return res;
         };
         return input("Wrong age Format! Try again: ", interfc);
     }
@@ -123,16 +88,9 @@ public class ConsoleInput extends Input{
      * @return description of the dragon.
      */
     public String inputDescription() {
-        String description;
-        System.out.print("Enter the dragon's description: ");
-        description = sc.nextLine();
-        if (description.equals(""))
-            description = null;
 
-        Func<String> interfc = (str) -> {
-            return str;
-        };
-        return  description;
+        System.out.print("Enter the dragon's description: ");
+        return input("", (str) -> str);
     }
 
 
@@ -142,23 +100,19 @@ public class ConsoleInput extends Input{
      */
     @Override
     public Long inputWingspan() {
-        String temp;
-        Long wingspan;
 
         System.out.print("Enter the dragon's wingspan: ");
-        while(true) {
-            temp = sc.nextLine();
-            if (temp.matches("\\d*")) {
-                if (temp.equals(""))
-                    wingspan = null;
-                else
-                    wingspan = Long.parseLong(temp);
-                break;
-            }
 
-            System.out.print("Wrong wingspan! Try again: ");
-        }
-        return wingspan;
+        Func<Long> iterfc = (str) -> {
+            if (str.equals(""))
+                return null;
+            long span = Long.parseLong(str);
+            if (span <= 0)
+                throw new WrongInputFormatException();
+            return span;
+        };
+
+        return input("Wrong wingspan! Try again: ", iterfc);
     }
 
     /**
@@ -167,19 +121,15 @@ public class ConsoleInput extends Input{
      */
     @Override
     public DragonType inputType() {
-        String temp;
-        DragonType type;
 
         System.out.print("Enter the dragon's type: (AIR, UNDERGROUND, FIRE, WATER) ");
-        while(true) {
-            temp = sc.nextLine();
-            if (temp.toUpperCase().matches("AIR|UNDERGROUND|FIRE|WATER")) {
-                type = DragonType.valueOf(temp.toUpperCase());
-                break;
+        Func<DragonType> interfc = (str) -> {
+            if (str.toUpperCase().matches("AIR|UNDERGROUND|FIRE|WATER")) {
+                return DragonType.valueOf(str.toUpperCase());
             }
-            System.out.print("Wrong type format! Try again:");
-        }
-        return type;
+            throw new WrongInputFormatException();
+        };
+        return input("Wrong type format! Try again: ", interfc);
     }
 
     /**
@@ -188,13 +138,15 @@ public class ConsoleInput extends Input{
      */
     @Override
     public String inputKillerName() {
+
         System.out.print("Enter the killer's name: ");
-        String personName = sc.nextLine();
-        while (personName.equals("") || personName.equals("\n")) {
-            System.out.println("Wrong name! Try again: ");
-            personName = sc.nextLine();
-        }
-        return personName;
+
+        Func<String> interfc = (str) -> {
+            if (str.equals("") || str.equals("\n"))
+                throw new WrongInputFormatException();
+            return str;
+        };
+        return input("Wrong name! Try again: ", interfc);
     }
 
     /**
@@ -204,14 +156,15 @@ public class ConsoleInput extends Input{
     @Override
     public String inputKilBirthday() {
         System.out.print("Enter the killer's birthday: (YYYY-MM-DD hh:mm:ss) ");
-        String date;
-        while(true) {
-            date = sc.nextLine();
-            if (date.matches("\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01]) " +
+
+        Func<String> interfc = (str) -> {
+            if (str.matches("\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01]) " +
                     "(0[0-9]|1[0-9]|2[0-4]):([0-5]\\d):([0-5]\\d)"))
-                return date;
-            System.out.print("Try again: ");
-        }
+                return str;
+            throw new WrongInputFormatException();
+        };
+        return input("Wrong date format! Try again: ", interfc);
+
     }
 
     /**
@@ -220,15 +173,16 @@ public class ConsoleInput extends Input{
      */
     @Override
     public Color inputKilEyeColor() {
-        String temp;
+
         System.out.print("Enter the killer's eye color: (WHITE, RED, ORANGE, YELLOW, GREEN, BLACK) ");
-        while(true) {
-            temp = sc.nextLine();
-            if (temp.toUpperCase().matches("WHITE|RED|ORANGE|YELLOW|GREEN|BLACK")) {
-                return Color.valueOf(temp.toUpperCase());
+
+        Func<Color> interfc = (str) -> {
+            if (str.toUpperCase().matches("WHITE|RED|ORANGE|YELLOW|GREEN|BLACK")) {
+                return Color.valueOf(str.toUpperCase());
             }
-            System.out.print("Try again: ");
-        }
+            throw new WrongInputFormatException();
+        };
+        return input("Wrong color format! Try again: ", interfc);
     }
 
     /**
@@ -237,15 +191,17 @@ public class ConsoleInput extends Input{
      */
     @Override
     public Color inputKilHairColor() {
-        String temp;
+
         System.out.print("Enter the killer's hair color: (WHITE, RED, ORANGE, YELLOW, GREEN, BLACK) ");
-        while(true) {
-            temp = sc.nextLine();
-            if (temp.toUpperCase().matches("WHITE|RED|ORANGE|YELLOW|GREEN|BLACK")) {
-                return Color.valueOf(temp.toUpperCase());
+
+        Func<Color> interfc = (str) -> {
+            if (str.toUpperCase().matches("WHITE|RED|ORANGE|YELLOW|GREEN|BLACK")) {
+                return Color.valueOf(str.toUpperCase());
             }
-            System.out.print("Try again: ");
-        }
+            throw new WrongInputFormatException();
+        };
+        return input("Wrong color format! Try again: ", interfc);
+
     }
 
     /**
@@ -254,18 +210,9 @@ public class ConsoleInput extends Input{
      */
     @Override
     public long inputKilZLoc() {
-        long locZ;
+
         System.out.print("Enter the killer's Z location: ");
-        while(true) {
-            if (sc.hasNextLong()) {
-                locZ = sc.nextLong();
-                if (sc.nextLine().equals("")) break;
-            }
-            else
-                sc.nextLine();
-            System.out.print("Wrong coordinate! Try again: ");
-        }
-        return locZ;
+        return input("Wrong coordinate! Try again: ", Long::parseLong);
     }
 
     /**
@@ -274,19 +221,11 @@ public class ConsoleInput extends Input{
      */
     @Override
     public Long inputKilYLoc() {
-        long locY;
-        System.out.print("Enter the killer's Y location: ");
-        while(true) {
-            if(sc.hasNextLong()) {
-                locY = sc.nextLong();
-                if (sc.nextLine().equals("")) break;
-            }
-            else
-                sc.nextLine();
 
-            System.out.print("Wrong wingspan! Try again: ");
-        }
-        return locY;
+        System.out.print("Enter the killer's Y location: ");
+        return input("Wrong coordinate! Try again: ", Long::parseLong);
+
+
     }
 
     /**
@@ -295,19 +234,9 @@ public class ConsoleInput extends Input{
      */
     @Override
     public int inputKilXLoc() {
-        int locX;
+
         System.out.print("Enter the killer's X location: ");
-        while(true) {
-            if (sc.hasNextInt()) {
-                locX = sc.nextInt();
-                if (sc.nextLine().equals("")) break;
-            }
-            else {
-                sc.nextLine();
-            }
-            System.out.print("Wrong coordinate! Try again: ");
-        }
-        return locX;
+        return input("Wrong coordinate! Try again: ", Integer::parseInt);
     }
 
     /**
@@ -316,15 +245,16 @@ public class ConsoleInput extends Input{
      */
     @Override
     public Country inputKilNation() {
-        String temp;
+
         System.out.print("Enter the killer's nationality: (ITALY, NORTH_KOREA, USA, INDIA, VATICAN) ");
-        while(true) {
-            temp = sc.nextLine();
-            if (temp.toUpperCase().matches("ITALY|USA|VATICAN|NORTH_KOREA|INDIA")) {
-                return Country.valueOf(temp.toUpperCase());
-            }
-            System.out.print("Try again: ");
-        }
+
+        Func<Country> interfc = (str) -> {
+          if (str.toUpperCase().matches("ITALY|USA|VATICAN|NORTH_KOREA|INDIA"))
+              return Country.valueOf(str.toUpperCase());
+          throw new WrongInputFormatException();
+        };
+
+        return input("Wrong country format! Try again: ", interfc);
     }
 
     /**
@@ -333,32 +263,29 @@ public class ConsoleInput extends Input{
      */
     @Override
     public boolean needKiller() {
-        String ans;
+
         System.out.print("Is there a killer? (y/n) ");
-        while(true) {
-            ans = sc.nextLine();
-            if (ans.matches("[yn]"))
-                switch(ans) {
+
+        Func<Boolean> interfc = (str) -> {
+            if (str.matches("[yn]"))
+                switch (str) {
                     case "y": return true;
                     case "n": return false;
                 }
-            System.out.print("Wrong answer format! ");
-        }
+            throw new WrongInputFormatException();
+        };
+
+        return input("Wrong answer format! Try again: ", interfc);
+
     }
 
-    // TODO: Do something with values that can be null
-    // TODO: Fix all the input
     public<T> T input(String message, Func<T> rule) {
         T result;
         while (true) {
             String data = sc.nextLine();
             try {
                 result = rule.func(data);
-            } catch (InputMismatchException e) {
-                System.out.print(message);
-                continue;
-            }
-            if (result == null) {
+            } catch (NumberFormatException | WrongInputFormatException e) {
                 System.out.print(message);
                 continue;
             }

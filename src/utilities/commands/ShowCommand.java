@@ -11,6 +11,7 @@ public class ShowCommand extends Command{
 
     public ShowCommand(DragonCollection collection, Input input) {
         super(collection, input);
+        description = "show - show all the elements of collection";
     }
 
     /**

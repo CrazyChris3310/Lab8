@@ -9,6 +9,7 @@ abstract public class Command {
 
     DragonCollection drg;
     Input input;
+    String description;
 
     /**
      * Constructs command with given collection and input.
@@ -24,4 +25,9 @@ abstract public class Command {
      * Executes command.
      */
     abstract public void execute();
+
+    @Override
+    public String toString() {
+        return description;
+    }
 }

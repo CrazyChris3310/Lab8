@@ -14,6 +14,7 @@ public class PrintDescendingCommand extends Command{
 
     public PrintDescendingCommand(DragonCollection collection, Input input) {
         super(collection, input);
+        description = "print_descending - show elements in descending order";
     }
 
     /**

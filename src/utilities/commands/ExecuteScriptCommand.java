@@ -18,6 +18,7 @@ public class ExecuteScriptCommand extends Command{
 
     public ExecuteScriptCommand(DragonCollection collection, Input input) {
         super(collection, input);
+        description = "execute_script file_name - read and execute script from given file";
     }
 
     /**

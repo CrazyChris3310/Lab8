@@ -11,6 +11,7 @@ public class ClearCommand extends Command{
 
     public ClearCommand(DragonCollection collection, Input input) {
         super(collection, input);
+        description = "clear - remove everything from collection";
     }
 
     /**

@@ -11,6 +11,7 @@ public class HistoryCommand extends Command{
 
     public HistoryCommand(DragonCollection collection, Input input) {
         super(collection, input);
+        description = "history - show last 14 commands";
     }
 
     /**

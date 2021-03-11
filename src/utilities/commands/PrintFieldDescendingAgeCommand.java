@@ -14,6 +14,7 @@ public class PrintFieldDescendingAgeCommand extends Command{
 
     public PrintFieldDescendingAgeCommand(DragonCollection collection, Input input) {
         super(collection, input);
+        description = "print_field_descending_age - show the age of each element in descending order";
     }
 
     /**

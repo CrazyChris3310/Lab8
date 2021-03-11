@@ -18,6 +18,7 @@ public class SaveCommand extends Command{
 
     public SaveCommand(DragonCollection collection, Input input) {
         super(collection, input);
+        description = "save - save collection to the file";
     }
 
     /**

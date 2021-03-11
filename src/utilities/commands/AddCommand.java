@@ -13,6 +13,7 @@ public class AddCommand extends Command{
 
     public AddCommand(DragonCollection collection, Input input) {
         super(collection, input);
+        description = "add {element} - add new element to collection";
     }
 
     /**

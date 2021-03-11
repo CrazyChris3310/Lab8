@@ -14,6 +14,7 @@ public class RemoveAnyByKillerCommand extends Command{
 
     public RemoveAnyByKillerCommand(DragonCollection collection, Input input) {
         super(collection, input);
+        description = "remove_any_by_killer killer - remove from collection one element with given killer";
     }
 
     /**

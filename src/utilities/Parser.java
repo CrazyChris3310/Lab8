@@ -11,6 +11,8 @@ import java.util.ArrayList;
  */
 public class Parser {
 
+
+    // TODO: Make an ability to add String with comma
     /**
      * Method returns array. Each elements is one line from file.
      * @param filePath file from where to parse.

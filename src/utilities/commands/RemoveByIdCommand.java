@@ -12,6 +12,7 @@ public class RemoveByIdCommand extends Command{
 
     public RemoveByIdCommand(DragonCollection collection, Input input) {
         super(collection, input);
+        description = "remove_by_id id - remove element with given id";
     }
 
     /**

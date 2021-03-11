@@ -13,6 +13,7 @@ public class InfoCommand extends Command{
 
     public InfoCommand(DragonCollection collection, Input input) {
         super(collection, input);
+        description = "info - show information about collection";
     }
 
     /**

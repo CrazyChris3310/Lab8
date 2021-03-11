@@ -11,6 +11,7 @@ public class ExitCommand extends Command{
 
     public ExitCommand(DragonCollection collection, Input input) {
         super(collection, input);
+        description = "exit - stop the program without saving";
     }
 
     @Override

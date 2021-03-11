@@ -14,6 +14,7 @@ public class UpdateIdCommand extends Command{
 
     public UpdateIdCommand(DragonCollection collection, Input input) {
         super(collection, input);
+        description = "update id {element} - update the element with given id";
     }
 
     /**

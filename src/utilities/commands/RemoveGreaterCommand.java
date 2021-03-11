@@ -13,6 +13,7 @@ public class RemoveGreaterCommand extends Command{
 
     public RemoveGreaterCommand(DragonCollection collection, Input input) {
         super(collection, input);
+        description = "remove_greater {element} - remove all elements, that are greater then given element";
     }
 
     /**

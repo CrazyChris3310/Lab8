@@ -11,6 +11,7 @@ public class RemoveFirstCommand extends Command{
 
     public RemoveFirstCommand(DragonCollection collection, Input input) {
         super(collection, input);
+        description = "remove_first - remove the first element from collection";
     }
 
     /**

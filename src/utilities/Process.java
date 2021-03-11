@@ -41,6 +41,10 @@ public class Process {
         commands.put("exit", new ExitCommand(dragons, input));
     }
 
+    public HashMap<String, Command> getCommands() {
+        return commands;
+    }
+
     /**
      * Method defines commands from console input and executes them.
      */

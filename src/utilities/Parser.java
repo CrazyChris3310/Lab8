@@ -1,83 +1,83 @@
 package utilities;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Defines methods for parsing from csv files.
  */
 public class Parser {
 
+    private static final char SEPARATOR = ',';
+    private static final char DOUBLE_QUOTES = '"';
 
-    // TODO: Make an ability to add String with comma
-    /**
-     * Method returns array. Each elements is one line from file.
-     * @param filePath file from where to parse.
-     * @return array of lines from file.
-     * @throws IOException if something went wrong.
-     */
-    public ArrayList<String> parseFromFile(File filePath) throws IOException {
+    public ArrayList<String> parseFromFile(File path) throws IOException{
+        return parseFromFile(path, 0);
+    }
 
-        ArrayList<String> fileLines = new ArrayList<>();
-        InputStreamReader isr = new InputStreamReader(new FileInputStream(filePath));
-        int c;
-        StringBuilder text = new StringBuilder();
-        do {
-            c = isr.read();
-            if ((char) c == '\n') {
-                fileLines.add(text.toString().trim());
-                text = new StringBuilder();
+    public ArrayList<String> parseFromFile(File path, int skipLine) throws IOException{
+        ArrayList<String> result = new ArrayList<>();
+        int indexLine = 1;
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
+
+        String line;
+        while ((line = br.readLine()) != null) {
+
+            if (indexLine++ <= skipLine) {
                 continue;
             }
-            text.append((char) c);
-        } while (c != -1);
+            result.add(line);
+        }
 
-        isr.close();
-
-        return fileLines;
+        return result;
     }
 
-    /**
-     * Divides fileLine on elements using comma as a delimiter.
-     * @param fileLine {@code String} containing values separated by comma.
-     * @return array of values from csv.
-     */
-    public ArrayList<String> getItems(String fileLine) {
-        String[] splitedText = fileLine.split(",", 18);
-        ArrayList<String> columnList = new ArrayList<>();
-        for (String s : splitedText) {
-            //Если колонка начинается на кавычки или заканчиваеться на кавычки
-            if (IsColumnPart(s)) {
-                String lastText = columnList.get(columnList.size() - 1);
-                columnList.set(columnList.size() - 1, lastText + "," + s);
+    public ArrayList<String> getItems(String line) {
+        ArrayList<String> result = new ArrayList<>();
+
+        boolean inQuotes = false;
+        boolean isFieldWithEmbeddedDoubleQuotes = false;
+
+        StringBuilder field = new StringBuilder();
+
+        for (char c : line.toCharArray()) {
+
+            if (c == DOUBLE_QUOTES) {               // handle embedded double quotes ""
+                if (isFieldWithEmbeddedDoubleQuotes) {
+
+                    if (field.length() > 0) {       // handle for empty field like "",""
+                        field.append(DOUBLE_QUOTES);
+                        isFieldWithEmbeddedDoubleQuotes = false;
+                    }
+
+                } else {
+                    isFieldWithEmbeddedDoubleQuotes = true;
+                }
             } else {
-                columnList.add(s);
+                isFieldWithEmbeddedDoubleQuotes = false;
+            }
+
+            if (c == DOUBLE_QUOTES) {
+                inQuotes = !inQuotes;
+            } else {
+                if (c == SEPARATOR && !inQuotes) {  // if find separator and not in quotes, add field to the list
+                    result.add(field.toString());
+                    field.setLength(0);             // empty the field and ready for the next
+                } else {
+                    field.append(c);                // else append the char into a field
+                }
             }
         }
 
-        for (int i = 0; i < columnList.size(); ++i) {
-            String s = columnList.get(i);
-            if (s.matches("^\".*?\"$")) {
-                s = s.substring(1, s.length() - 1);
-                columnList.set(i, s);
-            }
-        }
+        result.add(field.toString());           // this is the last field
 
-        return columnList;
-
+        return result;
     }
 
-    /**
-     * Checks if value is part of previous value.
-     * @param text value to check.
-     * @return true if text is part of previous value, false if not.
-     */
-    private static boolean IsColumnPart(String text) {
-        String trimText = text.trim();
-        //Если в тексте одна ковычка и текст на нее заканчиваеться значит это часть предыдущей колонки
-        return trimText.indexOf("\"") == trimText.lastIndexOf("\"") && trimText.endsWith("\"");
-    }
 }

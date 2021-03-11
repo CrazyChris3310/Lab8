@@ -40,7 +40,7 @@ public class Main {
         DragonCollection dragons;
         try {
             dragons = new DragonCollection(path.toFile());
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
             System.out.println("Wrong data in the file");
             return;
         }

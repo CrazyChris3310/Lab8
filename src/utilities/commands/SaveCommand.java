@@ -33,17 +33,20 @@ public class SaveCommand extends Command{
 
         try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(drg.getFile()))) {
             for (Dragon dragon : drg.getCollection()) {
-                output = "" + dragon.getId() + ",\"" + dragon.getName() + "\"," + dragon.getCoordinates().getX() + "," +
-                        dragon.getCoordinates().getY() + "," + zdtFormatter.format(dragon.getCreationDate()) + "," +
-                        dragon.getAge() + ",\"" + defineNull(dragon.getDescription()) + "\"," + defineNull(dragon.getWingspan()) +
-                        "," + defineNull(dragon.getType()) + ",";
+                output = "" + dragon.getId() + ",\"" + dragon.getName().replaceAll("\"", "\"\"")
+                        + "\"," + dragon.getCoordinates().getX() + "," + dragon.getCoordinates().getY() + "," +
+                        zdtFormatter.format(dragon.getCreationDate()) + "," + dragon.getAge() + ",\"" +
+                        defineNull(dragon.getDescription()).replaceAll("\"", "\"\"") +
+                        "\"," + defineNull(dragon.getWingspan()) + "," + defineNull(dragon.getType()) + ",";
                 if (dragon.getKiller() == null)
                     output += ",,,,,,,\n";
                 else
-                    output += "\"" + dragon.getKiller().getName() + "\"," + ldtFormatter.format(dragon.getKiller().getBirthday()) +
-                            "," + dragon.getKiller().getEyeColor() + "," + dragon.getKiller().getHairColor() +
+                    output += "\"" + dragon.getKiller().getName().replaceAll("\"", "\"\"") + "\","
+                            + ldtFormatter.format(dragon.getKiller().getBirthday()) + "," +
+                            dragon.getKiller().getEyeColor() + "," + dragon.getKiller().getHairColor() +
                             "," + dragon.getKiller().getNationality() + "," + dragon.getKiller().getLocation().getX() +
-                            "," + dragon.getKiller().getLocation().getY() + "," + dragon.getKiller().getLocation().getZ() + "\n";
+                            "," + dragon.getKiller().getLocation().getY() + "," + dragon.getKiller().getLocation().getZ()
+                            + "\n";
 
                 bos.write(output.getBytes());
                 bos.flush();

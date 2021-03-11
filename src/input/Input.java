@@ -33,7 +33,6 @@ abstract public class Input{
             return str;
         };
 
-//        System.out.print("Enter the name: ");
         return input("Enter the name: ", "Wrong name! Try again: ", interfc);
     }
 
@@ -42,15 +41,12 @@ abstract public class Input{
      * @return dragon's X coordinate.
      */
     public Long inputXCord() throws WrongInputFormatException {
-//        System.out.print("Enter the X coordinate: (x <= 302) ");
-
         Func<Long> interfc = (str) -> {
             long res = Long.parseLong(str);
             if (res > 302)
                 throw new WrongInputFormatException();
             return res;
         };
-
         return input("Enter the X coordinate: (x <= 302) ", "Wrong Coordinate! Try again: ", interfc);
     }
 
@@ -59,8 +55,6 @@ abstract public class Input{
      * @return dragon's Y coordinate.
      */
     public float inputYCord() throws WrongInputFormatException {
-//        System.out.print("Enter the Y coordinate: ");
-
         return input("Enter the Y coordinate: ", "Wrong Y Coordinate! Try again: ", Float::parseFloat);
     }
 
@@ -69,9 +63,6 @@ abstract public class Input{
      * @return age of the dragon.
      */
     public int inputAge() throws WrongInputFormatException {
-
-//        System.out.print("Enter the dragon's age: ");
-
         Func<Integer> interfc = (str) -> {
             int res = Integer.parseInt(str);
             if (res <= 0)
@@ -87,8 +78,6 @@ abstract public class Input{
      * @return description of the dragon.
      */
     public String inputDescription() throws WrongInputFormatException {
-
-//        System.out.print("Enter the dragon's description: ");
         return input("Enter the dragon's description: ", "", (str) -> str);
     }
 
@@ -98,9 +87,6 @@ abstract public class Input{
      * @return wingspan of the dragon.
      */
     public Long inputWingspan() throws WrongInputFormatException {
-
-//        System.out.print("Enter the dragon's wingspan: ");
-
         Func<Long> iterfc = (str) -> {
             if (str.equals(""))
                 return null;
@@ -118,8 +104,6 @@ abstract public class Input{
      * @return type of dragon.
      */
     public DragonType inputType() throws WrongInputFormatException {
-
-//        System.out.print("Enter the dragon's type: (AIR, UNDERGROUND, FIRE, WATER) ");
         Func<DragonType> interfc = (str) -> {
             if (str.toUpperCase().matches("AIR|UNDERGROUND|FIRE|WATER")) {
                 return DragonType.valueOf(str.toUpperCase());
@@ -135,9 +119,6 @@ abstract public class Input{
      * @return name of the killer.
      */
     public String inputKillerName() throws WrongInputFormatException {
-
-//        System.out.print("Enter the killer's name: ");
-
         Func<String> interfc = (str) -> {
             if (str.equals("") || str.equals("\n"))
                 throw new WrongInputFormatException();
@@ -151,8 +132,6 @@ abstract public class Input{
      * @return killer's birthday.
      */
     public String inputKilBirthday() throws WrongInputFormatException {
-//        System.out.print("Enter the killer's birthday: (YYYY-MM-DD hh:mm:ss) ");
-
         Func<String> interfc = (str) -> {
             if (str.matches("\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01]) " +
                     "(0[0-9]|1[0-9]|2[0-4]):([0-5]\\d):([0-5]\\d)"))
@@ -169,9 +148,6 @@ abstract public class Input{
      * @return color of killer's eyes.
      */
     public Color inputKilEyeColor() throws WrongInputFormatException {
-
-//        System.out.print("Enter the killer's eye color: (WHITE, RED, ORANGE, YELLOW, GREEN, BLACK) ");
-
         Func<Color> interfc = (str) -> {
             if (str.toUpperCase().matches("WHITE|RED|ORANGE|YELLOW|GREEN|BLACK")) {
                 return Color.valueOf(str.toUpperCase());
@@ -187,9 +163,6 @@ abstract public class Input{
      * @return color of killer's hair.
      */
     public Color inputKilHairColor() throws WrongInputFormatException {
-
-//        System.out.print("Enter the killer's hair color: (WHITE, RED, ORANGE, YELLOW, GREEN, BLACK) ");
-
         Func<Color> interfc = (str) -> {
             if (str.toUpperCase().matches("WHITE|RED|ORANGE|YELLOW|GREEN|BLACK")) {
                 return Color.valueOf(str.toUpperCase());
@@ -206,8 +179,6 @@ abstract public class Input{
      * @return Z location.
      */
     public long inputKilZLoc() throws WrongInputFormatException {
-
-//        System.out.print("Enter the killer's Z location: ");
         return input("Enter the killer's Z location: ", "Wrong coordinate! Try again: ",
                 Long::parseLong);
     }
@@ -217,8 +188,6 @@ abstract public class Input{
      * @return Y location.
      */
     public Long inputKilYLoc() throws WrongInputFormatException {
-
-//        System.out.print("Enter the killer's Y location: ");
         return input("Enter the killer's Y location: ", "Wrong coordinate! Try again: ",
                 Long::parseLong);
     }
@@ -228,8 +197,6 @@ abstract public class Input{
      * @return X location.
      */
     public int inputKilXLoc() throws WrongInputFormatException {
-
-//        System.out.print("Enter the killer's X location: ");
         return input("Enter the killer's X location: ", "Wrong coordinate! Try again: ",
                 Integer::parseInt);
     }
@@ -239,9 +206,6 @@ abstract public class Input{
      * @return killer's nation.
      */
     public Country inputKilNation() throws WrongInputFormatException {
-
-//        System.out.print("Enter the killer's nationality: (ITALY, NORTH_KOREA, USA, INDIA, VATICAN) ");
-
         Func<Country> interfc = (str) -> {
             if (str.toUpperCase().matches("ITALY|USA|VATICAN|NORTH_KOREA|INDIA"))
                 return Country.valueOf(str.toUpperCase());
@@ -257,9 +221,6 @@ abstract public class Input{
      * @return true if killer defined, false in other case.
      */
     public boolean needKiller() throws WrongInputFormatException {
-
-//        System.out.print("Is there a killer? (y/n) ");
-
         Func<Boolean> interfc = (str) -> {
             if (str.matches("[yn]"))
                 switch (str) {

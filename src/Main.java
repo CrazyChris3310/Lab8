@@ -10,32 +10,31 @@ import java.util.NoSuchElementException;
 
 public class Main {
     public static void main(String[] args) {
-//        if (args.length != 1) {
-//            System.out.println("Wrong files");
-//            return;
-//        }
-//        Path path;
-//        try {
-//            path = Paths.get(args[0]);
-//        } catch (InvalidPathException e) {
-//            System.out.println("Invalid path to file");
-//            return;
-//        }
-//
-//        if (Files.isDirectory(path)) {
-//            System.out.println("File required, directory found");
-//            return;
-//        }
-//        if (!Files.isReadable(path)) {
-//            System.out.println("Can not read from this file");
-//            return;
-//        }
-//        if (!Files.isWritable(path)) {
-//            System.out.println("Can not write to this file");
-//            return;
-//        }
+        if (args.length != 1) {
+            System.out.println("Wrong files");
+            return;
+        }
+        Path path;
+        try {
+            path = Paths.get(args[0]);
+        } catch (InvalidPathException e) {
+            System.out.println("Invalid path to file");
+            return;
+        }
 
-        Path path = Paths.get("Files/bank.csv");
+        if (Files.isDirectory(path)) {
+            System.out.println("File required, directory found");
+            return;
+        }
+        if (!Files.isReadable(path)) {
+            System.out.println("Can not read from this file");
+            return;
+        }
+        if (!Files.isWritable(path)) {
+            System.out.println("Can not write to this file");
+            return;
+        }
+
 
         DragonCollection dragons;
         try {

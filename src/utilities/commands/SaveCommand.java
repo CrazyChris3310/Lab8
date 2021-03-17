@@ -26,6 +26,8 @@ public class SaveCommand extends Command{
      */
     @Override
     public void execute() {
+        input.nextLine();
+
         DateTimeFormatter zdtFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss xxxxx");
         DateTimeFormatter ldtFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
 

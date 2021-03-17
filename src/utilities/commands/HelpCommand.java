@@ -22,7 +22,7 @@ public class HelpCommand extends Command{
      */
     @Override
     public void execute() {
-
+        input.nextLine();
         Process proc = new Process(drg, input);
         for (Map.Entry<String, Command> command : proc.getCommands().entrySet()) {
             System.out.println(command.getValue());

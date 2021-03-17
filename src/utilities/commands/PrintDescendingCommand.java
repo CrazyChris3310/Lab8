@@ -22,6 +22,7 @@ public class PrintDescendingCommand extends Command{
      */
     @Override
     public void execute() {
+        input.nextLine();
         ArrayList<Dragon> temp = new ArrayList<>(drg.getCollection());
         temp.sort((o1, o2) -> o1.getName().compareTo(o2.getName()));
         temp.forEach(System.out::println);

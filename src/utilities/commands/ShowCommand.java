@@ -19,6 +19,7 @@ public class ShowCommand extends Command{
      */
     @Override
     public void execute() {
+        input.nextLine();
         drg.getCollection().forEach(System.out::println);
     }
 

@@ -1,12 +1,7 @@
 package utilities;
 
 import java.io.*;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Defines methods for parsing from csv files.

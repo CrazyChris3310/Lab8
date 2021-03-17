@@ -19,6 +19,7 @@ public class ClearCommand extends Command{
      */
     @Override
     public void execute() {
+        input.nextLine();
         drg.clear();
     }
 }

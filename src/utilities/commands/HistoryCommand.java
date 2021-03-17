@@ -19,6 +19,7 @@ public class HistoryCommand extends Command{
      */
     @Override
     public void execute() {
+        input.nextLine();
         drg.showHistory();
     }
 }

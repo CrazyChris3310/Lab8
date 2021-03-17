@@ -19,6 +19,7 @@ public class RemoveFirstCommand extends Command{
      */
     @Override
     public void execute() {
+        input.nextLine();
         drg.removeFirst();
     }
 }

@@ -1,10 +1,8 @@
 package input;
 
-import dragon.*;
 import exceptions.WrongInputFormatException;
 import utilities.Func;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Scanner;

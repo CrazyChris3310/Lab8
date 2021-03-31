@@ -264,19 +264,23 @@ abstract public class Input{
      */
     public Path inputFilePath() throws WrongInputFormatException, WrongPathRightsException, InvalidPathException{
         String path;
-        path = sc.next();
-        if (sc.nextLine().equals("")) {
-            isValidPath(path);
-            return Paths.get(path);
-        }
-        throw new WrongInputFormatException();
+        path = sc.nextLine().trim();
+
+        if (path.equals(""))
+            throw new WrongInputFormatException();
+        Path f = Paths.get(path);
+        isValidPath(f);
+
+        return f;
     }
 
-    private void isValidPath(String a) throws WrongPathRightsException, InvalidPathException{
-        Path path = Paths.get(a);
+    private void isValidPath(Path path) throws WrongPathRightsException {
 
+        if (Files.notExists(path)) {
+            throw new WrongPathRightsException("This script file does not exist");
+        }
         if (Files.isDirectory(path)) {
-            throw new WrongPathRightsException("path is a directory");
+            throw new WrongPathRightsException("Path is a directory");
         }
         if (!Files.isReadable(path)) {
             throw new WrongPathRightsException("Can not read file: " + path.getFileName());
@@ -299,6 +303,8 @@ abstract public class Input{
         }
         else
             sc.nextLine();
+
+
 
         throw new WrongIdFormatException("Wrong id format!");
     }

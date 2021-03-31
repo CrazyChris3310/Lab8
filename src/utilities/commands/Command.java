@@ -1,6 +1,7 @@
 package utilities.commands;
-import input.*;
-import utilities.*;
+
+import input.Input;
+import utilities.DragonCollection;
 
 /**
  * Root class for all commands. Contains source for input and the collection to work with.
@@ -29,5 +30,13 @@ abstract public class Command {
     @Override
     public String toString() {
         return description;
+    }
+
+    boolean isInputStreamNotEmpty() {
+        if (input.nextLine().trim().isEmpty()) {
+            return false;
+        }
+        System.out.println("Wrong command format!");
+        return true;
     }
 }

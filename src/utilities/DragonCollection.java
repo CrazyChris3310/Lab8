@@ -1,5 +1,6 @@
 package utilities;
 
+import com.opencsv.exceptions.CsvValidationException;
 import exceptions.NoSuchIdException;
 import exceptions.NoSuchKillerException;
 import dragon.*;
@@ -37,7 +38,7 @@ public class DragonCollection {
      * Constructs collection and fills it from given file.
      * @param path path to file with collection.
      */
-    public DragonCollection(File path) {
+    public DragonCollection(File path) throws CsvValidationException, IOException{
         this.path = path;
         initDate = LocalDateTime.now();
         collection = new PriorityQueue<Dragon>();
@@ -66,16 +67,11 @@ public class DragonCollection {
      * Method parses data from file into collection.
      * @param path path where collection is stored.
      */
-    public void parseFrom(File path) {
+    public void parseFrom(File path) throws CsvValidationException, IOException{
         Parser pars = new Parser();
         ArrayList<String> fileLines;
 
-        try {
-            fileLines = pars.parseFromFile(path);
-        } catch(IOException e) {
-            System.out.println("Reading error!");
-            return;
-        }
+        fileLines = pars.parseFromFile(path);
 
         ArrayList<String> columnList;
         for (String fileLine : fileLines) {

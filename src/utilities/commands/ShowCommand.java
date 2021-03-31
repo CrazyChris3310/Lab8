@@ -19,7 +19,9 @@ public class ShowCommand extends Command{
      */
     @Override
     public void execute() {
-        input.nextLine();
+        if (isInputStreamNotEmpty())
+            return;
+
         drg.getCollection().forEach(System.out::println);
     }
 

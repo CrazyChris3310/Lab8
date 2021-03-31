@@ -1,6 +1,6 @@
 package utilities.commands;
 
-import dragon.*;
+import dragon.Dragon;
 import exceptions.WrongInputFormatException;
 import input.Input;
 import utilities.DragonCollection;
@@ -22,7 +22,9 @@ public class AddCommand extends Command{
     @Override
     public void execute() {
         try {
-            input.nextLine();
+            if (isInputStreamNotEmpty())
+                return;
+
             Dragon dragon = input.inputDragon();
             dragon.setId(drg.getMaxId() + 1);
             drg.add(dragon);

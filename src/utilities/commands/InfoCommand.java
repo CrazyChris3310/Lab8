@@ -21,7 +21,9 @@ public class InfoCommand extends Command{
      */
     @Override
     public void execute() {
-        input.nextLine();
+        if (isInputStreamNotEmpty())
+            return;
+
         System.out.println("Type of elements: Dragon");
         System.out.println("Size = " + drg.getSize());
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd MMM yyyy hh:mm:ss");

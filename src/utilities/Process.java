@@ -4,6 +4,7 @@ import utilities.commands.*;
 import input.*;
 
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 
 /**
  * Class that is responsible for defining command and input source.
@@ -50,9 +51,14 @@ public class Process {
      */
     public void defineCommand() {
         String command;
-        do {
+        while (true) {
             System.out.print("Input a command: ");
-            command = input.next();
+            try {
+                command = input.next();
+            } catch (NoSuchElementException e) {
+                System.exit(0);
+                return;
+            }
 
             if (commands.containsKey(command)) {
                 dragons.updateHistory(command);
@@ -61,8 +67,7 @@ public class Process {
             else {
                 System.out.println("Wrong command!");
             }
-
-        } while(!command.equals("exit"));
+        }
     }
 
     /**

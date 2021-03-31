@@ -21,8 +21,10 @@ public class RemoveGreaterCommand extends Command{
      */
     @Override
     public void execute() {
+        if (isInputStreamNotEmpty())
+            return;
+
         try {
-            input.nextLine();
             Dragon dragon = input.inputDragon();
             drg.removeGreater(dragon);
         } catch (WrongInputFormatException e) {

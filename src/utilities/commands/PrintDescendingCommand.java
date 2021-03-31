@@ -22,9 +22,11 @@ public class PrintDescendingCommand extends Command{
      */
     @Override
     public void execute() {
-        input.nextLine();
+        if (isInputStreamNotEmpty())
+            return;
+
         ArrayList<Dragon> temp = new ArrayList<>(drg.getCollection());
-        temp.sort((o1, o2) -> o1.getName().compareTo(o2.getName()));
+        temp.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));
         temp.forEach(System.out::println);
     }
 }

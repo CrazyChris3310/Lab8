@@ -4,6 +4,7 @@ import dragon.*;
 import exceptions.WrongInputFormatException;
 import utilities.Func;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -24,9 +25,13 @@ public class ConsoleInput extends Input{
         T result;
         while (true) {
             System.out.print(question);
-            String data = sc.nextLine();
+            String data;
             try {
+                data = sc.nextLine();
                 result = rule.func(data);
+            } catch (NoSuchElementException e) {
+                System.exit(0);
+                continue;
             } catch (NumberFormatException | WrongInputFormatException e) {
                 System.out.println(errorMessage);
                 continue;

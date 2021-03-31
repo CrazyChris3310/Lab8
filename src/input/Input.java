@@ -108,6 +108,8 @@ abstract public class Input{
             if (str.toUpperCase().matches("AIR|UNDERGROUND|FIRE|WATER")) {
                 return DragonType.valueOf(str.toUpperCase());
             }
+            else if (str.equals(""))
+                return null;
             throw new WrongInputFormatException();
         };
         return input("Enter the dragon's type: (AIR, UNDERGROUND, FIRE, WATER) ",

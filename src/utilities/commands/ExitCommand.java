@@ -15,5 +15,10 @@ public class ExitCommand extends Command{
     }
 
     @Override
-    public void execute() {}
+    public void execute() {
+        if (isInputStreamNotEmpty())
+            return;
+
+        System.exit(0);
+    }
 }

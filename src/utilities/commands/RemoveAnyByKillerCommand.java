@@ -22,9 +22,11 @@ public class RemoveAnyByKillerCommand extends Command{
      */
     @Override
     public void execute() {
+        if (isInputStreamNotEmpty())
+            return;
+
         Person killer;
         try {
-            input.nextLine();
             killer = input.inputKiller();
         } catch (WrongInputFormatException e) {
             System.out.println("Wrong data!");

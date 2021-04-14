@@ -6,6 +6,7 @@ import exceptions.NoSuchKillerException;
 import dragon.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.*;

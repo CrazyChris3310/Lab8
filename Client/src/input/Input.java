@@ -6,6 +6,7 @@ import exceptions.WrongInputFormatException;
 import exceptions.WrongPathRightsException;
 import utilities.Func;
 
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
@@ -15,7 +16,7 @@ import java.util.Scanner;
 /**
  * Class {@code Input} defines methods to work with an input from various sources.
  */
-abstract public class Input{
+abstract public class Input implements Serializable {
 
     Scanner sc;
 

@@ -4,6 +4,7 @@ import exceptions.WrongInputFormatException;
 import exceptions.WrongPathRightsException;
 import input.FileInput;
 import input.Input;
+import utilities.ConnectionManager;
 import utilities.DragonCollection;
 import utilities.Process;
 
@@ -16,8 +17,8 @@ import java.nio.file.Path;
  */
 public class ExecuteScriptCommand extends Command{
 
-    public ExecuteScriptCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public ExecuteScriptCommand(Input input, ConnectionManager cm) {
+        super(input, cm);
         description = "execute_script file_name - read and execute script from given file";
     }
 
@@ -48,16 +49,16 @@ public class ExecuteScriptCommand extends Command{
             return;
         }
 
-        if (drg.getScripts().contains(path)) {
-            System.out.println("To prevent stack overflow error script was stopped");
-            return;
-        }
-        drg.addToPathSet(path);
-
-        Process fileReader = new Process(drg,inp);
-        fileReader.defineFileCommand();
-
-        drg.getScripts().remove(path);
+//        if (drg.getScripts().contains(path)) {
+//            System.out.println("To prevent stack overflow error script was stopped");
+//            return;
+//        }
+//        drg.addToPathSet(path);
+//
+//        Process fileReader = new Process(drg,inp);
+//        fileReader.defineFileCommand();
+//
+//        drg.getScripts().remove(path);
     }
 
 }

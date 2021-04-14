@@ -1,9 +1,11 @@
 package dragon;
 
+import java.io.Serializable;
+
 /**
  * Defines possible country where killer was born.
  */
-public enum Country {
+public enum Country implements Serializable {
     USA,
     INDIA,
     VATICAN,

@@ -1,6 +1,7 @@
 package utilities.commands;
 
 import input.Input;
+import utilities.ConnectionManager;
 import utilities.DragonCollection;
 
 /**
@@ -9,8 +10,8 @@ import utilities.DragonCollection;
 public class ShowCommand extends Command{
 
 
-    public ShowCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public ShowCommand(Input input, ConnectionManager cm) {
+        super(input, cm);
         description = "show - show all the elements of collection";
     }
 
@@ -22,7 +23,7 @@ public class ShowCommand extends Command{
         if (isInputStreamNotEmpty())
             return;
 
-        drg.getCollection().forEach(System.out::println);
+//        drg.getCollection().forEach(System.out::println);
     }
 
 }

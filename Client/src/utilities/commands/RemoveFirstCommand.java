@@ -1,6 +1,7 @@
 package utilities.commands;
 
 import input.Input;
+import utilities.ConnectionManager;
 import utilities.DragonCollection;
 
 /**
@@ -9,8 +10,8 @@ import utilities.DragonCollection;
 public class RemoveFirstCommand extends Command{
 
 
-    public RemoveFirstCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public RemoveFirstCommand(Input input, ConnectionManager cm) {
+        super(input, cm);
         description = "remove_first - remove the first element from collection";
     }
 
@@ -22,6 +23,6 @@ public class RemoveFirstCommand extends Command{
         if (isInputStreamNotEmpty())
             return;
 
-        drg.removeFirst();
+//        drg.removeFirst();
     }
 }

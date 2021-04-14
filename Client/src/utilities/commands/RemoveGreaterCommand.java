@@ -3,6 +3,7 @@ package utilities.commands;
 import dragon.Dragon;
 import exceptions.WrongInputFormatException;
 import input.Input;
+import utilities.ConnectionManager;
 import utilities.DragonCollection;
 
 /**
@@ -11,8 +12,8 @@ import utilities.DragonCollection;
 public class RemoveGreaterCommand extends Command{
 
 
-    public RemoveGreaterCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public RemoveGreaterCommand(Input input, ConnectionManager cm) {
+        super(input, cm);
         description = "remove_greater {element} - remove all elements, that are greater then given element";
     }
 
@@ -23,12 +24,12 @@ public class RemoveGreaterCommand extends Command{
     public void execute() {
         if (isInputStreamNotEmpty())
             return;
-
-        try {
-            Dragon dragon = input.inputDragon();
-            drg.removeGreater(dragon);
-        } catch (WrongInputFormatException e) {
-            System.out.println("Wrong Data given");
-        }
+//
+//        try {
+//            Dragon dragon = input.inputDragon();
+//            drg.removeGreater(dragon);
+//        } catch (WrongInputFormatException e) {
+//            System.out.println("Wrong Data given");
+//        }
     }
 }

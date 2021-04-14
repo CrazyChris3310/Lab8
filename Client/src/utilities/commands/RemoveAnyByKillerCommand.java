@@ -4,6 +4,7 @@ import dragon.Person;
 import exceptions.NoSuchKillerException;
 import exceptions.WrongInputFormatException;
 import input.Input;
+import utilities.ConnectionManager;
 import utilities.DragonCollection;
 
 /**
@@ -12,8 +13,8 @@ import utilities.DragonCollection;
 public class RemoveAnyByKillerCommand extends Command{
 
 
-    public RemoveAnyByKillerCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public RemoveAnyByKillerCommand(Input input, ConnectionManager cm) {
+        super(input, cm);
         description = "remove_any_by_killer killer - remove from collection one element with given killer";
     }
 
@@ -33,11 +34,11 @@ public class RemoveAnyByKillerCommand extends Command{
             return;
         }
 
-        try {
-            drg.removeByKiller(killer);
-        } catch (NoSuchKillerException e) {
-            System.out.println("No such killer in the collection");
-        }
+//        try {
+//            drg.removeByKiller(killer);
+//        } catch (NoSuchKillerException e) {
+//            System.out.println("No such killer in the collection");
+//        }
 
     }
 }

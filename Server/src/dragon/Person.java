@@ -1,4 +1,5 @@
 package dragon;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -6,7 +7,7 @@ import java.util.Objects;
 /**
  * Defines a person who killed the dragon.
  */
-public class Person {
+public class Person implements Serializable {
     private String name; //Поле не может быть null, Строка не может быть пустой
     private LocalDateTime birthday; //Поле не может быть null
     private Color eyeColor; //Поле не может быть null

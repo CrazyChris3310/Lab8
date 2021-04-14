@@ -2,6 +2,7 @@ package utilities.commands;
 
 import dragon.Dragon;
 import input.Input;
+import utilities.ConnectionManager;
 import utilities.DragonCollection;
 
 import java.util.ArrayList;
@@ -12,8 +13,8 @@ import java.util.ArrayList;
 public class PrintFieldDescendingAgeCommand extends Command{
 
 
-    public PrintFieldDescendingAgeCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public PrintFieldDescendingAgeCommand(Input input, ConnectionManager cm) {
+        super(input, cm);
         description = "print_field_descending_age - show the age of each element in descending order";
     }
 
@@ -24,11 +25,11 @@ public class PrintFieldDescendingAgeCommand extends Command{
     public void execute() {
         if (isInputStreamNotEmpty())
             return;
-
-        ArrayList<Dragon> temp = new ArrayList<>(drg.getCollection());
-        temp.sort((o1, o2) -> o2.getAge() - o1.getAge());
-        for (Dragon dragon : temp) {
-            System.out.println(dragon.getAge());
-        }
+//
+//        ArrayList<Dragon> temp = new ArrayList<>(drg.getCollection());
+//        temp.sort((o1, o2) -> o2.getAge() - o1.getAge());
+//        for (Dragon dragon : temp) {
+//            System.out.println(dragon.getAge());
+//        }
     }
 }

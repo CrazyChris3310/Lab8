@@ -5,14 +5,22 @@ import exceptions.WrongInputFormatException;
 import input.Input;
 import utilities.DragonCollection;
 
+import java.io.Serializable;
+
 /**
  * Command "Add". Adds element to collection.
  */
-public class AddCommand extends Command{
+public class AddCommand extends Command {
 
+    private Dragon dragon;
 
     public AddCommand(DragonCollection collection, Input input) {
         super(collection, input);
+        description = "add {element} - add new element to collection";
+    }
+
+    public AddCommand(Input input) {
+        super(input);
         description = "add {element} - add new element to collection";
     }
 
@@ -24,12 +32,13 @@ public class AddCommand extends Command{
         try {
             if (isInputStreamNotEmpty())
                 return;
-
-            Dragon dragon = input.inputDragon();
-            dragon.setId(drg.getMaxId() + 1);
-            drg.add(dragon);
+            dragon = input.inputDragon();
         } catch (WrongInputFormatException e) {
             System.out.println("Wrong Data given!");
         }
+    }
+
+    public Dragon getDragon() {
+        return dragon;
     }
 }

@@ -2,6 +2,7 @@ package utilities.commands;
 
 import exceptions.IdException;
 import input.Input;
+import utilities.ConnectionManager;
 import utilities.DragonCollection;
 
 /**
@@ -10,8 +11,8 @@ import utilities.DragonCollection;
 public class RemoveByIdCommand extends Command{
 
 
-    public RemoveByIdCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public RemoveByIdCommand(Input input, ConnectionManager cm) {
+        super(input, cm);
         description = "remove_by_id id - remove element with given id";
     }
 
@@ -21,11 +22,11 @@ public class RemoveByIdCommand extends Command{
     @Override
     public void execute() {
         Long id;
-        try {
-            id = input.inputId();
-            drg.removeFromQueue(id);
-        } catch (IdException e) {
-            System.out.println(e.getMessage());
-        }
+//        try {
+//            id = input.inputId();
+//            drg.removeFromQueue(id);
+//        } catch (IdException e) {
+//            System.out.println(e.getMessage());
+//        }
     }
 }

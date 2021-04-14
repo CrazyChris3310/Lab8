@@ -1,11 +1,12 @@
 package dragon;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Defines Location of the killer.
  */
-public class Location {
+public class Location implements Serializable {
     private int x;
     private Long y; //Поле не может быть null
     private long z;

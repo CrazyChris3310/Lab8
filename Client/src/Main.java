@@ -1,61 +1,45 @@
 import com.opencsv.exceptions.CsvValidationException;
 import input.ConsoleInput;
+import utilities.ConnectionManager;
 import utilities.DragonCollection;
 import utilities.Process;
 
 import java.io.IOException;
+import java.net.SocketAddress;
+import java.net.SocketException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println("Wrong files");
-            return;
-        }
-        Path path;
-        try {
-            path = Paths.get(args[0]);
-        } catch (InvalidPathException e) {
-            System.out.println("Invalid path to file");
-            return;
+
+        Scanner sc = new Scanner(System.in);
+        int port;
+        String ip;
+
+        System.out.println("Enter the ip address of server: ");
+        ip = sc.nextLine().trim();
+        System.out.println("Enter the port of server: ");
+        port = Integer.parseInt(sc.nextLine());
+
+        ConnectionManager cm;
+        while (true) {
+            try {
+                cm = new ConnectionManager(ip, port);
+                cm.run();
+                break;
+            } catch (SocketException e) {
+                System.out.println("Port is out of range");
+            } catch (IOException e) {
+                System.out.println("IOException occurred");
+            }
         }
 
-        if (!Files.exists(path)) {
-            System.out.println("File does not exist");
-            return;
-        }
-        if (Files.isDirectory(path)) {
-            System.out.println("File required, directory found");
-            return;
-        }
-        if (!Files.isReadable(path)) {
-            System.out.println("Can not read from this file");
-            return;
-        }
-        if (!Files.isWritable(path)) {
-            System.out.println("Can not write to this file");
-            return;
-        }
+        Process process = new Process(new ConsoleInput(), cm);
+        process.defineCommand();
 
-
-//        Path path = Paths.get("Files\\bank.csv");
-
-
-        DragonCollection dragons;
-        try {
-            dragons = new DragonCollection(path.toFile());
-        } catch (NumberFormatException | IndexOutOfBoundsException | IOException e) {
-            System.out.println("Wrong data in the file");
-            return;
-        } catch (CsvValidationException e) {
-            System.out.println("CSV is wrong");
-            return;
-        }
-        Process proc = new Process(dragons, new ConsoleInput());
-
-        proc.defineCommand();
     }
 }

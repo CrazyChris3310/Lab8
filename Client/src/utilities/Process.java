@@ -11,35 +11,32 @@ import java.util.NoSuchElementException;
  */
 public class Process {
 
-    private DragonCollection dragons;
     private HashMap<String, Command> commands = new HashMap<>();
     Input input;
 
     /**
      * Constructs a {@code Process} with given collection and input source.
      * Also defines all the commands available.
-     * @param drg given collection.
      * @param source input stream.
      */
-    public Process(DragonCollection drg, Input source) {
-        dragons = drg;
+    public Process(Input source, ConnectionManager cm) {
         input = source;
-        commands.put("help", new HelpCommand(dragons, input));
-        commands.put("add", new AddCommand(dragons, input));
-        commands.put("info", new InfoCommand(dragons, input));
-        commands.put("clear", new ClearCommand(dragons, input));
-        commands.put("execute_script", new ExecuteScriptCommand(dragons, input));
-        commands.put("print_descending", new PrintDescendingCommand(dragons, input));
-        commands.put("history", new HistoryCommand(dragons, input));
-        commands.put("print_field_descending_age", new PrintFieldDescendingAgeCommand(dragons, input));
-        commands.put("remove_any_by_killer", new RemoveAnyByKillerCommand(dragons, input));
-        commands.put("remove_by_id", new RemoveByIdCommand(dragons, input));
-        commands.put("remove_first", new RemoveFirstCommand(dragons, input));
-        commands.put("remove_greater", new RemoveGreaterCommand(dragons, input));
-        commands.put("save", new SaveCommand(dragons, input));
-        commands.put("show", new ShowCommand(dragons, input));
-        commands.put("update", new UpdateIdCommand(dragons, input));
-        commands.put("exit", new ExitCommand(dragons, input));
+        commands.put("help", new HelpCommand(input, cm));
+        commands.put("add", new AddCommand(input, cm));
+        commands.put("info", new InfoCommand(input, cm));
+        commands.put("clear", new ClearCommand(input, cm));
+        commands.put("execute_script", new ExecuteScriptCommand(input, cm));
+        commands.put("print_descending", new PrintDescendingCommand(input, cm));
+        commands.put("history", new HistoryCommand(input, cm));
+        commands.put("print_field_descending_age", new PrintFieldDescendingAgeCommand(input, cm));
+        commands.put("remove_any_by_killer", new RemoveAnyByKillerCommand(input, cm));
+        commands.put("remove_by_id", new RemoveByIdCommand(input, cm));
+        commands.put("remove_first", new RemoveFirstCommand(input, cm));
+        commands.put("remove_greater", new RemoveGreaterCommand(input, cm));
+        commands.put("save", new SaveCommand(input, cm));
+        commands.put("show", new ShowCommand(input, cm));
+        commands.put("update", new UpdateIdCommand(input, cm));
+        commands.put("exit", new ExitCommand(input, cm));
     }
 
     public HashMap<String, Command> getCommands() {
@@ -61,7 +58,6 @@ public class Process {
             }
 
             if (commands.containsKey(command)) {
-                dragons.updateHistory(command);
                 commands.get(command).execute();
             }
             else {

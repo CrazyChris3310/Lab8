@@ -1,11 +1,12 @@
 package dragon;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Class {@code Coordinates} defines dragon's coordinates on x an y
  */
-public class Coordinates {
+public class Coordinates implements Serializable {
     private Long x; //Максимальное значение поля: 302, Поле не может быть null
     private float y;
 

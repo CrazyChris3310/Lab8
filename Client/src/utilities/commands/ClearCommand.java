@@ -1,6 +1,7 @@
 package utilities.commands;
 
 import input.Input;
+import utilities.ConnectionManager;
 import utilities.DragonCollection;
 
 /**
@@ -8,9 +9,8 @@ import utilities.DragonCollection;
  */
 public class ClearCommand extends Command{
 
-
-    public ClearCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public ClearCommand(Input input, ConnectionManager cm) {
+        super(input, cm);
         description = "clear - remove everything from collection";
     }
 
@@ -19,9 +19,5 @@ public class ClearCommand extends Command{
      */
     @Override
     public void execute() {
-        if (isInputStreamNotEmpty())
-            return;
-
-        drg.clear();
     }
 }

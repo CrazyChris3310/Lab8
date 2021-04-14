@@ -3,16 +3,17 @@ package utilities;
 import com.opencsv.exceptions.CsvValidationException;
 import exceptions.NoSuchIdException;
 import exceptions.NoSuchKillerException;
-import dragon.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
-import java.util.*;
 import java.time.ZonedDateTime;
+import java.util.*;
+import dragon.*;
 
 /**
- * Class {@code DragonCollection} defines the collection and methods for managing it.
+ * Class {@code utilities.DragonCollection} defines the collection and methods for managing it.
  */
 public class DragonCollection {
     /**
@@ -36,10 +37,9 @@ public class DragonCollection {
 
     /**
      * Constructs collection and fills it from given file.
-     * @param path path to file with collection.
      */
-    public DragonCollection(File path) throws CsvValidationException, IOException{
-        this.path = path;
+    public DragonCollection(File pathToFile) throws CsvValidationException, IOException{
+        path = pathToFile;
         initDate = LocalDateTime.now();
         collection = new PriorityQueue<Dragon>();
         history = new LinkedList<>();

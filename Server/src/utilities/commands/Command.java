@@ -3,14 +3,17 @@ package utilities.commands;
 import input.Input;
 import utilities.DragonCollection;
 
+import java.io.Serializable;
+
 /**
  * Root class for all commands. Contains source for input and the collection to work with.
  */
-abstract public class Command {
+abstract public class Command implements Serializable {
 
-    DragonCollection drg;
-    Input input;
+    transient DragonCollection drg;
+    transient Input input;
     String description;
+    String name;
 
     /**
      * Constructs command with given collection and input.
@@ -20,6 +23,14 @@ abstract public class Command {
     public Command(DragonCollection collection, Input input) {
         drg = collection;
         this.input = input;
+    }
+
+    public Command(Input input) {
+        this.input = input;
+    }
+
+    public String getName() {
+        return name;
     }
 
     /**

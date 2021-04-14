@@ -2,6 +2,7 @@ package utilities.commands;
 
 import dragon.Dragon;
 import input.Input;
+import utilities.ConnectionManager;
 import utilities.DragonCollection;
 
 import java.io.BufferedOutputStream;
@@ -16,8 +17,8 @@ import java.time.format.DateTimeFormatter;
 public class SaveCommand extends Command{
 
 
-    public SaveCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public SaveCommand(Input input, ConnectionManager cm) {
+        super(input, cm);
         description = "save - save collection to the file";
     }
 
@@ -34,32 +35,32 @@ public class SaveCommand extends Command{
 
         String output;
 
-        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(drg.getFile()))) {
-            for (Dragon dragon : drg.getCollection()) {
-                output = "" + dragon.getId() + ",\"" + dragon.getName().replaceAll("\"", "\"\"")
-                        + "\"," + dragon.getCoordinates().getX() + "," + dragon.getCoordinates().getY() + "," +
-                        zdtFormatter.format(dragon.getCreationDate()) + "," + dragon.getAge() + ",\"" +
-                        defineNull(dragon.getDescription()).replaceAll("\"", "\"\"") +
-                        "\"," + defineNull(dragon.getWingspan()) + "," + defineNull(dragon.getType()) + ",";
-                if (dragon.getKiller() == null)
-                    output += ",,,,,,,\n";
-                else
-                    output += "\"" + dragon.getKiller().getName().replaceAll("\"", "\"\"") + "\","
-                            + ldtFormatter.format(dragon.getKiller().getBirthday()) + "," +
-                            dragon.getKiller().getEyeColor() + "," + dragon.getKiller().getHairColor() +
-                            "," + dragon.getKiller().getNationality() + "," + dragon.getKiller().getLocation().getX() +
-                            "," + dragon.getKiller().getLocation().getY() + "," + dragon.getKiller().getLocation().getZ()
-                            + "\n";
-
-                bos.write(output.getBytes());
-                bos.flush();
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found!)");
-        } catch (IOException e) {
-            System.out.println("Writing error");
-        }
-
+//        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(drg.getFile()))) {
+//            for (Dragon dragon : drg.getCollection()) {
+//                output = "" + dragon.getId() + ",\"" + dragon.getName().replaceAll("\"", "\"\"")
+//                        + "\"," + dragon.getCoordinates().getX() + "," + dragon.getCoordinates().getY() + "," +
+//                        zdtFormatter.format(dragon.getCreationDate()) + "," + dragon.getAge() + ",\"" +
+//                        defineNull(dragon.getDescription()).replaceAll("\"", "\"\"") +
+//                        "\"," + defineNull(dragon.getWingspan()) + "," + defineNull(dragon.getType()) + ",";
+//                if (dragon.getKiller() == null)
+//                    output += ",,,,,,,\n";
+//                else
+//                    output += "\"" + dragon.getKiller().getName().replaceAll("\"", "\"\"") + "\","
+//                            + ldtFormatter.format(dragon.getKiller().getBirthday()) + "," +
+//                            dragon.getKiller().getEyeColor() + "," + dragon.getKiller().getHairColor() +
+//                            "," + dragon.getKiller().getNationality() + "," + dragon.getKiller().getLocation().getX() +
+//                            "," + dragon.getKiller().getLocation().getY() + "," + dragon.getKiller().getLocation().getZ()
+//                            + "\n";
+//
+//                bos.write(output.getBytes());
+//                bos.flush();
+//            }
+//        } catch (FileNotFoundException e) {
+//            System.out.println("File not found!)");
+//        } catch (IOException e) {
+//            System.out.println("Writing error");
+//        }
+//
     }
 
     /**

@@ -1,6 +1,7 @@
 package utilities.commands;
 
 import input.Input;
+import utilities.ConnectionManager;
 import utilities.DragonCollection;
 
 /**
@@ -9,8 +10,8 @@ import utilities.DragonCollection;
 public class HistoryCommand extends Command{
 
 
-    public HistoryCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public HistoryCommand(Input input, ConnectionManager cm) {
+        super(input, cm);
         description = "history - show last 14 commands";
     }
 
@@ -22,6 +23,6 @@ public class HistoryCommand extends Command{
         if (isInputStreamNotEmpty())
             return;
 
-        drg.showHistory();
+//        drg.showHistory();
     }
 }

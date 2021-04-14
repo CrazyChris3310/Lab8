@@ -3,10 +3,6 @@ package utilities.commands;
 import dragon.Dragon;
 import exceptions.WrongInputFormatException;
 import input.Input;
-import utilities.ConnectionManager;
-import utilities.DragonCollection;
-
-import java.io.Serializable;
 
 /**
  * Command "Add". Adds element to collection.
@@ -15,8 +11,8 @@ public class AddCommand extends Command {
 
     private Dragon dragon;
 
-    public AddCommand(Input input, ConnectionManager cm) {
-        super(input, cm);
+    public AddCommand(Input input) {
+        super(input);
         description = "add {element} - add new element to collection";
     }
 

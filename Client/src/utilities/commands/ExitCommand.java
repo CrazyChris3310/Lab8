@@ -1,8 +1,6 @@
 package utilities.commands;
 
 import input.Input;
-import utilities.ConnectionManager;
-import utilities.DragonCollection;
 
 /**
  * Command "exit".
@@ -10,8 +8,8 @@ import utilities.DragonCollection;
 public class ExitCommand extends Command{
 
 
-    public ExitCommand(Input input, ConnectionManager cm) {
-        super(input, cm);
+    public ExitCommand(Input input) {
+        super(input);
         description = "exit - stop the program without saving";
     }
 

@@ -1,16 +1,14 @@
 package utilities.commands;
 
 import input.Input;
-import utilities.ConnectionManager;
-import utilities.DragonCollection;
 
 /**
  * Command "clear". Clears the collection.
  */
 public class ClearCommand extends Command{
 
-    public ClearCommand(Input input, ConnectionManager cm) {
-        super(input, cm);
+    public ClearCommand(Input input) {
+        super(input);
         description = "clear - remove everything from collection";
     }
 

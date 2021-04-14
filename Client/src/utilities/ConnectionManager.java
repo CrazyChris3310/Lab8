@@ -5,34 +5,91 @@ import input.Input;
 import utilities.commands.AddCommand;
 import utilities.commands.Command;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
+import java.util.ArrayList;
 
 public class ConnectionManager {
 
-    private SocketAddress adr;
-    private DatagramChannel channel;
-
-    private int port;
-    private String ipAddress;
+    private  final SocketAddress adr;
+    private final DatagramChannel channel;
 
     ByteBuffer buf;
 
     public ConnectionManager(String ip, int port) throws SocketException, IOException{
-        this.port = port;
-        ipAddress = ip;
         buf = ByteBuffer.allocate(10000);
         adr = new InetSocketAddress(ip, port); // address of server
         channel = DatagramChannel.open();
     }
 
 
-    public void run() {
-        Input input = new ConsoleInput();
+    public void send(Command command) {
 
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(10000);
+             ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+            buf.clear();
+            oos.writeObject(command);
+            buf.put(baos.toByteArray());
+            buf.flip();
+            channel.send(buf, adr);
+        } catch (IOException e) {
+            System.out.println("IO error happened");
+            e.printStackTrace();
+        }
     }
+
+    public ArrayList<String> receiveResult() {
+        ArrayList<String> result = null;
+        return receive(result);
+//        try (ByteArrayInputStream bais = new ByteArrayInputStream(buf.array());
+//             ObjectInputStream ois = new ObjectInputStream(bais)) {
+//            buf.clear();
+//            channel.receive(buf);
+//            buf.flip();
+//            result = (ArrayList<String>) ois.readObject();
+//        } catch (IOException e) {
+//            System.out.println("IO error happened");
+//            e.printStackTrace();
+//            return null;
+//        } catch (ClassNotFoundException e) {
+//            System.out.println("Class not found");
+//            e.printStackTrace();
+//            return null;
+//        }
+//
+//        return result;
+    }
+
+    public String receiveErrorMessage() {
+        String message = null;
+        return receive(message);
+    }
+
+    public CommandStatus receiveStatus() {
+        CommandStatus status = null;
+        return receive(status);
+    }
+
+    private <T> T receive(T receiver) {
+        try (ByteArrayInputStream bais = new ByteArrayInputStream(buf.array());
+             ObjectInputStream ois = new ObjectInputStream(bais)) {
+            buf.clear();
+            channel.receive(buf);
+            buf.flip();
+            receiver = (T) ois.readObject();
+        } catch (IOException e) {
+            System.out.println("IO error happened");
+            e.printStackTrace();
+            return null;
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class not found");
+            e.printStackTrace();
+            return null;
+        }
+
+        return receiver;
+    }
+
 }

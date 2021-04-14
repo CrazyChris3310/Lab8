@@ -1,21 +1,14 @@
 package utilities.commands;
 
-import dragon.Dragon;
-import exceptions.IdException;
-import exceptions.WrongInputFormatException;
 import input.Input;
-import utilities.ConnectionManager;
-import utilities.DragonCollection;
-
-import java.time.ZonedDateTime;
 
 /**
  * Command "update".
  */
 public class UpdateIdCommand extends Command{
 
-    public UpdateIdCommand(Input input, ConnectionManager cm) {
-        super(input, cm);
+    public UpdateIdCommand(Input input) {
+        super(input);
         description = "update id {element} - update the element with given id";
     }
 

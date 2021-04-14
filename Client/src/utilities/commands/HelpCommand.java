@@ -1,11 +1,6 @@
 package utilities.commands;
 
 import input.Input;
-import utilities.ConnectionManager;
-import utilities.DragonCollection;
-import utilities.Process;
-
-import java.util.Map;
 
 /**
  * Command "help".
@@ -13,8 +8,8 @@ import java.util.Map;
 public class HelpCommand extends Command{
 
 
-    public HelpCommand(Input input, ConnectionManager cm) {
-        super(input, cm);
+    public HelpCommand(Input input) {
+        super(input);
         description = "help - show information for available commands";
     }
 

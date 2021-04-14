@@ -1,11 +1,6 @@
 package utilities.commands;
 
-import dragon.Dragon;
 import input.Input;
-import utilities.ConnectionManager;
-import utilities.DragonCollection;
-
-import java.util.ArrayList;
 
 /**
  * Command "print_field_descending_age".
@@ -13,8 +8,8 @@ import java.util.ArrayList;
 public class PrintFieldDescendingAgeCommand extends Command{
 
 
-    public PrintFieldDescendingAgeCommand(Input input, ConnectionManager cm) {
-        super(input, cm);
+    public PrintFieldDescendingAgeCommand(Input input) {
+        super(input);
         description = "print_field_descending_age - show the age of each element in descending order";
     }
 

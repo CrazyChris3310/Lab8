@@ -1,10 +1,6 @@
 package utilities.commands;
 
 import input.Input;
-import utilities.ConnectionManager;
-import utilities.DragonCollection;
-
-import java.time.format.DateTimeFormatter;
 
 /**
  * Command "info".
@@ -12,8 +8,8 @@ import java.time.format.DateTimeFormatter;
 public class InfoCommand extends Command{
 
 
-    public InfoCommand(Input input, ConnectionManager cm) {
-        super(input, cm);
+    public InfoCommand(Input input) {
+        super(input);
         description = "info - show information about collection";
     }
 

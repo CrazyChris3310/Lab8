@@ -4,21 +4,21 @@ import exceptions.WrongInputFormatException;
 import exceptions.WrongPathRightsException;
 import input.FileInput;
 import input.Input;
-import utilities.ConnectionManager;
-import utilities.DragonCollection;
-import utilities.Process;
 
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
+
+import utilities.ConnectionManager;
+import utilities.Process;
 
 /**
  * Command "ExecuteCommand". Executes script.
  */
 public class ExecuteScriptCommand extends Command{
 
-    public ExecuteScriptCommand(Input input, ConnectionManager cm) {
-        super(input, cm);
+    public ExecuteScriptCommand(Input input) {
+        super(input);
         description = "execute_script file_name - read and execute script from given file";
     }
 
@@ -55,7 +55,7 @@ public class ExecuteScriptCommand extends Command{
 //        }
 //        drg.addToPathSet(path);
 //
-//        Process fileReader = new Process(drg,inp);
+//        Process fileReader = new Process(inp, new ConnectionManager());
 //        fileReader.defineFileCommand();
 //
 //        drg.getScripts().remove(path);

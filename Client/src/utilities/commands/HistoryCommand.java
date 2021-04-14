@@ -1,8 +1,6 @@
 package utilities.commands;
 
 import input.Input;
-import utilities.ConnectionManager;
-import utilities.DragonCollection;
 
 /**
  * Command "history".
@@ -10,8 +8,8 @@ import utilities.DragonCollection;
 public class HistoryCommand extends Command{
 
 
-    public HistoryCommand(Input input, ConnectionManager cm) {
-        super(input, cm);
+    public HistoryCommand(Input input) {
+        super(input);
         description = "history - show last 14 commands";
     }
 

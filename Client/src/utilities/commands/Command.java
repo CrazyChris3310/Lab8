@@ -1,8 +1,6 @@
 package utilities.commands;
 
 import input.Input;
-import utilities.ConnectionManager;
-import utilities.DragonCollection;
 
 import java.io.Serializable;
 
@@ -12,7 +10,6 @@ import java.io.Serializable;
 abstract public class Command implements Serializable {
 
     transient Input input;
-    transient ConnectionManager cManager;
     String description;
     String name;
 
@@ -20,14 +17,15 @@ abstract public class Command implements Serializable {
      * Constructs command with given input.
      * @param input input source.
      */
-    public Command(Input input, ConnectionManager cm) {
+    public Command(Input input) {
         this.input = input;
-        cManager = cm;
     }
 
     public String getName() {
         return name;
     }
+
+
 
     /**
      * Executes command.

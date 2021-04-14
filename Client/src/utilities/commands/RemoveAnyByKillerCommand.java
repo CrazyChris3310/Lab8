@@ -1,11 +1,8 @@
 package utilities.commands;
 
 import dragon.Person;
-import exceptions.NoSuchKillerException;
 import exceptions.WrongInputFormatException;
 import input.Input;
-import utilities.ConnectionManager;
-import utilities.DragonCollection;
 
 /**
  * Command "remove_any_by_killer".
@@ -13,8 +10,8 @@ import utilities.DragonCollection;
 public class RemoveAnyByKillerCommand extends Command{
 
 
-    public RemoveAnyByKillerCommand(Input input, ConnectionManager cm) {
-        super(input, cm);
+    public RemoveAnyByKillerCommand(Input input) {
+        super(input);
         description = "remove_any_by_killer killer - remove from collection one element with given killer";
     }
 

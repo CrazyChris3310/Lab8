@@ -1,11 +1,6 @@
 package utilities.commands;
 
-import dragon.Dragon;
 import input.Input;
-import utilities.ConnectionManager;
-import utilities.DragonCollection;
-
-import java.util.ArrayList;
 
 /**
  * Command "print_descending".
@@ -13,8 +8,8 @@ import java.util.ArrayList;
 public class PrintDescendingCommand extends Command{
 
 
-    public PrintDescendingCommand(Input input, ConnectionManager cm) {
-        super(input, cm);
+    public PrintDescendingCommand(Input input) {
+        super(input);
         description = "print_descending - show elements in descending order";
     }
 

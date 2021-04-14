@@ -1,14 +1,7 @@
 package utilities.commands;
 
-import dragon.Dragon;
 import input.Input;
-import utilities.ConnectionManager;
-import utilities.DragonCollection;
 
-import java.io.BufferedOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -17,8 +10,8 @@ import java.time.format.DateTimeFormatter;
 public class SaveCommand extends Command{
 
 
-    public SaveCommand(Input input, ConnectionManager cm) {
-        super(input, cm);
+    public SaveCommand(Input input) {
+        super(input);
         description = "save - save collection to the file";
     }
 

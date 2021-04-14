@@ -1,8 +1,6 @@
 package utilities.commands;
 
 import input.Input;
-import utilities.ConnectionManager;
-import utilities.DragonCollection;
 
 /**
  * Command "show"
@@ -10,8 +8,8 @@ import utilities.DragonCollection;
 public class ShowCommand extends Command{
 
 
-    public ShowCommand(Input input, ConnectionManager cm) {
-        super(input, cm);
+    public ShowCommand(Input input) {
+        super(input);
         description = "show - show all the elements of collection";
     }
 

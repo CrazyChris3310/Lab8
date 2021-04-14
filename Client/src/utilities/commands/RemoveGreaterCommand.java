@@ -1,10 +1,6 @@
 package utilities.commands;
 
-import dragon.Dragon;
-import exceptions.WrongInputFormatException;
 import input.Input;
-import utilities.ConnectionManager;
-import utilities.DragonCollection;
 
 /**
  * Command "remove_greater".
@@ -12,8 +8,8 @@ import utilities.DragonCollection;
 public class RemoveGreaterCommand extends Command{
 
 
-    public RemoveGreaterCommand(Input input, ConnectionManager cm) {
-        super(input, cm);
+    public RemoveGreaterCommand(Input input) {
+        super(input);
         description = "remove_greater {element} - remove all elements, that are greater then given element";
     }
 

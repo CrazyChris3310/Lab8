@@ -1,9 +1,6 @@
 package utilities.commands;
 
-import exceptions.IdException;
 import input.Input;
-import utilities.ConnectionManager;
-import utilities.DragonCollection;
 
 /**
  * Command "Remove_by_id".
@@ -11,8 +8,8 @@ import utilities.DragonCollection;
 public class RemoveByIdCommand extends Command{
 
 
-    public RemoveByIdCommand(Input input, ConnectionManager cm) {
-        super(input, cm);
+    public RemoveByIdCommand(Input input) {
+        super(input);
         description = "remove_by_id id - remove element with given id";
     }
 

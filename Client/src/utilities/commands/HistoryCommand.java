@@ -15,12 +15,10 @@ public class HistoryCommand extends Command{
 
     /**
      * Method shows 14 last commands.
+     * @return
      */
     @Override
-    public void execute() {
-        if (isInputStreamNotEmpty())
-            return;
-
-//        drg.showHistory();
+    public boolean execute() {
+        return !isInputStreamNotEmpty();
     }
 }

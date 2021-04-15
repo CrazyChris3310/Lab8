@@ -9,6 +9,7 @@ import input.Input;
  */
 public class RemoveAnyByKillerCommand extends Command{
 
+    Person killer;
 
     public RemoveAnyByKillerCommand(Input input) {
         super(input);
@@ -17,25 +18,20 @@ public class RemoveAnyByKillerCommand extends Command{
 
     /**
      * Method inputs killer and removes an element with the same killer from collection.
+     * @return
      */
     @Override
-    public void execute() {
+    public boolean execute() {
         if (isInputStreamNotEmpty())
-            return;
+            return false;
 
-        Person killer;
         try {
             killer = input.inputKiller();
         } catch (WrongInputFormatException e) {
             System.out.println("Wrong data!");
-            return;
+            return false;
         }
 
-//        try {
-//            drg.removeByKiller(killer);
-//        } catch (NoSuchKillerException e) {
-//            System.out.println("No such killer in the collection");
-//        }
-
+        return true;
     }
 }

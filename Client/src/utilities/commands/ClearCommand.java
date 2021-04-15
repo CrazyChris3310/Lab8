@@ -14,8 +14,10 @@ public class ClearCommand extends Command{
 
     /**
      * Method removes everything from collection.
+     * @return
      */
     @Override
-    public void execute() {
+    public boolean execute() {
+        return !isInputStreamNotEmpty();
     }
 }

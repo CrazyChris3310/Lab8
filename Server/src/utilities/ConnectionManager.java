@@ -29,6 +29,7 @@ public class ConnectionManager {
         buf = ByteBuffer.allocate(1000);
         adr = new InetSocketAddress(port);
         socket = new DatagramSocket(port);
+        System.out.println("The server is started on " + adr);
     }
 
     public void run() {

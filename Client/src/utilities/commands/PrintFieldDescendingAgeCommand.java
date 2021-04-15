@@ -15,11 +15,11 @@ public class PrintFieldDescendingAgeCommand extends Command{
 
     /**
      * Method prints age field of each element in descending error.
+     * @return
      */
     @Override
-    public void execute() {
-        if (isInputStreamNotEmpty())
-            return;
+    public boolean execute() {
+        return !isInputStreamNotEmpty();
 //
 //        ArrayList<Dragon> temp = new ArrayList<>(drg.getCollection());
 //        temp.sort((o1, o2) -> o2.getAge() - o1.getAge());

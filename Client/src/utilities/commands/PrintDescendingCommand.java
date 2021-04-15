@@ -15,11 +15,11 @@ public class PrintDescendingCommand extends Command{
 
     /**
      * Method prints elements of collection in descending order.
+     * @return
      */
     @Override
-    public void execute() {
-        if (isInputStreamNotEmpty())
-            return;
+    public boolean execute() {
+        return !isInputStreamNotEmpty();
 //
 //        ArrayList<Dragon> temp = new ArrayList<>(drg.getCollection());
 //        temp.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));

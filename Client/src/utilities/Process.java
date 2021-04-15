@@ -28,7 +28,7 @@ public class Process {
         commands.put("add", new AddCommand(input));
         commands.put("info", new InfoCommand(input));
         commands.put("clear", new ClearCommand(input));
-        commands.put("execute_script", new ExecuteScriptCommand(input));
+        commands.put("execute_script", new ExecuteScriptCommand(input, connectionManager));
         commands.put("print_descending", new PrintDescendingCommand(input));
         commands.put("history", new HistoryCommand(input));
         commands.put("print_field_descending_age", new PrintFieldDescendingAgeCommand(input));
@@ -62,7 +62,8 @@ public class Process {
 
             if (commands.containsKey(command)) {
                 Command com = commands.get(command);
-                com.execute();
+                if(!com.execute())
+                    continue;
                 connectionManager.send(com);
                 CommandStatus status = connectionManager.receiveStatus();
                 processResult(status);

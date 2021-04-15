@@ -25,12 +25,11 @@ abstract public class Command implements Serializable {
         return name;
     }
 
-
-
     /**
      * Executes command.
+     * @return
      */
-    abstract public void execute();
+    abstract public boolean execute();
 
     @Override
     public String toString() {

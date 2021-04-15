@@ -15,13 +15,11 @@ public class ShowCommand extends Command{
 
     /**
      * Method prints each element of collection.
+     * @return
      */
     @Override
-    public void execute() {
-        if (isInputStreamNotEmpty())
-            return;
-
-//        drg.getCollection().forEach(System.out::println);
+    public boolean execute() {
+        return !isInputStreamNotEmpty();
     }
 
 }

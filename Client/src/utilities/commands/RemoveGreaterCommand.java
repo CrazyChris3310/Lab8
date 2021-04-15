@@ -1,5 +1,7 @@
 package utilities.commands;
 
+import dragon.Dragon;
+import exceptions.WrongInputFormatException;
 import input.Input;
 
 /**
@@ -7,6 +9,7 @@ import input.Input;
  */
 public class RemoveGreaterCommand extends Command{
 
+    Dragon dragon;
 
     public RemoveGreaterCommand(Input input) {
         super(input);
@@ -15,17 +18,20 @@ public class RemoveGreaterCommand extends Command{
 
     /**
      * Method inputs a dragon and removes each dragon that is greater that entered.
+     * @return
      */
     @Override
-    public void execute() {
+    public boolean execute() {
         if (isInputStreamNotEmpty())
-            return;
-//
-//        try {
-//            Dragon dragon = input.inputDragon();
-//            drg.removeGreater(dragon);
-//        } catch (WrongInputFormatException e) {
-//            System.out.println("Wrong Data given");
-//        }
+            return false;
+
+        try {
+            dragon = input.inputDragon();
+        } catch (WrongInputFormatException e) {
+            System.out.println("Wrong Data given");
+            return false;
+        }
+
+        return true;
     }
 }

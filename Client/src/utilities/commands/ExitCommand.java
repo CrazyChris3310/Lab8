@@ -14,10 +14,11 @@ public class ExitCommand extends Command{
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         if (isInputStreamNotEmpty())
-            return;
+            return false;
 
         System.exit(0);
+        return true;
     }
 }

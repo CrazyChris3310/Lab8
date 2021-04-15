@@ -1,5 +1,6 @@
 package utilities.commands;
 
+import exceptions.IdException;
 import input.Input;
 
 /**
@@ -7,6 +8,7 @@ import input.Input;
  */
 public class RemoveByIdCommand extends Command{
 
+    Long id;
 
     public RemoveByIdCommand(Input input) {
         super(input);
@@ -15,15 +17,17 @@ public class RemoveByIdCommand extends Command{
 
     /**
      * Method inputs id and removes an element with the same id from collection.
+     * @return
      */
     @Override
-    public void execute() {
-        Long id;
-//        try {
-//            id = input.inputId();
-//            drg.removeFromQueue(id);
-//        } catch (IdException e) {
-//            System.out.println(e.getMessage());
-//        }
+    public boolean execute() {
+        try {
+            id = input.inputId();
+        } catch (IdException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+
+        return true;
     }
 }

@@ -15,11 +15,11 @@ public class InfoCommand extends Command{
 
     /**
      * Method shows information about collection.
+     * @return
      */
     @Override
-    public void execute() {
-        if (isInputStreamNotEmpty())
-            return;
+    public boolean execute() {
+        return !isInputStreamNotEmpty();
 
 //        System.out.println("Type of elements: Dragon");
 //        System.out.println("Size = " + drg.getSize());

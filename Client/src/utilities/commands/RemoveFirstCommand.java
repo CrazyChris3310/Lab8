@@ -15,12 +15,10 @@ public class RemoveFirstCommand extends Command{
 
     /**
      * Method removes first element from collection.
+     * @return
      */
     @Override
-    public void execute() {
-        if (isInputStreamNotEmpty())
-            return;
-
-//        drg.removeFirst();
+    public boolean execute() {
+        return !isInputStreamNotEmpty();
     }
 }

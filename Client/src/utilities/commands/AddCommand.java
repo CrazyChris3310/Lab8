@@ -18,15 +18,17 @@ public class AddCommand extends Command {
 
     /**
      * Method inputs a dragon and adds it into collection.
+     * @return
      */
     @Override
-    public void execute() {
+    public boolean execute() {
         try {
             if (isInputStreamNotEmpty())
-                return;
+                return false;
             dragon = input.inputDragon();
         } catch (WrongInputFormatException e) {
             System.out.println("Wrong Data given!");
         }
+        return true;
     }
 }

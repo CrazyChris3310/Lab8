@@ -15,11 +15,11 @@ public class HelpCommand extends Command{
 
     /**
      * Method shows information about all commands.
+     * @return
      */
     @Override
-    public void execute() {
-        if (isInputStreamNotEmpty())
-            return;
+    public boolean execute() {
+        return !isInputStreamNotEmpty();
 
 //        Process proc = new Process(drg, input);
 //        for (Map.Entry<String, Command> command : proc.getCommands().entrySet()) {

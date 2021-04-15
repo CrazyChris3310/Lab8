@@ -7,10 +7,12 @@ import input.Input;
  */
 public class HistoryCommand extends Command{
 
+    private static final long serialVersionUID = 107L;
 
     public HistoryCommand(Input input) {
         super(input);
-        description = "history - show last 14 commands";
+        name = "history";
+        description = "show last 14 commands";
     }
 
     /**

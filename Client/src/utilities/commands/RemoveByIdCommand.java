@@ -8,11 +8,13 @@ import input.Input;
  */
 public class RemoveByIdCommand extends Command{
 
+    private static final long serialVersionUID = 112L;
     Long id;
 
     public RemoveByIdCommand(Input input) {
         super(input);
-        description = "remove_by_id id - remove element with given id";
+        name = "remove_by_id id";
+        description = "remove element with given id";
     }
 
     /**

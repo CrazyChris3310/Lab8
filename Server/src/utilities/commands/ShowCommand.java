@@ -1,28 +1,29 @@
 package utilities.commands;
 
-import input.Input;
 import utilities.DragonCollection;
+
+import java.util.ArrayList;
 
 /**
  * Command "show"
  */
 public class ShowCommand extends Command{
 
+    private static final long serialVersionUID = 102L;
 
-    public ShowCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public ShowCommand(DragonCollection collection) {
+        super(collection);
         description = "show - show all the elements of collection";
     }
 
     /**
      * Method prints each element of collection.
+     * @return
      */
     @Override
-    public void execute() {
-        if (isInputStreamNotEmpty())
-            return;
-
-        drg.getCollection().forEach(System.out::println);
+    public ArrayList<String> execute() {
+        return drg.getCollection().stream()
+                .collect(ArrayList::new, (ls, dr) -> ls.add(dr.toString()), ArrayList::addAll);
     }
 
 }

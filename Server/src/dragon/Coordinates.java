@@ -10,6 +10,8 @@ public class Coordinates implements Serializable {
     private Long x; //Максимальное значение поля: 302, Поле не может быть null
     private float y;
 
+    private static final long serialVersionUID = 204L;
+
     /**
      * Defines coordinates of dragon.
      * @param x coordinate on x.

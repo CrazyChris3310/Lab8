@@ -1,7 +1,6 @@
 package utilities.commands;
 
 import dragon.Dragon;
-import input.Input;
 import utilities.DragonCollection;
 
 import java.io.BufferedOutputStream;
@@ -9,6 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+
+// TODO: Make realisation a bit different than it is in other commands since it can not be received from client
 
 /**
  * Command "save".
@@ -16,18 +18,17 @@ import java.time.format.DateTimeFormatter;
 public class SaveCommand extends Command{
 
 
-    public SaveCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public SaveCommand(DragonCollection collection) {
+        super(collection);
         description = "save - save collection to the file";
     }
 
     /**
      * Method writes elements of collection into file in csv format.
+     * @return
      */
     @Override
-    public void execute() {
-        if (isInputStreamNotEmpty())
-            return;
+    public ArrayList<String> execute() {
 
         DateTimeFormatter zdtFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss xxxxx");
         DateTimeFormatter ldtFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
@@ -60,6 +61,7 @@ public class SaveCommand extends Command{
             System.out.println("Writing error");
         }
 
+        return null;
     }
 
     /**

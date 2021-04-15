@@ -9,11 +9,13 @@ import input.Input;
  */
 public class AddCommand extends Command {
 
+    private static final long serialVersionUID = 101L;
     private Dragon dragon;
 
     public AddCommand(Input input) {
         super(input);
-        description = "add {element} - add new element to collection";
+        name = "add {element}";
+        description = "add new element to collection";
     }
 
     /**

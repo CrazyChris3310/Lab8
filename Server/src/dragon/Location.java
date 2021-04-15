@@ -11,6 +11,8 @@ public class Location implements Serializable {
     private Long y; //Поле не может быть null
     private long z;
 
+    private static final long serialVersionUID = 203L;
+
 
     public Location(int x, Long y, long z) {
         this.x = x;

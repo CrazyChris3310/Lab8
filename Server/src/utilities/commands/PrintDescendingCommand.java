@@ -1,9 +1,6 @@
 package utilities.commands;
 
-import dragon.Dragon;
-import input.Input;
 import utilities.DragonCollection;
-
 import java.util.ArrayList;
 
 /**
@@ -11,22 +8,21 @@ import java.util.ArrayList;
  */
 public class PrintDescendingCommand extends Command{
 
+    private static final long serialVersionUID = 109L;
 
-    public PrintDescendingCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public PrintDescendingCommand(DragonCollection collection) {
+        super(collection);
         description = "print_descending - show elements in descending order";
     }
 
     /**
      * Method prints elements of collection in descending order.
+     * @return
      */
     @Override
-    public void execute() {
-        if (isInputStreamNotEmpty())
-            return;
-
-        ArrayList<Dragon> temp = new ArrayList<>(drg.getCollection());
-        temp.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));
-        temp.forEach(System.out::println);
+    public ArrayList<String> execute() {
+        return drg.getCollection().stream()
+                .sorted((o1, o2) -> -o2.compareTo(o1))
+                .collect(ArrayList::new, (ls, o) -> ls.add(o.toString()), ArrayList::addAll);
     }
 }

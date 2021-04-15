@@ -16,9 +16,9 @@ public class Main {
         ConnectionManager cm;
         while (true) {
             try {
-                System.out.println("Enter the ip address of server: ");
+                System.out.print("Enter the ip address of server: ");
                 ip = sc.nextLine().trim();
-                System.out.println("Enter the port of server: ");
+                System.out.print("Enter the port of server: ");
                 port = Integer.parseInt(sc.nextLine());
 
                 cm = new ConnectionManager(ip, port);

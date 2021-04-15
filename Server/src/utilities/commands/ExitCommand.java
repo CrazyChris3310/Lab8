@@ -1,24 +1,22 @@
 package utilities.commands;
 
-import input.Input;
 import utilities.DragonCollection;
+import java.util.ArrayList;
 
 /**
  * Command "exit".
  */
 public class ExitCommand extends Command{
 
+    private static final long serialVersionUID = 105L;
 
-    public ExitCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public ExitCommand(DragonCollection collection) {
+        super(collection);
         description = "exit - stop the program without saving";
     }
 
     @Override
-    public void execute() {
-        if (isInputStreamNotEmpty())
-            return;
-
-        System.exit(0);
+    public ArrayList<String> execute() {
+        return null;
     }
 }

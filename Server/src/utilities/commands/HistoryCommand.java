@@ -1,27 +1,26 @@
 package utilities.commands;
 
-import input.Input;
 import utilities.DragonCollection;
+import java.util.ArrayList;
 
 /**
  * Command "history".
  */
 public class HistoryCommand extends Command{
 
+    private static final long serialVersionUID = 107L;
 
-    public HistoryCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public HistoryCommand(DragonCollection collection) {
+        super(collection);
         description = "history - show last 14 commands";
     }
 
     /**
      * Method shows 14 last commands.
+     * @return
      */
     @Override
-    public void execute() {
-        if (isInputStreamNotEmpty())
-            return;
-
-        drg.showHistory();
+    public ArrayList<String> execute() {
+        return drg.getHistory();
     }
 }

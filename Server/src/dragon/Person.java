@@ -15,6 +15,8 @@ public class Person implements Serializable {
     private Country nationality; //Поле не может быть null
     private Location location; //Поле не может быть null
 
+    private static final long serialVersionUID = 202L;
+
     /**
      * Constructs a killer with given parameters.
      * @param n name of the killer.

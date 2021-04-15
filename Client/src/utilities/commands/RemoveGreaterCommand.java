@@ -9,11 +9,13 @@ import input.Input;
  */
 public class RemoveGreaterCommand extends Command{
 
+    private static final long serialVersionUID = 114L;
     Dragon dragon;
 
     public RemoveGreaterCommand(Input input) {
         super(input);
-        description = "remove_greater {element} - remove all elements, that are greater then given element";
+        name = "remove_greater {element}";
+        description = "remove all elements, that are greater then given element";
     }
 
     /**

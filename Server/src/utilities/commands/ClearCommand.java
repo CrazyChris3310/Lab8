@@ -1,27 +1,27 @@
 package utilities.commands;
 
-import input.Input;
 import utilities.DragonCollection;
+import java.util.ArrayList;
 
 /**
  * Command "clear". Clears the collection.
  */
 public class ClearCommand extends Command{
 
+    private static final long serialVersionUID = 103L;
 
-    public ClearCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public ClearCommand(DragonCollection collection) {
+        super(collection);
         description = "clear - remove everything from collection";
     }
 
     /**
      * Method removes everything from collection.
+     * @return
      */
     @Override
-    public void execute() {
-        if (isInputStreamNotEmpty())
-            return;
-
+    public ArrayList<String> execute() {
         drg.clear();
+        return null;
     }
 }

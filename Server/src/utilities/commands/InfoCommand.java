@@ -1,33 +1,35 @@
 package utilities.commands;
 
-import input.Input;
 import utilities.DragonCollection;
-
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  * Command "info".
  */
 public class InfoCommand extends Command{
 
+    private static final long serialVersionUID = 108L;
 
-    public InfoCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public InfoCommand(DragonCollection collection) {
+        super(collection);
         description = "info - show information about collection";
     }
 
     /**
      * Method shows information about collection.
+     * @return
      */
     @Override
-    public void execute() {
-        if (isInputStreamNotEmpty())
-            return;
-
-        System.out.println("Type of elements: Dragon");
-        System.out.println("Size = " + drg.getSize());
+    public ArrayList<String> execute() {
+        ArrayList<String> result = new ArrayList<>();
+        result.add("Type of elements: Dragon");
+        result.add("Size = " + drg.getSize());
+        result.add("Collection type: PriorityQueue");
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd MMM yyyy hh:mm:ss");
-        System.out.println("Initialization date: " + fmt.format(drg.getInitDate()));
-        System.out.println();
+        result.add("Initialization date: " + fmt.format(drg.getInitDate()));
+        result.add("\n");
+
+        return result;
     }
 }

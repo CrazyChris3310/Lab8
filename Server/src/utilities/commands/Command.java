@@ -1,32 +1,33 @@
 package utilities.commands;
 
-import input.Input;
+import exceptions.NoSuchIdException;
+import exceptions.NoSuchKillerException;
 import utilities.DragonCollection;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Root class for all commands. Contains source for input and the collection to work with.
  */
 abstract public class Command implements Serializable {
 
+    private static final long serialVersionUID = 100L;
     transient DragonCollection drg;
-    transient Input input;
     String description;
     String name;
 
     /**
      * Constructs command with given collection and input.
      * @param collection collection to work with.
-     * @param input input source.
+     *
      */
-    public Command(DragonCollection collection, Input input) {
+    public Command(DragonCollection collection) {
         drg = collection;
-        this.input = input;
     }
 
-    public Command(Input input) {
-        this.input = input;
+    public void setDrg(DragonCollection drg) {
+        this.drg = drg;
     }
 
     public String getName() {
@@ -35,19 +36,13 @@ abstract public class Command implements Serializable {
 
     /**
      * Executes command.
+     * @return
      */
-    abstract public void execute();
+    abstract public ArrayList<String> execute() throws NoSuchKillerException, NoSuchIdException;
 
     @Override
     public String toString() {
-        return description;
+        return name + " - " + description;
     }
 
-    boolean isInputStreamNotEmpty() {
-        if (input.nextLine().trim().isEmpty()) {
-            return false;
-        }
-        System.out.println("Wrong command format!");
-        return true;
-    }
 }

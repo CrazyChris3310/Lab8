@@ -40,7 +40,7 @@ public class ConnectionManager {
     }
 
     public ArrayList<String> receiveResult() {
-        ArrayList<String> result = null;
+        ArrayList<String> result = new ArrayList<>();
         return receive(result);
 //        try (ByteArrayInputStream bais = new ByteArrayInputStream(buf.array());
 //             ObjectInputStream ois = new ObjectInputStream(bais)) {
@@ -62,7 +62,7 @@ public class ConnectionManager {
     }
 
     public String receiveErrorMessage() {
-        String message = null;
+        String message = "";
         return receive(message);
     }
 

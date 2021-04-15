@@ -7,10 +7,12 @@ import input.Input;
  */
 public class RemoveFirstCommand extends Command{
 
+    private static final long serialVersionUID = 113L;
 
     public RemoveFirstCommand(Input input) {
         super(input);
-        description = "remove_first - remove the first element from collection";
+        name = "remove_first";
+        description = "remove the first element from collection";
     }
 
     /**

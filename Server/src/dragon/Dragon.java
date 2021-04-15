@@ -9,15 +9,17 @@ import java.util.Objects;
  * Class {@code Dragon} defines a dragon with its characteristics
  */
 public class Dragon implements Comparable<Dragon>, Serializable {
-    private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    transient private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
-    private Coordinates coordinates; //Поле не может быть null
+    transient private Coordinates coordinates; //Поле не может быть null
     private ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private int age; //Значение поля должно быть больше 0
     private String description; //Поле может быть null
     private Long wingspan; //Значение поля должно быть больше 0, Поле может быть null
     private DragonType type; //Поле может быть null
     private Person killer; //Поле может быть null
+
+    private static final long serialVersionUID = 201L;
 
     /**
      * Construct dragon with given parameters from the csv file.
@@ -187,6 +189,6 @@ public class Dragon implements Comparable<Dragon>, Serializable {
 
     @Override
     public int compareTo(Dragon o) {
-        return name.compareTo((o).getName());
+        return name.compareTo(o.getName());
     }
 }

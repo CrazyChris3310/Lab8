@@ -9,6 +9,7 @@ import java.io.Serializable;
  */
 abstract public class Command implements Serializable {
 
+    private static final long serialVersionUID = 100L;
     transient Input input;
     String description;
     String name;
@@ -21,10 +22,6 @@ abstract public class Command implements Serializable {
         this.input = input;
     }
 
-    public String getName() {
-        return name;
-    }
-
     /**
      * Executes command.
      * @return
@@ -33,7 +30,7 @@ abstract public class Command implements Serializable {
 
     @Override
     public String toString() {
-        return description;
+        return name + " - " + description;
     }
 
     boolean isInputStreamNotEmpty() {

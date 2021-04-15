@@ -2,42 +2,30 @@ package utilities.commands;
 
 import dragon.Person;
 import exceptions.NoSuchKillerException;
-import exceptions.WrongInputFormatException;
-import input.Input;
 import utilities.DragonCollection;
+
+import java.util.ArrayList;
 
 /**
  * Command "remove_any_by_killer".
  */
 public class RemoveAnyByKillerCommand extends Command{
 
+    private static final long serialVersionUID = 111L;
+    Person killer;
 
-    public RemoveAnyByKillerCommand(DragonCollection collection, Input input) {
-        super(collection, input);
+    public RemoveAnyByKillerCommand(DragonCollection collection) {
+        super(collection);
         description = "remove_any_by_killer killer - remove from collection one element with given killer";
     }
 
     /**
      * Method inputs killer and removes an element with the same killer from collection.
+     * @return
      */
     @Override
-    public void execute() {
-        if (isInputStreamNotEmpty())
-            return;
-
-        Person killer;
-        try {
-            killer = input.inputKiller();
-        } catch (WrongInputFormatException e) {
-            System.out.println("Wrong data!");
-            return;
-        }
-
-        try {
-            drg.removeByKiller(killer);
-        } catch (NoSuchKillerException e) {
-            System.out.println("No such killer in the collection");
-        }
-
+    public ArrayList<String> execute() throws NoSuchKillerException{
+        drg.removeByKiller(killer);
+        return null;
     }
 }

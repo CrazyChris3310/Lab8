@@ -1,5 +1,6 @@
 package utilities.commands;
 
+import dragon.Dragon;
 import exceptions.IdException;
 import exceptions.WrongInputFormatException;
 import input.Input;
@@ -9,11 +10,14 @@ import input.Input;
  */
 public class UpdateIdCommand extends Command{
 
+    private static final long serialVersionUID = 115L;
     Long id;
+    Dragon dragon;
 
     public UpdateIdCommand(Input input) {
         super(input);
-        description = "update id {element} - update the element with given id";
+        name = "update id {element}";
+        description = "update the element with given id";
     }
 
     /**
@@ -24,9 +28,12 @@ public class UpdateIdCommand extends Command{
     public boolean execute() {
         try {
             id = input.inputId();
+            dragon = input.inputDragon();
         } catch (IdException e) {
             System.out.println(e.getMessage());
             return false;
+        } catch (WrongInputFormatException e) {
+            System.out.println("Wrong data in the file");
         }
         return true;
     }

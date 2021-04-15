@@ -1,6 +1,9 @@
 import com.opencsv.exceptions.CsvValidationException;
+import utilities.CommandManager;
 import utilities.ConnectionManager;
 import utilities.DragonCollection;
+import utilities.commands.Command;
+import utilities.commands.SaveCommand;
 
 import java.io.IOException;
 import java.net.SocketException;
@@ -56,19 +59,25 @@ public class Main {
 
         int port;
 
+        ConnectionManager cm;
+
         while (true) {
             try {
                 System.out.print("Enter the port to bind server to: ");
                 port = Integer.parseInt(sc.nextLine());
-                ConnectionManager cm = new ConnectionManager(port);
-                cm.run();
-                System.out.println("The server has successfully finished");
-                return;
+                cm = new ConnectionManager(port);
+                break;
             } catch (NumberFormatException e) {
                 System.out.println("Wrong port format");
             } catch (SocketException e) {
                 System.out.println("This port is not available right know. Try another one");
             }
         }
+
+        CommandManager commandManager = new CommandManager(cm, dragons);
+        commandManager.startProcess();
+        SaveCommand save = new SaveCommand(dragons);
+        save.execute();
+        System.out.println("The server has successfully finished");
     }
 }

@@ -7,10 +7,12 @@ import input.Input;
  */
 public class ShowCommand extends Command{
 
+    private static final long serialVersionUID = 102L;
 
     public ShowCommand(Input input) {
         super(input);
-        description = "show - show all the elements of collection";
+        name = "show";
+        description = "show all the elements of collection";
     }
 
     /**

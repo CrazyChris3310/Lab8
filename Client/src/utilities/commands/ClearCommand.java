@@ -7,9 +7,11 @@ import input.Input;
  */
 public class ClearCommand extends Command{
 
+    private static final long serialVersionUID = 103L;
     public ClearCommand(Input input) {
         super(input);
-        description = "clear - remove everything from collection";
+        name = "clear";
+        description = "remove everything from collection";
     }
 
     /**

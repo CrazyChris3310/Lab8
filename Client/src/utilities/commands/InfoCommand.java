@@ -7,10 +7,12 @@ import input.Input;
  */
 public class InfoCommand extends Command{
 
+    private static final long serialVersionUID = 108L;
 
     public InfoCommand(Input input) {
         super(input);
-        description = "info - show information about collection";
+        name = "info";
+        description = "show information about collection";
     }
 
     /**

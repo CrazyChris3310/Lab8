@@ -9,11 +9,13 @@ import input.Input;
  */
 public class RemoveAnyByKillerCommand extends Command{
 
+    private static final long serialVersionUID = 111L;
     Person killer;
 
     public RemoveAnyByKillerCommand(Input input) {
         super(input);
-        description = "remove_any_by_killer killer - remove from collection one element with given killer";
+        name = "remove_any_by_killer killer";
+        description = "remove from collection one element with given killer";
     }
 
     /**

@@ -19,6 +19,8 @@ public class Dragon implements Comparable<Dragon>, Serializable {
     private DragonType type; //Поле может быть null
     private Person killer; //Поле может быть null
 
+    private static final long serialVersionUID = 201L;
+
     /**
      * Construct dragon with given parameters from the csv file.
      * @param id dragon's id.

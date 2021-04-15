@@ -2,15 +2,21 @@ package utilities.commands;
 
 import input.Input;
 
+import java.util.HashMap;
+
 /**
  * Command "help".
  */
 public class HelpCommand extends Command{
 
+    private static final long serialVersionUID = 106L;
+    HashMap<String, Command> commands;
 
-    public HelpCommand(Input input) {
+    public HelpCommand(Input input, HashMap<String, Command> commands) {
         super(input);
-        description = "help - show information for available commands";
+        this.commands = commands;
+        name = "help";
+        description = "show information for available commands";
     }
 
     /**

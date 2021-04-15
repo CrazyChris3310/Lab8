@@ -18,12 +18,14 @@ import java.nio.file.Path;
  */
 public class ExecuteScriptCommand extends Command{
 
-    ConnectionManager cManager;
+    private static final long serialVersionUID = 104L;
+    transient ConnectionManager cManager;
 
     public ExecuteScriptCommand(Input input, ConnectionManager cm) {
         super(input);
         cManager = cm;
-        description = "execute_script file_name - read and execute script from given file";
+        name = "execute_script file_name";
+        description = "read and execute script from given file";
     }
 
     /**

@@ -7,10 +7,12 @@ import input.Input;
  */
 public class PrintDescendingCommand extends Command{
 
+    private static final long serialVersionUID = 109L;
 
     public PrintDescendingCommand(Input input) {
         super(input);
-        description = "print_descending - show elements in descending order";
+        name = "print_descending";
+        description = "show elements in descending order";
     }
 
     /**

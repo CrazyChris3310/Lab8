@@ -7,10 +7,12 @@ import input.Input;
  */
 public class PrintFieldDescendingAgeCommand extends Command{
 
+    private static final long serialVersionUID = 110L;
 
     public PrintFieldDescendingAgeCommand(Input input) {
         super(input);
-        description = "print_field_descending_age - show the age of each element in descending order";
+        name = "print_field_descending_age";
+        description = "show the age of each element in descending order";
     }
 
     /**

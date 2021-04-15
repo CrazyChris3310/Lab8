@@ -1,62 +1,88 @@
 package utilities;
 
-import dragon.Coordinates;
-import dragon.Dragon;
-import dragon.DragonType;
-import utilities.commands.AddCommand;
 import utilities.commands.Command;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.net.*;
 import java.nio.ByteBuffer;
 
 public class ConnectionManager {
 
-    private DragonCollection dragons;
     private final int port;
     ByteBuffer buf;
-
 
     SocketAddress adr;
     DatagramSocket socket;
 
+    SocketAddress clientAdr;
 
-    // TODO: Socket exception should be processed
     public ConnectionManager(int port) throws SocketException {
         this.port = port;
-        buf = ByteBuffer.allocate(1000);
+        buf = ByteBuffer.allocate(10000);
         adr = new InetSocketAddress(port);
         socket = new DatagramSocket(port);
         System.out.println("The server is started on " + adr);
     }
 
-    public void run() {
+    public Command receiveCommand() {
         buf.clear();
+        DatagramPacket toReceive = new DatagramPacket(buf.array(), buf.limit());
+        try {
+            socket.receive(toReceive);
+        } catch (IOException e) {
+            System.out.println("Error while reading");
+            e.printStackTrace();
+        }
+        clientAdr = new InetSocketAddress(toReceive.getAddress(), toReceive.getPort());
+        buf.flip();
 
-        AddCommand add;
+        try (ByteArrayInputStream bais = new ByteArrayInputStream(buf.array());
+             ObjectInputStream ois = new ObjectInputStream(bais)) {
 
-        while (true) {
-            DatagramPacket receivingPacket = new DatagramPacket(buf.array(), buf.limit());
-            try {
-                socket.receive(receivingPacket);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return;
-            }
+            return (Command) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("SomeError");
+            return null;
+        }
+    }
 
-            buf.flip();
-            ByteArrayInputStream bais = new ByteArrayInputStream(buf.array());
+//    public void sendCommandResult(ArrayList<String> list) {
+//        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(10000);
+//             ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+//
+//            oos.writeObject(list);
+//            DatagramPacket toSend = new DatagramPacket(baos.toByteArray(), baos.size(), clientAdr);
+//            socket.send(toSend);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void sendErrorMessage(String message) {
+//        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(10000);
+//             ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+//
+//            oos.writeObject(message);
+//            DatagramPacket toSend = new DatagramPacket(baos.toByteArray(), baos.size(), clientAdr);
+//            socket.send(toSend);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-            try (ObjectInputStream ois = new ObjectInputStream(bais)) {
-                add = (AddCommand) ois.readObject();
-                System.out.println(add.getDragon());
-            } catch (ClassNotFoundException e) {
-                System.out.println("Class not found");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public <T> void send(T obj) {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(10000);
+             ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+
+            oos.writeObject(obj);
+            DatagramPacket toSend = new DatagramPacket(baos.toByteArray(), baos.size(), clientAdr);
+            socket.send(toSend);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -24,7 +24,7 @@ public class Process {
     public Process(Input source, ConnectionManager cm) {
         input = source;
         connectionManager = cm;
-        commands.put("help", new HelpCommand(input));
+        commands.put("help", new HelpCommand(input, commands));
         commands.put("add", new AddCommand(input));
         commands.put("info", new InfoCommand(input));
         commands.put("clear", new ClearCommand(input));
@@ -36,7 +36,6 @@ public class Process {
         commands.put("remove_by_id", new RemoveByIdCommand(input));
         commands.put("remove_first", new RemoveFirstCommand(input));
         commands.put("remove_greater", new RemoveGreaterCommand(input));
-        commands.put("save", new SaveCommand(input));
         commands.put("show", new ShowCommand(input));
         commands.put("update", new UpdateIdCommand(input));
         commands.put("exit", new ExitCommand(input));
@@ -83,13 +82,17 @@ public class Process {
             command = input.next();
 
             if (commands.containsKey(command)) {
-                commands.get(command).execute();
+                Command com = commands.get(command);
+                if(!com.execute())
+                    continue;
+                connectionManager.send(com);
+                CommandStatus status = connectionManager.receiveStatus();
+                processResult(status);
             }
             else {
                 System.out.println("Wrong command!");
                 break;
             }
-
         }
     }
 
@@ -100,7 +103,8 @@ public class Process {
         }
         else if (stat == CommandStatus.EXECUTED) {
             ArrayList<String> result = connectionManager.receiveResult();
-            result.forEach(System.out::println);
+            if (result != null)
+                result.forEach(System.out::println);
         }
     }
 

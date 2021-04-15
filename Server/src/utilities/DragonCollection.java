@@ -144,6 +144,8 @@ public class DragonCollection {
      * @param dragon element to insert.
      */
     public void add(Dragon dragon) {
+        dragon.setId(getMaxId() + 1);
+        dragon.setCreationDate(ZonedDateTime.now());
         collection.add(dragon);
     }
 
@@ -185,11 +187,13 @@ public class DragonCollection {
     /**
      * Method prints history in console.
      */
-    public void showHistory() {
-        if (history.size() == 0) {
-            System.out.println("History is empty");
-        }
-        history.forEach(System.out::println);
+    public ArrayList<String> getHistory() {
+        ArrayList<String> list = new ArrayList<>();
+        if (history.size() == 0)
+            list.add("The history is empty");
+        else
+            list = new ArrayList<>(history);
+        return list;
     }
 
     /**

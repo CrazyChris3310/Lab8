@@ -7,10 +7,12 @@ import input.Input;
  */
 public class ExitCommand extends Command{
 
+    private static final long serialVersionUID = 105L;
 
     public ExitCommand(Input input) {
         super(input);
-        description = "exit - stop the program without saving";
+        name = "exit";
+        description = "stop client application";
     }
 
     @Override

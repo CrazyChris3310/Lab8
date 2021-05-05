@@ -21,7 +21,6 @@ public class ConnectionManager {
     public ConnectionManager(int port) throws AlreadyBoundException, IOException {
         buf = ByteBuffer.allocate(10000);
         adr = new InetSocketAddress(port);
-        channel = null;
         socketChannel = ServerSocketChannel.open();
         socketChannel.bind(adr);
         socketChannel.configureBlocking(false);
@@ -29,6 +28,7 @@ public class ConnectionManager {
 
     public void connect() {
         try {
+            channel = null;
             do {
                 channel = socketChannel.accept();
             } while (channel == null);

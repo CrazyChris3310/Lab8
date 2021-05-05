@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
@@ -78,9 +79,13 @@ public class Main {
         }
 
         CommandManager commandManager = new CommandManager(cm, dragons);
-        commandManager.startProcess();
-        SaveCommand save = new SaveCommand(dragons);
-        save.execute();
+        try {
+            commandManager.startProcess();
+        } catch (NoSuchElementException ignored) {
+        } finally {
+            SaveCommand save = new SaveCommand(dragons);
+            save.execute();
+        }
         System.out.println("The server has successfully finished");
     }
 }

@@ -19,11 +19,17 @@ public class ConnectionManager {
     public ConnectionManager(String ip, int port) throws UnknownHostException, IOException {
         buf = ByteBuffer.allocate(10000);
         adr = new InetSocketAddress(ip, port); // address of server
-        socket = new Socket();
     }
 
-    public void connect() throws IOException{
-        socket.connect(adr);
+    public void connect() {
+        while (true) {
+            try {
+                socket = new Socket();
+                socket.connect(adr);
+                break;
+            } catch (IOException ignored) {
+            }
+        }
     }
 
     public void send(Command command) throws IOException{

@@ -51,19 +51,12 @@ public class Process {
      * Method defines commands from console input and executes them.
      */
     public void defineCommand() {
-        try {
-            connectionManager.connect();
-        } catch (ConnectException e) {
-            System.out.println("Can't connect to the server");
-            System.out.println("Try again later");
-            return;
-        } catch (IOException e) {
-            System.out.println("Error happened during connection");
-            System.out.println("Try again later");
-            return;
-        }
         String command;
         while (true) {
+
+            connectionManager.connect();
+
+
             System.out.print("Input a command: ");
             try {
                 command = input.next();
@@ -71,6 +64,7 @@ public class Process {
                 System.exit(0);
                 return;
             }
+
 
             if (commands.containsKey(command)) {
                 method(command);

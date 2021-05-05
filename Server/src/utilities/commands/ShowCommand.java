@@ -24,6 +24,7 @@ public class ShowCommand extends Command{
     @Override
     public Response execute() {
         return new Response(drg.getCollection().stream()
+                .sorted()
                 .collect(ArrayList::new, (ls, dr) -> ls.add(dr.toString()), ArrayList::addAll));
     }
 

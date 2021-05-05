@@ -1,7 +1,7 @@
 package utilities.commands;
 
 import utilities.DragonCollection;
-import java.util.ArrayList;
+import utilities.Response;
 
 /**
  * Command "exit".
@@ -16,7 +16,10 @@ public class ExitCommand extends Command{
     }
 
     @Override
-    public ArrayList<String> execute() {
-        return null;
+    public Response execute() {
+        System.out.println("Client has disconnected from your server");
+        SaveCommand save = new SaveCommand(drg);
+        save.execute();
+        return new Response();
     }
 }

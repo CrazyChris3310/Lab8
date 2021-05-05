@@ -1,7 +1,7 @@
 package utilities.commands;
 
 import utilities.DragonCollection;
-import java.util.ArrayList;
+import utilities.Response;
 
 /**
  * Command "clear". Clears the collection.
@@ -20,8 +20,8 @@ public class ClearCommand extends Command{
      * @return
      */
     @Override
-    public ArrayList<String> execute() {
+    public Response execute() {
         drg.clear();
-        return null;
+        return new Response();
     }
 }

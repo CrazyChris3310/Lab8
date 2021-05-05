@@ -1,6 +1,7 @@
 package utilities.commands;
 
 import utilities.DragonCollection;
+import utilities.Response;
 
 import java.util.ArrayList;
 
@@ -21,9 +22,9 @@ public class ShowCommand extends Command{
      * @return
      */
     @Override
-    public ArrayList<String> execute() {
-        return drg.getCollection().stream()
-                .collect(ArrayList::new, (ls, dr) -> ls.add(dr.toString()), ArrayList::addAll);
+    public Response execute() {
+        return new Response(drg.getCollection().stream()
+                .collect(ArrayList::new, (ls, dr) -> ls.add(dr.toString()), ArrayList::addAll));
     }
 
 }

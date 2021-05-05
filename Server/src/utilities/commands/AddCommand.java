@@ -2,8 +2,7 @@ package utilities.commands;
 
 import dragon.Dragon;
 import utilities.DragonCollection;
-
-import java.util.ArrayList;
+import utilities.Response;
 
 /**
  * Command "Add". Adds element to collection.
@@ -23,8 +22,8 @@ public class AddCommand extends Command {
      * @return
      */
     @Override
-    public ArrayList<String> execute() {
+    public Response execute() {
         drg.add(dragon);
-        return null;
+        return new Response();
     }
 }

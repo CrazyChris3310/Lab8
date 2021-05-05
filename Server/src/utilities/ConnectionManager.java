@@ -5,84 +5,76 @@ import utilities.commands.Command;
 import java.io.*;
 import java.net.*;
 import java.nio.ByteBuffer;
+import java.nio.channels.*;
 
 public class ConnectionManager {
 
-    private final int port;
-    ByteBuffer buf;
+    private ByteBuffer buf;
 
-    SocketAddress adr;
-    DatagramSocket socket;
+    private SocketAddress adr;
 
-    SocketAddress clientAdr;
+    private ServerSocketChannel socketChannel;
+    private SocketChannel channel;
 
-    public ConnectionManager(int port) throws SocketException {
-        this.port = port;
+    private SocketAddress remoteAdr;
+
+    public ConnectionManager(int port) throws AlreadyBoundException, IOException {
         buf = ByteBuffer.allocate(10000);
         adr = new InetSocketAddress(port);
-        socket = new DatagramSocket(port);
-        System.out.println("The server is started on " + adr);
+        channel = null;
+        socketChannel = ServerSocketChannel.open();
+        socketChannel.bind(adr);
+        socketChannel.configureBlocking(false);
     }
 
-    public Command receiveCommand() {
-        buf.clear();
-        DatagramPacket toReceive = new DatagramPacket(buf.array(), buf.limit());
+    public void connect() {
         try {
-            socket.receive(toReceive);
+            do {
+                channel = socketChannel.accept();
+            } while (channel == null);
+            channel.configureBlocking(false);
+            remoteAdr = channel.getRemoteAddress();
         } catch (IOException e) {
-            System.out.println("Error while reading");
-            e.printStackTrace();
+            System.out.println("IOException happened");
         }
-        clientAdr = new InetSocketAddress(toReceive.getAddress(), toReceive.getPort());
+    }
+
+    public SocketAddress getLocalAddress() {
+        return adr;
+    }
+
+    public SocketAddress getRemoteAddress() {
+        return remoteAdr;
+    }
+
+    public Command receiveCommand() throws IOException, ClassNotFoundException{
+
+        buf.clear();
+        int bytesRead;
+        do {
+            bytesRead = channel.read(buf);
+        } while (bytesRead == 0);
+
         buf.flip();
 
-        try (ByteArrayInputStream bais = new ByteArrayInputStream(buf.array());
-             ObjectInputStream ois = new ObjectInputStream(bais)) {
+        Command command;
 
-            return (Command) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("SomeError");
-            return null;
+        try (ByteArrayInputStream bais = new ByteArrayInputStream(buf.array());
+             ObjectInputStream ois = new ObjectInputStream(bais) ) {
+            command = (Command) ois.readObject();
         }
+        return command;
     }
 
-//    public void sendCommandResult(ArrayList<String> list) {
-//        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(10000);
-//             ObjectOutputStream oos = new ObjectOutputStream(baos)) {
-//
-//            oos.writeObject(list);
-//            DatagramPacket toSend = new DatagramPacket(baos.toByteArray(), baos.size(), clientAdr);
-//            socket.send(toSend);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void sendErrorMessage(String message) {
-//        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(10000);
-//             ObjectOutputStream oos = new ObjectOutputStream(baos)) {
-//
-//            oos.writeObject(message);
-//            DatagramPacket toSend = new DatagramPacket(baos.toByteArray(), baos.size(), clientAdr);
-//            socket.send(toSend);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void send(Response response) throws IOException{
 
-    public <T> void send(T obj) {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream(10000);
              ObjectOutputStream oos = new ObjectOutputStream(baos)) {
-
-            oos.writeObject(obj);
-            DatagramPacket toSend = new DatagramPacket(baos.toByteArray(), baos.size(), clientAdr);
-            socket.send(toSend);
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            oos.writeObject(response);
+            channel.write(ByteBuffer.wrap(baos.toByteArray()));
         }
+
     }
+
+
 }

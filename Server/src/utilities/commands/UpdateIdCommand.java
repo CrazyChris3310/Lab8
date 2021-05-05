@@ -1,12 +1,11 @@
 package utilities.commands;
 
 import dragon.Dragon;
-import exceptions.IdException;
 import exceptions.NoSuchIdException;
 import utilities.DragonCollection;
+import utilities.Response;
 
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 
 /**
  * Command "update".
@@ -27,13 +26,13 @@ public class UpdateIdCommand extends Command{
      * @return
      */
     @Override
-    public ArrayList<String> execute() throws NoSuchIdException {
+    public Response execute() throws NoSuchIdException {
 
         ZonedDateTime creation = drg.removeFromQueue(id);
         dragon.setId(id);
         dragon.setCreationDate(creation);
         drg.add(dragon);
 
-        return null;
+        return new Response();
     }
 }

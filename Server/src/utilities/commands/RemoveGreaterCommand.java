@@ -2,8 +2,7 @@ package utilities.commands;
 
 import dragon.Dragon;
 import utilities.DragonCollection;
-
-import java.util.ArrayList;
+import utilities.Response;
 
 /**
  * Command "remove_greater".
@@ -23,8 +22,8 @@ public class RemoveGreaterCommand extends Command{
      * @return
      */
     @Override
-    public ArrayList<String> execute() {
+    public Response execute() {
         drg.removeGreater(dragon);
-        return null;
+        return new Response();
     }
 }

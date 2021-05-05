@@ -3,9 +3,9 @@ package utilities.commands;
 import exceptions.NoSuchIdException;
 import exceptions.NoSuchKillerException;
 import utilities.DragonCollection;
+import utilities.Response;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Root class for all commands. Contains source for input and the collection to work with.
@@ -38,7 +38,7 @@ abstract public class Command implements Serializable {
      * Executes command.
      * @return
      */
-    abstract public ArrayList<String> execute() throws NoSuchKillerException, NoSuchIdException;
+    abstract public Response execute() throws NoSuchKillerException, NoSuchIdException;
 
     @Override
     public String toString() {

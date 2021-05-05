@@ -1,6 +1,8 @@
 package utilities.commands;
 
 import utilities.DragonCollection;
+import utilities.Response;
+
 import java.util.ArrayList;
 
 /**
@@ -20,9 +22,9 @@ public class PrintDescendingCommand extends Command{
      * @return
      */
     @Override
-    public ArrayList<String> execute() {
-        return drg.getCollection().stream()
+    public Response execute() {
+        return new Response(drg.getCollection().stream()
                 .sorted((o1, o2) -> -o2.compareTo(o1))
-                .collect(ArrayList::new, (ls, o) -> ls.add(o.toString()), ArrayList::addAll);
+                .collect(ArrayList::new, (ls, o) -> ls.add(o.toString()), ArrayList::addAll));
     }
 }

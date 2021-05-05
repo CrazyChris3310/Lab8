@@ -1,8 +1,7 @@
 package utilities.commands;
 
 import utilities.DragonCollection;
-
-import java.util.ArrayList;
+import utilities.Response;
 
 /**
  * Command "remove_first".
@@ -21,8 +20,8 @@ public class RemoveFirstCommand extends Command{
      * @return
      */
     @Override
-    public ArrayList<String> execute() {
+    public Response execute() {
         drg.removeFirst();
-        return null;
+        return new Response();
     }
 }

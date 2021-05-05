@@ -7,6 +7,7 @@ import utilities.commands.SaveCommand;
 
 import java.io.IOException;
 import java.net.SocketException;
+import java.nio.channels.AlreadyBoundException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
@@ -69,8 +70,10 @@ public class Main {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("Wrong port format");
-            } catch (SocketException e) {
-                System.out.println("This port is not available right know. Try another one");
+            } catch (AlreadyBoundException e) {
+                System.out.println("This part is already in use. Try another one.");
+            } catch (IOException e) {
+                System.out.println("IOException happened. Try again.");
             }
         }
 

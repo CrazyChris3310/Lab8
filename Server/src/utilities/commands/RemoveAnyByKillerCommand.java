@@ -3,8 +3,7 @@ package utilities.commands;
 import dragon.Person;
 import exceptions.NoSuchKillerException;
 import utilities.DragonCollection;
-
-import java.util.ArrayList;
+import utilities.Response;
 
 /**
  * Command "remove_any_by_killer".
@@ -24,8 +23,8 @@ public class RemoveAnyByKillerCommand extends Command{
      * @return
      */
     @Override
-    public ArrayList<String> execute() throws NoSuchKillerException{
+    public Response execute() throws NoSuchKillerException{
         drg.removeByKiller(killer);
-        return null;
+        return new Response();
     }
 }

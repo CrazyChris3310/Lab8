@@ -1,10 +1,8 @@
 package utilities.commands;
 
-import exceptions.IdException;
 import exceptions.NoSuchIdException;
 import utilities.DragonCollection;
-
-import java.util.ArrayList;
+import utilities.Response;
 
 /**
  * Command "Remove_by_id".
@@ -24,8 +22,8 @@ public class RemoveByIdCommand extends Command{
      * @return
      */
     @Override
-    public ArrayList<String> execute() throws NoSuchIdException {
+    public Response execute() throws NoSuchIdException {
         drg.removeFromQueue(id);
-        return null;
+        return new Response();
     }
 }

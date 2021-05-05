@@ -2,13 +2,13 @@ package utilities.commands;
 
 import dragon.Dragon;
 import utilities.DragonCollection;
+import utilities.Response;
 
 import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 // TODO: Make realisation a bit different than it is in other commands since it can not be received from client
 
@@ -28,7 +28,7 @@ public class SaveCommand extends Command{
      * @return
      */
     @Override
-    public ArrayList<String> execute() {
+    public Response execute() {
 
         DateTimeFormatter zdtFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss xxxxx");
         DateTimeFormatter ldtFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
@@ -61,7 +61,7 @@ public class SaveCommand extends Command{
             System.out.println("Writing error");
         }
 
-        return null;
+        return new Response();
     }
 
     /**

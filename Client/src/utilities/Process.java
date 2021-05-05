@@ -3,7 +3,9 @@ package utilities;
 import utilities.commands.*;
 import input.*;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketException;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
@@ -49,6 +51,17 @@ public class Process {
      * Method defines commands from console input and executes them.
      */
     public void defineCommand() {
+        try {
+            connectionManager.connect();
+        } catch (ConnectException e) {
+            System.out.println("Can't connect to the server");
+            System.out.println("Try again later");
+            return;
+        } catch (IOException e) {
+            System.out.println("Error happened during connection");
+            System.out.println("Try again later");
+            return;
+        }
         String command;
         while (true) {
             System.out.print("Input a command: ");
@@ -60,12 +73,7 @@ public class Process {
             }
 
             if (commands.containsKey(command)) {
-                Command com = commands.get(command);
-                if(!com.execute())
-                    continue;
-                connectionManager.send(com);
-                CommandStatus status = connectionManager.receiveStatus();
-                processResult(status);
+                method(command);
             }
             else {
                 System.out.println("Wrong command!");
@@ -82,12 +90,7 @@ public class Process {
             command = input.next();
 
             if (commands.containsKey(command)) {
-                Command com = commands.get(command);
-                if(!com.execute())
-                    continue;
-                connectionManager.send(com);
-                CommandStatus status = connectionManager.receiveStatus();
-                processResult(status);
+                method(command);
             }
             else {
                 System.out.println("Wrong command!");
@@ -96,15 +99,36 @@ public class Process {
         }
     }
 
-    public void processResult(CommandStatus stat) {
-        if (stat == CommandStatus.FAILED) {
-            String message = connectionManager.receiveErrorMessage();
-            System.out.println(message);
+    private void method(String command) {
+        Command com = commands.get(command);
+        if(!com.execute())
+            return;
+
+        try {
+            connectionManager.send(com);
+        } catch(SocketException e) {
+            System.out.println("Server is temporarily unavailable");
+            return;
+        } catch (IOException e) {
+            System.out.println("IOException happened. Unable to send data");
+            return;
         }
-        else if (stat == CommandStatus.EXECUTED) {
-            ArrayList<String> result = connectionManager.receiveResult();
-            if (result != null)
-                result.forEach(System.out::println);
+        try {
+            Response response = connectionManager.receive();
+            processResult(response);
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class not found");
+        } catch (IOException e) {
+            System.out.println("IOException happened while receiving data");
+        }
+    }
+
+    public void processResult(Response response) {
+        if (response.getCollection() != null) {
+            response.getCollection().forEach(System.out::println);
+        }
+        else {
+            System.out.println(response.getMessage());
         }
     }
 

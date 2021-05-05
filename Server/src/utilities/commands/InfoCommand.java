@@ -1,6 +1,8 @@
 package utilities.commands;
 
 import utilities.DragonCollection;
+import utilities.Response;
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -21,7 +23,7 @@ public class InfoCommand extends Command{
      * @return
      */
     @Override
-    public ArrayList<String> execute() {
+    public Response execute() {
         ArrayList<String> result = new ArrayList<>();
         result.add("Type of elements: Dragon");
         result.add("Size = " + drg.getSize());
@@ -30,6 +32,6 @@ public class InfoCommand extends Command{
         result.add("Initialization date: " + fmt.format(drg.getInitDate()));
         result.add("\n");
 
-        return result;
+        return new Response(result);
     }
 }

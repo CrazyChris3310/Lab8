@@ -1,6 +1,7 @@
 package utilities.commands;
 
 import utilities.DragonCollection;
+import utilities.Response;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,8 +24,8 @@ public class HelpCommand extends Command{
      * @return
      */
     @Override
-    public ArrayList<String> execute() {
-        return commands.entrySet().stream()
-                .collect(ArrayList::new, (ls, es) -> ls.add(es.getValue().toString()), ArrayList::addAll);
+    public Response execute() {
+        return new Response(commands.entrySet().stream()
+                .collect(ArrayList::new, (ls, es) -> ls.add(es.getValue().toString()), ArrayList::addAll));
     }
 }

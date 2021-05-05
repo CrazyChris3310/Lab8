@@ -1,7 +1,7 @@
 package utilities.commands;
 
 import utilities.DragonCollection;
-import java.util.ArrayList;
+import utilities.Response;
 
 
 /**
@@ -21,8 +21,8 @@ public class ExecuteScriptCommand extends Command{
      * @return
      */
     @Override
-    public ArrayList<String> execute() {
-        return null;
+    public Response execute() {
+        return new Response();
     }
 
 }

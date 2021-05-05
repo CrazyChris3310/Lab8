@@ -1,7 +1,7 @@
 package utilities.commands;
 
 import utilities.DragonCollection;
-import java.util.ArrayList;
+import utilities.Response;
 
 /**
  * Command "history".
@@ -20,7 +20,7 @@ public class HistoryCommand extends Command{
      * @return
      */
     @Override
-    public ArrayList<String> execute() {
-        return drg.getHistory();
+    public Response execute() {
+        return new Response(drg.getHistory());
     }
 }

@@ -214,8 +214,8 @@ public class DragonCollection {
     /**
      * Removes first element in collection.
      */
-    public void removeFirst() {
-        collection.poll();
+    public Dragon removeFirst() {
+        return collection.poll();
     }
 
     /**

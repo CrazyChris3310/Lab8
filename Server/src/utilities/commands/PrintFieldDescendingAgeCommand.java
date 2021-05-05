@@ -1,7 +1,7 @@
 package utilities.commands;
 
-import dragon.Dragon;
 import utilities.DragonCollection;
+import utilities.Response;
 
 import java.util.ArrayList;
 
@@ -22,11 +22,10 @@ public class PrintFieldDescendingAgeCommand extends Command{
      * @return
      */
     @Override
-    public ArrayList<String> execute() {
-        ArrayList<String> result;
-        return drg.getCollection().stream()
+    public Response execute() {
+        return new Response(drg.getCollection().stream()
                 .sorted((o1, o2) -> o2.getAge() - o1.getAge())
-                .collect(ArrayList::new, (ls, dr) -> ls.add(String.valueOf(dr.getAge())), ArrayList::addAll);
+                .collect(ArrayList::new, (ls, dr) -> ls.add(String.valueOf(dr.getAge())), ArrayList::addAll));
 
     }
 }

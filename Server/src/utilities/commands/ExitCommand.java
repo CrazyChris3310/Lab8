@@ -20,6 +20,8 @@ public class ExitCommand extends Command{
         System.out.println("Client has disconnected from your server");
         SaveCommand save = new SaveCommand(drg);
         save.execute();
-        return new Response();
+        Response response = new Response();
+        response.setToExit(true);
+        return response;
     }
 }

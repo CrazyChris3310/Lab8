@@ -14,7 +14,7 @@ public class CommandManager {
     ConnectionManager cManager;
     DragonCollection dragons;
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static Logger LOGGER = LogManager.getLogger();
 
     public CommandManager(ConnectionManager cm, DragonCollection drg) {
         cManager = cm;
@@ -33,7 +33,7 @@ public class CommandManager {
     public void startExchange() {
         Command command;
         Response response = new Response();
-        String message = null;
+        String message = "";
         try {
             command = cManager.receiveCommand();
             LOGGER.info(command.getName() + " command received");

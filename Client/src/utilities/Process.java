@@ -54,9 +54,6 @@ public class Process {
         String command;
         while (true) {
 
-            connectionManager.connect();
-
-
             System.out.print("Input a command: ");
             try {
                 command = input.next();
@@ -64,7 +61,6 @@ public class Process {
                 System.exit(0);
                 return;
             }
-
 
             if (commands.containsKey(command)) {
                 method(command);
@@ -94,9 +90,12 @@ public class Process {
     }
 
     private void method(String command) {
+
         Command com = commands.get(command);
         if(!com.execute())
             return;
+
+        connectionManager.connect();
 
         try {
             connectionManager.send(com);
@@ -118,7 +117,10 @@ public class Process {
     }
 
     public void processResult(Response response) {
-        if (response.getCollection() != null) {
+        if (response.getToExit()) {
+            System.exit(0);
+        }
+        else if (response.getCollection() != null) {
             response.getCollection().forEach(System.out::println);
         }
         else {

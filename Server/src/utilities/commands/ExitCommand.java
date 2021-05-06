@@ -17,7 +17,6 @@ public class ExitCommand extends Command{
 
     @Override
     public Response execute() {
-        System.out.println("Client has disconnected from your server");
         SaveCommand save = new SaveCommand(drg);
         save.execute();
         Response response = new Response();

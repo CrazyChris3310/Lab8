@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * Command "save".
  */
-public class SaveCommand extends Command{
+public class SaveCommand extends Command {
 
 
     public SaveCommand(DragonCollection collection) {
@@ -25,6 +25,7 @@ public class SaveCommand extends Command{
 
     /**
      * Method writes elements of collection into file in csv format.
+     *
      * @return
      */
     @Override
@@ -66,6 +67,7 @@ public class SaveCommand extends Command{
 
     /**
      * Method defines what to write to file if object is null.
+     *
      * @param str given object.
      * @param <T> type of given object.
      * @return if str is null, then "", in other case str.

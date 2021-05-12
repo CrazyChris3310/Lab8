@@ -7,7 +7,7 @@ import utilities.Response;
 /**
  * Command "ExecuteCommand". Executes script.
  */
-public class ExecuteScriptCommand extends Command{
+public class ExecuteScriptCommand extends Command {
 
     private static final long serialVersionUID = 104L;
 
@@ -18,6 +18,7 @@ public class ExecuteScriptCommand extends Command{
 
     /**
      * Method inputs file path to script and executes it if it's valid.
+     *
      * @return
      */
     @Override

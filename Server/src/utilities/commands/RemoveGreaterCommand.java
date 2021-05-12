@@ -7,7 +7,7 @@ import utilities.Response;
 /**
  * Command "remove_greater".
  */
-public class RemoveGreaterCommand extends Command{
+public class RemoveGreaterCommand extends Command {
 
     private static final long serialVersionUID = 114L;
     Dragon dragon;
@@ -19,6 +19,7 @@ public class RemoveGreaterCommand extends Command{
 
     /**
      * Method inputs a dragon and removes each dragon that is greater that entered.
+     *
      * @return
      */
     @Override

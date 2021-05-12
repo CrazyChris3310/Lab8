@@ -1,4 +1,4 @@
 package exceptions;
 
-public class NotAllDataSendException extends Exception{
+public class NotAllDataSendException extends Exception {
 }

@@ -8,7 +8,7 @@ import utilities.Response;
 /**
  * Command "remove_any_by_killer".
  */
-public class RemoveAnyByKillerCommand extends Command{
+public class RemoveAnyByKillerCommand extends Command {
 
     private static final long serialVersionUID = 111L;
     Person killer;
@@ -20,10 +20,11 @@ public class RemoveAnyByKillerCommand extends Command{
 
     /**
      * Method inputs killer and removes an element with the same killer from collection.
+     *
      * @return
      */
     @Override
-    public Response execute() throws NoSuchKillerException{
+    public Response execute() throws NoSuchKillerException {
         drg.removeByKiller(killer);
         return new Response();
     }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Command "print_field_descending_age".
  */
-public class PrintFieldDescendingAgeCommand extends Command{
+public class PrintFieldDescendingAgeCommand extends Command {
 
     private static final long serialVersionUID = 110L;
 
@@ -19,6 +19,7 @@ public class PrintFieldDescendingAgeCommand extends Command{
 
     /**
      * Method prints age field of each element in descending error.
+     *
      * @return
      */
     @Override

@@ -6,7 +6,7 @@ import utilities.Response;
 /**
  * Command "clear". Clears the collection.
  */
-public class ClearCommand extends Command{
+public class ClearCommand extends Command {
 
     private static final long serialVersionUID = 103L;
 
@@ -17,6 +17,7 @@ public class ClearCommand extends Command{
 
     /**
      * Method removes everything from collection.
+     *
      * @return
      */
     @Override

@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 /**
  * Command "update".
  */
-public class UpdateIdCommand extends Command{
+public class UpdateIdCommand extends Command {
 
     private static final long serialVersionUID = 115L;
     Long id;
@@ -23,6 +23,7 @@ public class UpdateIdCommand extends Command{
 
     /**
      * Method inputs id and then changes fields of dragon with given id to new ones.
+     *
      * @return
      */
     @Override

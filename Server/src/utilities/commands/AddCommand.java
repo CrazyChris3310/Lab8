@@ -19,6 +19,7 @@ public class AddCommand extends Command {
 
     /**
      * Method inputs a dragon and adds it into collection.
+     *
      * @return
      */
     @Override

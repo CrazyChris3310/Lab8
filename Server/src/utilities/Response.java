@@ -11,7 +11,7 @@ public class Response implements Serializable {
 
     private static final long serialVersionUID = 215L;
 
-    public Response(){
+    public Response() {
         answer = null;
         toExit = false;
         message = "";

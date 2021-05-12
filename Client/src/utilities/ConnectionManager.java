@@ -1,13 +1,15 @@
 package utilities;
 
+import exceptions.ServerUnavailableException;
 import utilities.commands.Command;
+
 import java.io.*;
 import java.net.*;
 import java.nio.ByteBuffer;
 
 public class ConnectionManager {
 
-    private  final SocketAddress adr;
+    private final SocketAddress adr;
 
     private Socket socket;
 
@@ -15,7 +17,8 @@ public class ConnectionManager {
         adr = new InetSocketAddress(ip, port); // address of server
     }
 
-    public void connect() {
+    public void connect() throws ServerUnavailableException {
+        long start = System.currentTimeMillis();
         while (true) {
             try {
                 socket = new Socket();
@@ -23,10 +26,14 @@ public class ConnectionManager {
                 break;
             } catch (IOException ignored) {
             }
+            long end = System.currentTimeMillis();
+            if (end - start > 10000) {
+                throw new ServerUnavailableException();
+            }
         }
     }
 
-    public void send(Command command) throws IOException{
+    public void send(Command command) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream(1000);
         ObjectOutputStream oos = new ObjectOutputStream(baos);
         oos.writeObject(command);
@@ -35,7 +42,7 @@ public class ConnectionManager {
     }
 
 
-    public Response receive() throws ClassNotFoundException, IOException{
+    public Response receive() throws ClassNotFoundException, IOException {
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         return (Response) ois.readObject();
     }

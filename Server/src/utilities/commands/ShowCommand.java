@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Command "show"
  */
-public class ShowCommand extends Command{
+public class ShowCommand extends Command {
 
     private static final long serialVersionUID = 102L;
 
@@ -19,6 +19,7 @@ public class ShowCommand extends Command{
 
     /**
      * Method prints each element of collection.
+     *
      * @return
      */
     @Override

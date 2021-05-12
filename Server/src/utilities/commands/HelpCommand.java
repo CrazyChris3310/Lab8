@@ -9,7 +9,7 @@ import java.util.HashMap;
 /**
  * Command "help".
  */
-public class HelpCommand extends Command{
+public class HelpCommand extends Command {
 
     private static final long serialVersionUID = 106L;
     HashMap<String, Command> commands;
@@ -21,6 +21,7 @@ public class HelpCommand extends Command{
 
     /**
      * Method shows information about all commands.
+     *
      * @return
      */
     @Override

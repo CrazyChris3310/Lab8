@@ -36,6 +36,6 @@ public class CommandExecutor {
             response.setMessage(e.getMessage());
         }
         logger.info(command.getName() + " command executed");
-        return  response;
+        return response;
     }
 }

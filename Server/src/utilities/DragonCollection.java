@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.*;
+
 import dragon.*;
 
 /**
@@ -38,7 +39,7 @@ public class DragonCollection {
     /**
      * Constructs collection and fills it from given file.
      */
-    public DragonCollection(File pathToFile) throws CsvValidationException, IOException{
+    public DragonCollection(File pathToFile) throws CsvValidationException, IOException {
         path = pathToFile;
         initDate = LocalDateTime.now();
         collection = new PriorityQueue<Dragon>();
@@ -65,9 +66,10 @@ public class DragonCollection {
 
     /**
      * Method parses data from file into collection.
+     *
      * @param path path where collection is stored.
      */
-    public void parseFrom(File path) throws CsvValidationException, IOException{
+    public void parseFrom(File path) throws CsvValidationException, IOException {
         Parser pars = new Parser();
         ArrayList<String> fileLines;
 
@@ -86,7 +88,7 @@ public class DragonCollection {
             String description = columnList.get(6).equals("") ? null : columnList.get(6);
             Long wingspan = columnList.get(7).equals("") ? null : Long.parseLong(columnList.get(7));
             DragonType type = columnList.get(8).equals("") ? null : DragonType.valueOf(columnList.get(8));
-            String personName = columnList.get(9).equals("") ? null : columnList.get(9) ;
+            String personName = columnList.get(9).equals("") ? null : columnList.get(9);
             String date = columnList.get(10).equals("") ? null : columnList.get(10);
             Color eye = columnList.get(11).equals("") ? null : Color.valueOf(columnList.get(11));
             Color hair = columnList.get(12).equals("") ? null : Color.valueOf(columnList.get(12));
@@ -102,13 +104,12 @@ public class DragonCollection {
             else
                 killer = new Person(personName, date, eye, hair, nation, new Location(locX, locY, locZ));
 
-            collection.add(new Dragon(id, dragName, new Coordinates(cordX, cordY),creationTime, dragAge, description,
+            collection.add(new Dragon(id, dragName, new Coordinates(cordX, cordY), creationTime, dragAge, description,
                     wingspan, type, killer));
         }
     }
 
     /**
-     *
      * @return path to csv file with data.
      */
     public File getFile() {
@@ -116,7 +117,6 @@ public class DragonCollection {
     }
 
     /**
-     *
      * @return date and time of collection's initialization.
      */
     public LocalDateTime getInitDate() {
@@ -124,7 +124,6 @@ public class DragonCollection {
     }
 
     /**
-     *
      * @return size of the collection.
      */
     public int getSize() {
@@ -132,7 +131,6 @@ public class DragonCollection {
     }
 
     /**
-     *
      * @return collection of dragons.
      */
     public PriorityQueue<Dragon> getCollection() {
@@ -141,6 +139,7 @@ public class DragonCollection {
 
     /**
      * Inserts element into PriorityQueue.
+     *
      * @param dragon element to insert.
      */
     public void add(Dragon dragon) {
@@ -151,6 +150,7 @@ public class DragonCollection {
 
     /**
      * Removes element that id equals ident and returns creation date of that dragon.
+     *
      * @param ident id of element to delete.
      * @return date and time when dragon was created.
      * @throws NoSuchIdException if element with such id is not in collection.
@@ -176,6 +176,7 @@ public class DragonCollection {
 
     /**
      * Method adds to history new command.
+     *
      * @param command command to add in history.
      */
     public void updateHistory(String command) {
@@ -198,10 +199,11 @@ public class DragonCollection {
 
     /**
      * Method removes element with the same killer as given.
+     *
      * @param killer given killer.
      * @throws NoSuchKillerException if element with such killer is not in collection.
      */
-    public void removeByKiller(Person killer) throws NoSuchKillerException{
+    public void removeByKiller(Person killer) throws NoSuchKillerException {
         for (Dragon dragon : collection) {
             if (killer.equals(dragon.getKiller())) {
                 collection.remove(dragon);
@@ -220,6 +222,7 @@ public class DragonCollection {
 
     /**
      * Removes all elements that are greater than given dragon.
+     *
      * @param dragon dragon to be compared with.
      */
     public void removeGreater(Dragon dragon) {

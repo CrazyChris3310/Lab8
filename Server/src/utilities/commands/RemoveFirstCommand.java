@@ -6,7 +6,7 @@ import utilities.Response;
 /**
  * Command "remove_first".
  */
-public class RemoveFirstCommand extends Command{
+public class RemoveFirstCommand extends Command {
 
     private static final long serialVersionUID = 113L;
 
@@ -17,6 +17,7 @@ public class RemoveFirstCommand extends Command{
 
     /**
      * Method removes first element from collection.
+     *
      * @return
      */
     @Override

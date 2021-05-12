@@ -1,10 +1,10 @@
 package utilities;
 
+import exceptions.ServerUnavailableException;
 import utilities.commands.*;
 import input.*;
 
 import java.io.IOException;
-import java.net.ConnectException;
 import java.net.SocketException;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
@@ -21,6 +21,7 @@ public class Process {
     /**
      * Constructs a {@code Process} with given collection and input source.
      * Also defines all the commands available.
+     *
      * @param source input stream.
      */
     public Process(Input source, ConnectionManager cm) {
@@ -54,6 +55,13 @@ public class Process {
         String command;
         while (true) {
 
+            try {
+                connectionManager.connect();
+            } catch (ServerUnavailableException e) {
+                System.out.println("Server is temporarily unavailable");
+                return;
+            }
+
             System.out.print("Input a command: ");
             try {
                 command = input.next();
@@ -64,8 +72,7 @@ public class Process {
 
             if (commands.containsKey(command)) {
                 method(command);
-            }
-            else {
+            } else {
                 System.out.println("Wrong command!");
             }
         }
@@ -81,8 +88,7 @@ public class Process {
 
             if (commands.containsKey(command)) {
                 method(command);
-            }
-            else {
+            } else {
                 System.out.println("Wrong command!");
                 break;
             }
@@ -92,15 +98,12 @@ public class Process {
     private void method(String command) {
 
         Command com = commands.get(command);
-        if(!com.execute())
+        if (!com.execute())
             return;
-
-        connectionManager.connect();
 
         try {
             connectionManager.send(com);
-        } catch(SocketException e) {
-            System.out.println("Server is temporarily unavailable");
+        } catch (SocketException e) {
             return;
         } catch (IOException e) {
             System.out.println("IOException happened. Unable to send data");
@@ -116,14 +119,12 @@ public class Process {
         }
     }
 
-    public void processResult(Response response) {
+    private void processResult(Response response) {
         if (response.getToExit()) {
             System.exit(0);
-        }
-        else if (response.getCollection() != null) {
+        } else if (response.getCollection() != null) {
             response.getCollection().forEach(System.out::println);
-        }
-        else {
+        } else {
             System.out.println(response.getMessage());
         }
     }

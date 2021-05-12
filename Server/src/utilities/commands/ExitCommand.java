@@ -6,7 +6,7 @@ import utilities.Response;
 /**
  * Command "exit".
  */
-public class ExitCommand extends Command{
+public class ExitCommand extends Command {
 
     private static final long serialVersionUID = 105L;
 

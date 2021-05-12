@@ -19,8 +19,8 @@ abstract public class Command implements Serializable {
 
     /**
      * Constructs command with given collection and input.
-     * @param collection collection to work with.
      *
+     * @param collection collection to work with.
      */
     public Command(DragonCollection collection) {
         drg = collection;
@@ -36,6 +36,7 @@ abstract public class Command implements Serializable {
 
     /**
      * Executes command.
+     *
      * @return
      */
     abstract public Response execute() throws NoSuchKillerException, NoSuchIdException;

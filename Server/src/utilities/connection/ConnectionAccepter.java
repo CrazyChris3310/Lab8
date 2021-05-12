@@ -28,7 +28,7 @@ public class ConnectionAccepter {
 //        }
 //    }
 
-    public SocketChannel accept() throws IOException{
+    public SocketChannel accept() throws IOException {
         SocketChannel channel;
         do {
             channel = serverSocketChannel.accept();

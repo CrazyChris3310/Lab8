@@ -6,7 +6,7 @@ import utilities.Response;
 /**
  * Command "history".
  */
-public class HistoryCommand extends Command{
+public class HistoryCommand extends Command {
 
     private static final long serialVersionUID = 107L;
 
@@ -17,6 +17,7 @@ public class HistoryCommand extends Command{
 
     /**
      * Method shows 14 last commands.
+     *
      * @return
      */
     @Override

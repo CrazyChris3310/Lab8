@@ -25,7 +25,7 @@ public class Process {
 
     private static Logger logger = LogManager.getLogger();
 
-    public Process(DragonCollection drg, int port)  throws AlreadyBoundException, IOException {
+    public Process(DragonCollection drg, int port) throws AlreadyBoundException, IOException {
         adr = new InetSocketAddress(port);
 
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
@@ -48,8 +48,8 @@ public class Process {
             try {
                 channel = accepter.accept();
             } catch (SocketException e) {
-              logger.info("Client has disconnected");
-              continue;
+                logger.info("Client has disconnected");
+                continue;
             } catch (IOException e) {
                 logger.warn("IOException happened while trying to accept client", e);
                 continue;
@@ -59,8 +59,8 @@ public class Process {
                 data = receiver.receiveCommand(channel);
                 response = executor.execute(data);
             } catch (SocketException e) {
-              logger.info("Client has disconnected");
-              continue;
+                logger.info("Client has disconnected");
+                continue;
             } catch (IOException e) {
                 logger.warn("IOException happened", e);
                 response.setMessage("IOException happened");

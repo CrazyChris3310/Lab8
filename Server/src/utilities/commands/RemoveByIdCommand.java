@@ -7,7 +7,7 @@ import utilities.Response;
 /**
  * Command "Remove_by_id".
  */
-public class RemoveByIdCommand extends Command{
+public class RemoveByIdCommand extends Command {
 
     private static final long serialVersionUID = 112L;
     Long id;
@@ -19,6 +19,7 @@ public class RemoveByIdCommand extends Command{
 
     /**
      * Method inputs id and removes an element with the same id from collection.
+     *
      * @return
      */
     @Override

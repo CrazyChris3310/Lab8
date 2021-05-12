@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Command "print_descending".
  */
-public class PrintDescendingCommand extends Command{
+public class PrintDescendingCommand extends Command {
 
     private static final long serialVersionUID = 109L;
 
@@ -19,6 +19,7 @@ public class PrintDescendingCommand extends Command{
 
     /**
      * Method prints elements of collection in descending order.
+     *
      * @return
      */
     @Override

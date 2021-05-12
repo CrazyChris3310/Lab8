@@ -11,7 +11,7 @@ public class DataReceiver {
 
     Logger logger;
 
-    public DataReceiver(Logger logger){
+    public DataReceiver(Logger logger) {
         this.logger = logger;
     }
 

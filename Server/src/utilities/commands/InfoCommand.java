@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Command "info".
  */
-public class InfoCommand extends Command{
+public class InfoCommand extends Command {
 
     private static final long serialVersionUID = 108L;
 
@@ -20,6 +20,7 @@ public class InfoCommand extends Command{
 
     /**
      * Method shows information about collection.
+     *
      * @return
      */
     @Override

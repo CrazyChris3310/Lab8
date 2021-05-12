@@ -34,6 +34,7 @@ public class UpdateIdCommand extends Command{
             return false;
         } catch (WrongInputFormatException e) {
             System.out.println("Wrong data in the file");
+            return false;
         }
         return true;
     }

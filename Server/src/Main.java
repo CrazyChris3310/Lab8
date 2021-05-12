@@ -1,12 +1,9 @@
 import com.opencsv.exceptions.CsvValidationException;
-import utilities.CommandManager;
-import utilities.ConnectionManager;
+import utilities.Process;
 import utilities.DragonCollection;
-import utilities.commands.Command;
 import utilities.commands.SaveCommand;
 
 import java.io.IOException;
-import java.net.SocketException;
 import java.nio.channels.AlreadyBoundException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
@@ -61,13 +58,13 @@ public class Main {
 
         int port;
 
-        ConnectionManager cm;
+        Process process;
 
         while (true) {
             try {
                 System.out.print("Enter the port to bind server to: ");
                 port = Integer.parseInt(sc.nextLine());
-                cm = new ConnectionManager(port);
+                process = new Process(dragons, port);
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("Wrong port format");
@@ -78,14 +75,15 @@ public class Main {
             }
         }
 
-        CommandManager commandManager = new CommandManager(cm, dragons);
+
         try {
-            commandManager.startProcess();
+            process.run();
         } catch (NoSuchElementException ignored) {
         } finally {
             SaveCommand save = new SaveCommand(dragons);
             save.execute();
         }
+
         System.out.println("The server has successfully finished");
     }
 }

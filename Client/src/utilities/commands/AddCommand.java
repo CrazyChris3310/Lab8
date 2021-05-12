@@ -30,6 +30,7 @@ public class AddCommand extends Command {
             dragon = input.inputDragon();
         } catch (WrongInputFormatException e) {
             System.out.println("Wrong Data given!");
+            return false;
         }
         return true;
     }

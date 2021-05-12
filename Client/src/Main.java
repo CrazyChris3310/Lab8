@@ -26,17 +26,12 @@ public class Main {
             try {
                 System.out.print("Enter the port of server: ");
                 port = Integer.parseInt(sc.nextLine());
-
-                cm = new ConnectionManager(ip, port);
                 break;
-            } catch (SocketException e) {
-                System.out.println("Port is out of range");
-            } catch (IOException e) {
-                System.out.println("IOException occurred");
             } catch (NumberFormatException e) {
                 System.out.println("Wrong port format");
             }
         }
+        cm = new ConnectionManager(ip, port);
 
         Process process = new Process(new ConsoleInput(), cm);
         process.defineCommand();

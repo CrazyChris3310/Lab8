@@ -1,12 +1,9 @@
 package utilities;
 
 import utilities.commands.Command;
-
 import java.io.*;
 import java.net.*;
 import java.nio.ByteBuffer;
-import java.nio.channels.DatagramChannel;
-import java.util.ArrayList;
 
 public class ConnectionManager {
 
@@ -14,10 +11,7 @@ public class ConnectionManager {
 
     private Socket socket;
 
-    ByteBuffer buf;
-
-    public ConnectionManager(String ip, int port) throws UnknownHostException, IOException {
-        buf = ByteBuffer.allocate(10000);
+    public ConnectionManager(String ip, int port) {
         adr = new InetSocketAddress(ip, port); // address of server
     }
 
@@ -36,6 +30,7 @@ public class ConnectionManager {
         ByteArrayOutputStream baos = new ByteArrayOutputStream(1000);
         ObjectOutputStream oos = new ObjectOutputStream(baos);
         oos.writeObject(command);
+        baos.write(ByteBuffer.allocate(4).putInt(baos.size()).array());
         baos.writeTo(socket.getOutputStream());
     }
 

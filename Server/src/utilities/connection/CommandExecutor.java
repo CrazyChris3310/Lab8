@@ -31,6 +31,7 @@ public class CommandExecutor {
 
         Response response = new Response();
         try {
+            collection.updateHistory(command.getName());
             response = command.execute();
         } catch (NoSuchIdException | NoSuchKillerException e) {
             response.setMessage(e.getMessage());

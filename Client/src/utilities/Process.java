@@ -6,7 +6,9 @@ import input.*;
 
 import java.io.IOException;
 import java.net.SocketException;
+import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.NoSuchElementException;
 
 /**
@@ -15,8 +17,9 @@ import java.util.NoSuchElementException;
 public class Process {
 
     private HashMap<String, Command> commands = new HashMap<>();
-    Input input;
-    ConnectionManager connectionManager;
+    private HashSet<Path> paths = new HashSet<>();
+    private Input input;
+    private ConnectionManager connectionManager;
 
     /**
      * Constructs a {@code Process} with given collection and input source.
@@ -31,7 +34,7 @@ public class Process {
         commands.put("add", new AddCommand(input));
         commands.put("info", new InfoCommand(input));
         commands.put("clear", new ClearCommand(input));
-        commands.put("execute_script", new ExecuteScriptCommand(input, connectionManager));
+        commands.put("execute_script", new ExecuteScriptCommand(input, connectionManager, this));
         commands.put("print_descending", new PrintDescendingCommand(input));
         commands.put("history", new HistoryCommand(input));
         commands.put("print_field_descending_age", new PrintFieldDescendingAgeCommand(input));
@@ -48,6 +51,14 @@ public class Process {
         return commands;
     }
 
+    public HashSet<Path> getPaths() {
+        return paths;
+    }
+
+    public void addToPaths(Path p) {
+        paths.add(p);
+    }
+
     /**
      * Method defines commands from console input and executes them.
      */
@@ -62,19 +73,22 @@ public class Process {
                 return;
             }
 
-            System.out.print("Input a command: ");
-            try {
-                command = input.next();
-            } catch (NoSuchElementException e) {
-                System.exit(0);
-                return;
-            }
+            while (true) {
+                System.out.print("Input a command: ");
+                try {
+                    command = input.next();
+                } catch (NoSuchElementException e) {
+                    System.exit(0);
+                    return;
+                }
 
-            if (commands.containsKey(command)) {
-                method(command);
-            } else {
-                System.out.println("Wrong command!");
+                if (commands.containsKey(command))
+                    break;
+                else
+                    System.out.println("Wrong command!");
+
             }
+            sendAndExecute(command);
         }
     }
 
@@ -87,7 +101,7 @@ public class Process {
             command = input.next();
 
             if (commands.containsKey(command)) {
-                method(command);
+                sendAndExecute(command);
             } else {
                 System.out.println("Wrong command!");
                 break;
@@ -95,7 +109,7 @@ public class Process {
         }
     }
 
-    private void method(String command) {
+    private void sendAndExecute(String command) {
 
         Command com = commands.get(command);
         if (!com.execute())

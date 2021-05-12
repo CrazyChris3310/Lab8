@@ -177,7 +177,7 @@ public class DragonCollection {
     /**
      * Method adds to history new command.
      *
-     * @param command command to add in history.
+     * @param command command name to add in history.
      */
     public void updateHistory(String command) {
         if (history.size() >= 14)

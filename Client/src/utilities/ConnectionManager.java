@@ -10,7 +10,6 @@ import java.nio.ByteBuffer;
 public class ConnectionManager {
 
     private final SocketAddress adr;
-
     private Socket socket;
 
     public ConnectionManager(String ip, int port) {

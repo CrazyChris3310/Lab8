@@ -10,7 +10,8 @@ import utilities.Process;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
-
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -20,10 +21,12 @@ public class ExecuteScriptCommand extends Command{
 
     private static final long serialVersionUID = 104L;
     transient ConnectionManager cManager;
+    Process proc;
 
-    public ExecuteScriptCommand(Input input, ConnectionManager cm) {
+    public ExecuteScriptCommand(Input input, ConnectionManager cm, Process process) {
         super(input);
         cManager = cm;
+        proc = process;
         name = "execute_script file_name";
         description = "read and execute script from given file";
     }
@@ -57,16 +60,19 @@ public class ExecuteScriptCommand extends Command{
             return false;
         }
 
-//        if (drg.getScripts().contains(path)) {
-//            System.out.println("To prevent stack overflow error script was stopped");
-//            return;
-//        }
-//        drg.addToPathSet(path);
-            Process fileReader = new Process(inp, cManager);
-            fileReader.defineFileCommand();
-//
-//        drg.getScripts().remove(path);
+
+        if (proc.getPaths().contains(path)) {
+            System.out.println("To prevent stack overflow error script was stopped");
+            return false;
+        }
+        proc.addToPaths(path);
+
+        Process fileReader = new Process(inp, cManager);
+        fileReader.defineFileCommand();
+
+        proc.getPaths().remove(path);
         return true;
     }
+
 
 }

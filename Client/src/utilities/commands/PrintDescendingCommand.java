@@ -22,9 +22,5 @@ public class PrintDescendingCommand extends Command{
     @Override
     public boolean execute() {
         return !isInputStreamNotEmpty();
-//
-//        ArrayList<Dragon> temp = new ArrayList<>(drg.getCollection());
-//        temp.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));
-//        temp.forEach(System.out::println);
     }
 }

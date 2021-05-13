@@ -27,10 +27,6 @@ public class HelpCommand extends Command{
     public boolean execute() {
         return !isInputStreamNotEmpty();
 
-//        Process proc = new Process(drg, input);
-//        for (Map.Entry<String, Command> command : proc.getCommands().entrySet()) {
-//            System.out.println(command.getValue());
-//        }
 
     }
 }

@@ -22,11 +22,5 @@ public class PrintFieldDescendingAgeCommand extends Command{
     @Override
     public boolean execute() {
         return !isInputStreamNotEmpty();
-//
-//        ArrayList<Dragon> temp = new ArrayList<>(drg.getCollection());
-//        temp.sort((o1, o2) -> o2.getAge() - o1.getAge());
-//        for (Dragon dragon : temp) {
-//            System.out.println(dragon.getAge());
-//        }
     }
 }

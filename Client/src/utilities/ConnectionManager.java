@@ -33,11 +33,12 @@ public class ConnectionManager {
     }
 
     public void send(Command command) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream(1000);
+        OutputStream os = socket.getOutputStream();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(baos);
         oos.writeObject(command);
-        baos.write(ByteBuffer.allocate(4).putInt(baos.size()).array());
-        baos.writeTo(socket.getOutputStream());
+        os.write(ByteBuffer.allocate(4).putInt(baos.size()).array());
+        baos.writeTo(os);
     }
 
 

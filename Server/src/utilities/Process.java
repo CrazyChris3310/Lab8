@@ -1,7 +1,5 @@
 package utilities;
 
-import exceptions.NotAllDataReceivedException;
-import exceptions.NotAllDataSendException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utilities.connection.*;
@@ -64,9 +62,6 @@ public class Process {
             } catch (IOException e) {
                 logger.warn("IOException happened", e);
                 response.setMessage("IOException happened");
-            } catch (NotAllDataReceivedException e) {
-                logger.warn("Not all data from client were received", e);
-                response.setMessage("Not all data from client were received");
             } catch (ClassNotFoundException e) {
                 logger.warn("Class not found");
                 response.setMessage("Class not found");
@@ -78,8 +73,6 @@ public class Process {
                 logger.warn("Client is disconnected");
             } catch (IOException e) {
                 logger.warn("IOException has happened", e);
-            } catch (NotAllDataSendException e) {
-                logger.warn("Not all data was sent to a client");
             }
 
         }

@@ -1,9 +1,12 @@
 package utilities.commands;
 
+import dragon.Dragon;
 import utilities.DragonCollection;
 import utilities.Response;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 /**
  * Command "print_field_descending_age".
@@ -25,8 +28,9 @@ public class PrintFieldDescendingAgeCommand extends Command {
     @Override
     public Response execute() {
         return new Response(drg.getCollection().stream()
-                .sorted((o1, o2) -> o2.getAge() - o1.getAge())
-                .collect(ArrayList::new, (ls, dr) -> ls.add(String.valueOf(dr.getAge())), ArrayList::addAll));
-
+                .map(Dragon::getAge)
+                .sorted(Comparator.comparingInt(o -> o))
+                .map(String::valueOf)
+                .collect(Collectors.toCollection(ArrayList::new)));
     }
 }

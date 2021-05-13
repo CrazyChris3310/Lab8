@@ -27,6 +27,7 @@ public class HelpCommand extends Command {
     @Override
     public Response execute() {
         return new Response(commands.entrySet().stream()
+                .sorted()
                 .collect(ArrayList::new, (ls, es) -> ls.add(es.getValue().toString()), ArrayList::addAll));
     }
 }

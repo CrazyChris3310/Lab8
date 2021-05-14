@@ -2,17 +2,11 @@ import input.ConsoleInput;
 import utilities.ConnectionManager;
 import utilities.Process;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.SocketException;
 import java.util.Scanner;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 public class Main {
 
     public static void main(String[] args) {
-
         Scanner sc = new Scanner(System.in);
         int port;
         String ip;
@@ -35,6 +29,5 @@ public class Main {
 
         Process process = new Process(new ConsoleInput(), cm);
         process.defineCommand();
-
     }
 }

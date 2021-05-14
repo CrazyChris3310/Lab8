@@ -1,4 +1,5 @@
 import com.opencsv.exceptions.CsvValidationException;
+import utilities.ExitSaver;
 import utilities.Process;
 import utilities.DragonCollection;
 import utilities.commands.SaveCommand;
@@ -54,6 +55,8 @@ public class Main {
             return;
         }
 
+        Runtime.getRuntime().addShutdownHook(new Thread(new ExitSaver(dragons)));
+
         Scanner sc = new Scanner(System.in);
 
         int port;
@@ -71,19 +74,10 @@ public class Main {
             } catch (AlreadyBoundException e) {
                 System.out.println("This part is already in use. Try another one.");
             } catch (IOException e) {
-                System.out.println("IOException happened. Try again.");
+                System.out.println("IOException happened. " + e.getMessage());
             }
         }
 
-
-        try {
-            process.run();
-        } catch (NoSuchElementException ignored) {
-        } finally {
-            SaveCommand save = new SaveCommand(dragons);
-            save.execute();
-        }
-
-        System.out.println("The server has successfully finished");
+        process.run();
     }
 }

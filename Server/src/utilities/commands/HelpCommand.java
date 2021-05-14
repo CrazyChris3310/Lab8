@@ -4,7 +4,9 @@ import utilities.DragonCollection;
 import utilities.Response;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Command "help".
@@ -12,7 +14,7 @@ import java.util.HashMap;
 public class HelpCommand extends Command {
 
     private static final long serialVersionUID = 106L;
-    HashMap<String, Command> commands;
+    private HashMap<String, Command> commands;
 
     public HelpCommand(DragonCollection collection) {
         super(collection);
@@ -27,7 +29,7 @@ public class HelpCommand extends Command {
     @Override
     public Response execute() {
         return new Response(commands.entrySet().stream()
-                .sorted()
+                .sorted(Map.Entry.comparingByKey())
                 .collect(ArrayList::new, (ls, es) -> ls.add(es.getValue().toString()), ArrayList::addAll));
     }
 }

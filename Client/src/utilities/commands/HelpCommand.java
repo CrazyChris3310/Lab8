@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class HelpCommand extends Command{
 
     private static final long serialVersionUID = 106L;
-    HashMap<String, Command> commands;
+    private HashMap<String, Command> commands;
 
     public HelpCommand(Input input, HashMap<String, Command> commands) {
         super(input);

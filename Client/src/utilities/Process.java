@@ -66,28 +66,19 @@ public class Process {
         String command;
         while (true) {
 
+            System.out.print("Input a command: ");
             try {
-                connectionManager.connect();
-            } catch (ServerUnavailableException e) {
-                System.out.println("Server is temporarily unavailable");
+                command = input.next();
+            } catch (NoSuchElementException e) {
+                System.exit(0);
                 return;
             }
 
-            while (true) {
-                System.out.print("Input a command: ");
-                try {
-                    command = input.next();
-                } catch (NoSuchElementException e) {
-                    System.exit(0);
-                    return;
-                }
-
-                if (commands.containsKey(command))
-                    break;
-                else
-                    System.out.println("Wrong command!");
-
+            if (!commands.containsKey(command)) {
+                System.out.println("Wrong command!");
+                continue;
             }
+
             sendAndExecute(command);
         }
     }
@@ -116,11 +107,19 @@ public class Process {
             return;
 
         try {
+            connectionManager.connect();
+        } catch (ServerUnavailableException e) {
+            System.out.println("Server is temporarily unavailable");
+            return;
+        }
+
+        try {
             connectionManager.send(com);
         } catch (SocketException e) {
             return;
         } catch (IOException e) {
             System.out.println("IOException happened. Unable to send data");
+            e.printStackTrace();
             return;
         }
         try {
@@ -142,5 +141,4 @@ public class Process {
             System.out.println(response.getMessage());
         }
     }
-
 }

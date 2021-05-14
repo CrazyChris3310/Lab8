@@ -61,10 +61,10 @@ public class Process {
                 continue;
             } catch (IOException e) {
                 logger.warn("IOException happened", e);
-                response.setMessage("IOException happened");
+                response.setMessage("IOException happened on server");
             } catch (ClassNotFoundException e) {
                 logger.warn("Class not found");
-                response.setMessage("Class not found");
+                response.setMessage("Class not found on server");
             }
 
             try {

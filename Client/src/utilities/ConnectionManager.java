@@ -24,10 +24,10 @@ public class ConnectionManager {
                 socket.connect(adr);
                 break;
             } catch (IOException ignored) {
-            }
-            long end = System.currentTimeMillis();
-            if (end - start > 10000) {
-                throw new ServerUnavailableException();
+                long end = System.currentTimeMillis();
+                if (end - start > 10000) {
+                    throw new ServerUnavailableException();
+                }
             }
         }
     }
@@ -45,6 +45,10 @@ public class ConnectionManager {
     public Response receive() throws ClassNotFoundException, IOException {
         ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         return (Response) ois.readObject();
+    }
+
+    public Socket getSocket() {
+        return socket;
     }
 
 }

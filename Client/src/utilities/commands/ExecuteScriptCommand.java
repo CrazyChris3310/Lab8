@@ -21,7 +21,7 @@ public class ExecuteScriptCommand extends Command{
 
     private static final long serialVersionUID = 104L;
     transient ConnectionManager cManager;
-    Process proc;
+    transient Process proc;
 
     public ExecuteScriptCommand(Input input, ConnectionManager cm, Process process) {
         super(input);

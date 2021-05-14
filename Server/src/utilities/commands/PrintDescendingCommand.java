@@ -4,6 +4,7 @@ import utilities.DragonCollection;
 import utilities.Response;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Command "print_descending".
@@ -25,7 +26,7 @@ public class PrintDescendingCommand extends Command {
     @Override
     public Response execute() {
         return new Response(drg.getCollection().stream()
-                .sorted((o1, o2) -> -o2.compareTo(o1))
+                .sorted(Comparator.reverseOrder())
                 .collect(ArrayList::new, (ls, o) -> ls.add(o.toString()), ArrayList::addAll));
     }
 }

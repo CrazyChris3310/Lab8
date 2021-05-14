@@ -29,7 +29,7 @@ public class PrintFieldDescendingAgeCommand extends Command {
     public Response execute() {
         return new Response(drg.getCollection().stream()
                 .map(Dragon::getAge)
-                .sorted(Comparator.comparingInt(o -> o))
+                .sorted(Comparator.reverseOrder())
                 .map(String::valueOf)
                 .collect(Collectors.toCollection(ArrayList::new)));
     }

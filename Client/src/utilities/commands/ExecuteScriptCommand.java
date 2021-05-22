@@ -10,8 +10,6 @@ import utilities.Process;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
-import java.util.HashSet;
-import java.util.Set;
 
 
 /**
@@ -61,16 +59,16 @@ public class ExecuteScriptCommand extends Command{
         }
 
 
-        if (proc.getPaths().contains(path)) {
+        if (cManager.getPaths().contains(path)) {
             System.out.println("To prevent stack overflow error script was stopped");
             return false;
         }
-        proc.addToPaths(path);
+        cManager.addToPaths(path);
 
         Process fileReader = new Process(inp, cManager);
         fileReader.defineFileCommand();
 
-        proc.getPaths().remove(path);
+        cManager.getPaths().remove(path);
         return true;
     }
 

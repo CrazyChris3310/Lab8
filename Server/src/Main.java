@@ -69,7 +69,7 @@ public class Main {
                 port = Integer.parseInt(sc.nextLine());
                 process = new Process(dragons, port);
                 break;
-            } catch (NumberFormatException e) {
+            } catch (IllegalArgumentException e) {
                 System.out.println("Wrong port format");
             } catch (AlreadyBoundException e) {
                 System.out.println("This part is already in use. Try another one.");

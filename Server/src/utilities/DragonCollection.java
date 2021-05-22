@@ -48,14 +48,6 @@ public class DragonCollection {
         parseFrom(path);
     }
 
-    public void addToPathSet(Path way) {
-        scripts.add(way);
-    }
-
-    public HashSet<Path> getScripts() {
-        return scripts;
-    }
-
     public Long getMaxId() {
         try {
             return Collections.max(collection, Comparator.comparingLong(Dragon::getId)).getId();
@@ -143,8 +135,6 @@ public class DragonCollection {
      * @param dragon element to insert.
      */
     public void add(Dragon dragon) {
-        dragon.setId(getMaxId() + 1);
-        dragon.setCreationDate(ZonedDateTime.now());
         collection.add(dragon);
     }
 

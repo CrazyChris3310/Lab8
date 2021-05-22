@@ -16,15 +16,19 @@ public class Main {
         System.out.print("Enter the ip address of server: ");
         ip = sc.nextLine().trim();
 
+        String str;
+
         while (true) {
-            try {
-                System.out.print("Enter the port of server: ");
-                port = Integer.parseInt(sc.nextLine());
+            System.out.print("Enter the port of server: ");
+            str = sc.nextLine().trim();
+            if (str.matches("^\\d{1,5}$")) {
+                port = Integer.parseInt(str);
                 break;
-            } catch (NumberFormatException e) {
-                System.out.println("Wrong port format");
             }
+            System.out.println("Wrong port format");
         }
+
+        port = Integer.parseInt(str);
         cm = new ConnectionManager(ip, port);
 
         Process process = new Process(new ConsoleInput(), cm);

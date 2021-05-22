@@ -10,8 +10,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
-// TODO: Make realisation a bit different than it is in other commands since it can not be received from client
-
 /**
  * Command "save".
  */

@@ -6,9 +6,7 @@ import input.*;
 
 import java.io.IOException;
 import java.net.SocketException;
-import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.NoSuchElementException;
 
 /**
@@ -17,7 +15,6 @@ import java.util.NoSuchElementException;
 public class Process {
 
     private HashMap<String, Command> commands = new HashMap<>();
-    private HashSet<Path> paths = new HashSet<>();
     private Input input;
     private ConnectionManager connectionManager;
 
@@ -49,14 +46,6 @@ public class Process {
 
     public HashMap<String, Command> getCommands() {
         return commands;
-    }
-
-    public HashSet<Path> getPaths() {
-        return paths;
-    }
-
-    public void addToPaths(Path p) {
-        paths.add(p);
     }
 
     /**
@@ -110,6 +99,9 @@ public class Process {
             connectionManager.connect();
         } catch (ServerUnavailableException e) {
             System.out.println("Server is temporarily unavailable");
+            if (com instanceof ExitCommand) {
+                System.exit(0);
+            }
             return;
         }
 
@@ -122,6 +114,7 @@ public class Process {
             e.printStackTrace();
             return;
         }
+
         try {
             Response response = connectionManager.receive();
             processResult(response);

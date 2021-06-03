@@ -4,32 +4,40 @@ import exceptions.NoSuchIdException;
 import exceptions.NoSuchKillerException;
 import org.apache.logging.log4j.Logger;
 import utilities.DragonCollection;
+import utilities.Request;
 import utilities.Response;
 import utilities.commands.Command;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.concurrent.Callable;
 
-public class CommandExecutor {
+public class CommandExecutor implements Callable<Response> {
 
     private DragonCollection collection;
-    Logger logger;
+    private Logger logger;
+    private Request request;
 
-    public CommandExecutor(DragonCollection drg, Logger logger) {
+    public CommandExecutor(Request request, DragonCollection drg, Logger logger) {
+        this.request = request;
         this.collection = drg;
         this.logger = logger;
     }
 
-    public Response execute(byte[] data) throws IOException, ClassNotFoundException {
-        Command command;
-        try (ByteArrayInputStream bais = new ByteArrayInputStream(data);
-             ObjectInputStream ois = new ObjectInputStream(bais)) {
-            command = (Command) ois.readObject();
+    @Override
+    public Response call() {
+
+        Response response = new Response();
+
+        Command command = request.getCommand();
+        if (command == null) {
+            response.setMessage(request.getReceivingError());
+            response.setDestination(request.getSource());
+            return response;
         }
         command.setDrg(collection);
 
-        Response response = new Response();
         try {
             collection.updateHistory(command.getName());
             response = command.execute();
@@ -37,6 +45,7 @@ public class CommandExecutor {
             response.setMessage(e.getMessage());
         }
         logger.info(command.getName() + " command executed");
+        response.setDestination(request.getSource());
         return response;
     }
 }

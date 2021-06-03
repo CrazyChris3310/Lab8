@@ -6,6 +6,8 @@ import input.*;
 
 import java.io.IOException;
 import java.net.SocketException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
@@ -17,6 +19,9 @@ public class Process {
     private HashMap<String, Command> commands = new HashMap<>();
     private Input input;
     private ConnectionManager connectionManager;
+
+    private String login;
+    private byte[] password;
 
     /**
      * Constructs a {@code Process} with given collection and input source.
@@ -42,6 +47,13 @@ public class Process {
         commands.put("show", new ShowCommand(input));
         commands.put("update", new UpdateIdCommand(input));
         commands.put("exit", new ExitCommand(input));
+
+        login = input.inputLogin();
+        try {
+            password = MessageDigest.getInstance("SHA-512").digest(input.inputPassword().getBytes());
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("Algorithm error");
+        }
     }
 
     public HashMap<String, Command> getCommands() {
@@ -53,6 +65,7 @@ public class Process {
      */
     public void defineCommand() {
         String command;
+
         while (true) {
 
             System.out.print("Input a command: ");
@@ -105,8 +118,11 @@ public class Process {
             return;
         }
 
+        Request request = new Request(login, password);
+        request.setCommand(com);
+
         try {
-            connectionManager.send(com);
+            connectionManager.send(request);
         } catch (SocketException e) {
             return;
         } catch (IOException e) {

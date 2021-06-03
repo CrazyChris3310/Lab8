@@ -44,11 +44,11 @@ public class ConnectionManager {
         }
     }
 
-    public void send(Command command) throws IOException {
+    public void send(Request request) throws IOException {
         OutputStream os = socket.getOutputStream();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(baos);
-        oos.writeObject(command);
+        oos.writeObject(request);
         os.write(ByteBuffer.allocate(4).putInt(baos.size()).array());
         baos.writeTo(os);
     }

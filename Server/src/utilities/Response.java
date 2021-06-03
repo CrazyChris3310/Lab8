@@ -1,6 +1,7 @@
 package utilities;
 
 import java.io.Serializable;
+import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 
 public class Response implements Serializable {
@@ -8,6 +9,7 @@ public class Response implements Serializable {
     private ArrayList<String> answer;
     private String message;
     private boolean toExit;
+    transient SocketChannel destination;
 
     private static final long serialVersionUID = 215L;
 
@@ -39,5 +41,13 @@ public class Response implements Serializable {
 
     public String getMessage() {
         return message;
+    }
+
+    public void setDestination(SocketChannel channel) {
+        this.destination = channel;
+    }
+
+    public SocketChannel getDestination() {
+        return this.destination;
     }
 }

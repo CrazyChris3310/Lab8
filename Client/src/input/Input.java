@@ -22,6 +22,18 @@ abstract public class Input implements Serializable {
 
     abstract public <T> T input(String question, String errorMessage, Func<T> rule) throws WrongInputFormatException;
 
+    public String inputLogin() {
+        System.out.print("Login: ");
+        return sc.nextLine().trim();
+    }
+
+    public String inputPassword() {
+        System.out.print("Password: ");
+//        Console console = System.console();
+//        char[] password = console.readPassword();
+        return sc.nextLine().trim();
+    }
+
     /**
      * Method asks to input name of dragon.
      * @return name of the dragon.

@@ -47,13 +47,6 @@ public class Process {
         commands.put("show", new ShowCommand(input));
         commands.put("update", new UpdateIdCommand(input));
         commands.put("exit", new ExitCommand(input));
-
-        login = input.inputLogin();
-        try {
-            password = MessageDigest.getInstance("SHA-512").digest(input.inputPassword().getBytes());
-        } catch (NoSuchAlgorithmException e) {
-            System.out.println("Algorithm error");
-        }
     }
 
     public HashMap<String, Command> getCommands() {
@@ -64,6 +57,9 @@ public class Process {
      * Method defines commands from console input and executes them.
      */
     public void defineCommand() {
+
+        authorize();
+
         String command;
 
         while (true) {
@@ -83,6 +79,54 @@ public class Process {
 
             sendAndExecute(command);
         }
+    }
+
+    private void authorize(){
+        Response response = new Response();
+        boolean register = input.needRegistration();
+        while (true) {
+            login = input.inputLogin();
+            try {
+                password = MessageDigest.getInstance("SHA-512").digest(input.inputPassword().getBytes());
+            } catch (NoSuchAlgorithmException e) {
+                System.out.println("Algorithm error");
+                System.exit(0);
+            }
+
+            Request request = new Request(login, password);
+            request.setRegistering(register);
+
+            try {
+                connectionManager.connect();
+            } catch (ServerUnavailableException e) {
+                System.out.println("Server is temporarily unavailable");
+            }
+
+            try {
+                connectionManager.send(request);
+            } catch (SocketException e) {
+                return;
+            } catch (IOException e) {
+                System.out.println("IOException happened. Unable to send data. " + e.getMessage());
+                return;
+            }
+
+            try {
+                response = connectionManager.receive();
+            } catch (ClassNotFoundException e) {
+                System.out.println("Class not found");
+            } catch (IOException e) {
+                System.out.println("IOException happened while receiving data");
+            }
+
+            if (response.isSuccessfulConnect()) {
+                break;
+            } else {
+                System.out.println(response.getMessage());
+            }
+
+        }
+
     }
 
     /**

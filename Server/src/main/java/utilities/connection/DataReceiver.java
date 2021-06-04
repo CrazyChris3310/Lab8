@@ -7,6 +7,7 @@ import utilities.commands.Command;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.Callable;
@@ -31,7 +32,7 @@ public class DataReceiver implements Callable<Request> {
                 channel.read(buf);
             } while (buf.hasRemaining());
 
-            buf.flip();
+            ((Buffer)buf).flip();
             int arraySize = buf.getInt();
 
             buf = ByteBuffer.allocate(arraySize);

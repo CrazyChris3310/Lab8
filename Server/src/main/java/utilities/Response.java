@@ -9,6 +9,7 @@ public class Response implements Serializable {
     private ArrayList<String> answer;
     private String message;
     private boolean toExit;
+    private boolean successfulConnect;
     transient SocketChannel destination;
 
     private static final long serialVersionUID = 215L;
@@ -17,6 +18,7 @@ public class Response implements Serializable {
         answer = null;
         toExit = false;
         message = "";
+        successfulConnect = false;
     }
 
     public Response(ArrayList<String> list) {
@@ -49,5 +51,9 @@ public class Response implements Serializable {
 
     public SocketChannel getDestination() {
         return this.destination;
+    }
+
+    public void setSuccessfulConnect(boolean successfulConnect) {
+        this.successfulConnect = successfulConnect;
     }
 }

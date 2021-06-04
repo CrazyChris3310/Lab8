@@ -9,6 +9,7 @@ public class Request implements Serializable {
     private String login;
     private byte[] password;
     private Command command;
+    private boolean registering;
     transient private SocketChannel source;
     transient private String receivingError;
 
@@ -40,5 +41,9 @@ public class Request implements Serializable {
 
     public void setReceivingError(String receivingError) {
         this.receivingError = receivingError;
+    }
+
+    public boolean isRegistering() {
+        return registering;
     }
 }

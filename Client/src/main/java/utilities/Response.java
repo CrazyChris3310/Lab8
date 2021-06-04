@@ -7,6 +7,7 @@ public class Response implements Serializable {
 
     private ArrayList<String> answer;
     private String message;
+    private boolean successfulConnect;
     private boolean toExit;
 
     private static final long serialVersionUID = 215L;
@@ -15,6 +16,7 @@ public class Response implements Serializable {
         answer = null;
         message = "";
         toExit = false;
+        successfulConnect = false;
     }
 
 
@@ -44,5 +46,9 @@ public class Response implements Serializable {
 
     public String getMessage() {
         return message;
+    }
+
+    public boolean isSuccessfulConnect() {
+        return successfulConnect;
     }
 }

@@ -1,9 +1,6 @@
 package utilities.connection;
 
-import exceptions.NoRightsException;
-import exceptions.NoSuchIdException;
-import exceptions.NoSuchKillerException;
-import exceptions.WrongPasswordException;
+import exceptions.*;
 import org.apache.logging.log4j.Logger;
 import utilities.DragonCollection;
 import utilities.Request;
@@ -34,26 +31,36 @@ public class CommandExecutor implements Callable<Response> {
 
         Response response = new Response();
 
-        Command command = request.getCommand();
-        if (command == null) {
-            response.setMessage(request.getReceivingError());
-            response.setDestination(request.getSource());
-            return response;
-        }
-
         try {
             DataBaseConnection connection = DataBaseConnection.getInstance();
-            if (connection.userExists(request.getLogin())) {
-                connection.signIn(request.getLogin(), request.getPassword());
-            } else {
+            if (request.isRegistering()) {
                 connection.register(request.getLogin(), request.getPassword());
+            } else {
+                connection.signIn(request.getLogin(), request.getPassword());
             }
         } catch (WrongPasswordException e) {
             response.setMessage("Wrong password");
             response.setDestination(request.getSource());
             return response;
         } catch (SQLException e) {
-            response.setMessage("Unable to access database");
+            response.setMessage("Unable to access database " + e.getMessage());
+            response.setDestination(request.getSource());
+            return response;
+        } catch (UserAlreadyExistsException e) {
+            response.setMessage("User with such login already exists");
+            response.setDestination(request.getSource());
+            return response;
+        } catch (UserNotExistsException e) {
+            response.setMessage("User with such login does not exists");
+            response.setDestination(request.getSource());
+            return response;
+        }
+
+        response.setSuccessfulConnect(true);
+
+        Command command = request.getCommand();
+        if (command == null) {
+            response.setMessage(request.getReceivingError());
             response.setDestination(request.getSource());
             return response;
         }

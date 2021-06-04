@@ -39,13 +39,6 @@ public class DragonCollection {
         requests.parseIntoCollection(collection);
     }
 
-//    /**
-//     * @return path to csv file with data.
-//     */
-//    public File getFile() {
-//        return path;
-//    }
-
     /**
      * @return date and time of collection's initialization.
      */
@@ -72,7 +65,6 @@ public class DragonCollection {
      *
      * @param dragon element to insert.
      */
-    //TODO: add parsing from collection in the end
     public void add(Dragon dragon, String login) throws SQLException {
         long id = requests.insertIntoCollection(dragon, login);
         dragon.setId(id);
@@ -155,7 +147,6 @@ public class DragonCollection {
      * @param killer given killer.
      * @throws NoSuchKillerException if element with such killer is not in collection.
      */
-    // WARNING: terrible syntax
     public void removeByKiller(Person killer, String login) throws NoSuchKillerException,
             NoRightsException, SQLException {
 

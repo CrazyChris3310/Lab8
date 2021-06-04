@@ -6,6 +6,7 @@ import exceptions.WrongInputFormatException;
 import exceptions.WrongPathRightsException;
 import utilities.Func;
 
+import java.io.Console;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
@@ -29,10 +30,24 @@ abstract public class Input implements Serializable {
 
     public String inputPassword() {
         System.out.print("Password: ");
-//        Console console = System.console();
-//        char[] password = console.readPassword();
-        return sc.nextLine().trim();
+        Console console = System.console();
+        char[] password = console.readPassword();
+        return new String(password);
     }
+
+    public boolean needRegistration() throws WrongInputFormatException {
+        Func<Boolean> interfc = (str) -> {
+            if (str.matches("^(su|li)$"))
+                switch (str) {
+                    case "su": return true;
+                    case "li": return false;
+                }
+            throw new WrongInputFormatException();
+        };
+
+        return input("Do you want to sign up or log in? (su/li) ","Wrong answer format!", interfc);
+    }
+
 
     /**
      * Method asks to input name of dragon.

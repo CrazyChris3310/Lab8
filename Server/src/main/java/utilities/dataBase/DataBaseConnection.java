@@ -8,11 +8,13 @@ import java.util.Arrays;
 
 public class DataBaseConnection {
 
+//    private static final String hostName = "s313111";
+//    private static final String hostPassword = "ndw141";
+//    private static final String URL = "jdbc:postgresql://pg:5432/studs";
 
-    //  TODO: make login and password input from console
-    private static final String hostName = "s313111";
+    private static final String hostName = "postgres";
     private static final String hostPassword = "ndw141";
-    private static final String URL = "jdbc:postgresql://pg:5432/studs";
+    private static final String URL = "jdbc:postgresql://localhost:1337/postgres";
 
     private Connection connection;
 

@@ -75,15 +75,20 @@ public class DragonCollection {
     // FIXME: totally wrong
     public void updateId(Long id, Dragon dragon, String login) throws NoSuchIdException,
             SQLException, NoRightsException {
+        boolean idExists = collection.stream()
+                .anyMatch(dr -> dr.getId().equals(id));
         boolean dragonExists = collection.stream()
                 .anyMatch(dr -> dr.getId().equals(id) && dr.getOwner().equals(login));
+
         if (dragonExists) {
             requests.updateId(id, dragon, login);
             collection.clear();
             requests.parseIntoCollection(collection);
-            return;
+        } else if (idExists) {
+            throw new NoRightsException();
+        } else {
+            throw new NoSuchIdException("No such Id");
         }
-        throw new NoSuchIdException("No such Id");
     }
 
     /**
@@ -113,9 +118,9 @@ public class DragonCollection {
      */
     public void clear(String login) throws SQLException {
         requests.clear(login);
-        collection.stream()
-                .filter(dr -> dr.getOwner().equals(login))
-                .forEach(dr -> collection.remove(dr));
+        collection = collection.stream()
+                .filter(dr -> !dr.getOwner().equals(login))
+                .collect(Collectors.toCollection(PriorityQueue::new));
     }
 
     /**
@@ -184,7 +189,6 @@ public class DragonCollection {
      * @param dragon dragon to be compared with.
      */
     public void removeGreater(Dragon dragon, String login) throws SQLException, NoRightsException {
-        collection.removeIf(drag -> drag.getName().compareTo(dragon.getName()) > 0);
         ArrayList<Dragon> toRemove = collection.stream()
                 .filter(dr -> dr.compareTo(dragon) > 0 && dr.getOwner().equals(login))
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -194,5 +198,4 @@ public class DragonCollection {
             collection.remove(dr);
         }
     }
-
 }

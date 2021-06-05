@@ -49,6 +49,12 @@ public class Process {
         commands.put("exit", new ExitCommand(input));
     }
 
+    public Process(Input source, ConnectionManager cm, String login, byte[] password) {
+        this(source, cm);
+        this.login = login;
+        this.password = password;
+    }
+
     public HashMap<String, Command> getCommands() {
         return commands;
     }
@@ -83,8 +89,8 @@ public class Process {
 
     private void authorize(){
         Response response = new Response();
-        boolean register = input.needRegistration();
         while (true) {
+            boolean register = input.needRegistration();
             login = input.inputLogin();
             try {
                 password = MessageDigest.getInstance("SHA-512").digest(input.inputPassword().getBytes());
@@ -193,5 +199,13 @@ public class Process {
         } else {
             System.out.println(response.getMessage());
         }
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public byte[] getPassword() {
+        return password;
     }
 }

@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -30,9 +31,10 @@ abstract public class Input implements Serializable {
 
     public String inputPassword() {
         System.out.print("Password: ");
-        Console console = System.console();
-        char[] password = console.readPassword();
-        return new String(password);
+//        Console console = System.console();
+//        char[] password = console.readPassword();
+//        return new String(password);
+        return sc.nextLine().trim();
     }
 
     public boolean needRegistration() throws WrongInputFormatException {

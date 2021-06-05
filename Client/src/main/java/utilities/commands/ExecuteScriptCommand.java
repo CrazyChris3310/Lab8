@@ -10,6 +10,7 @@ import utilities.Process;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
+import java.util.NoSuchElementException;
 
 
 /**
@@ -65,8 +66,12 @@ public class ExecuteScriptCommand extends Command{
         }
         cManager.addToPaths(path);
 
-        Process fileReader = new Process(inp, cManager);
-        fileReader.defineFileCommand();
+        Process fileReader = new Process(inp, cManager, proc.getLogin(), proc.getPassword());
+        try {
+            fileReader.defineFileCommand();
+        } catch (NoSuchElementException e) {
+            System.out.println("Wrong data in the file");
+        }
 
         cManager.getPaths().remove(path);
         return true;

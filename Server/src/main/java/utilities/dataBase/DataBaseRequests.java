@@ -123,9 +123,10 @@ public class DataBaseRequests {
 
     public void removeById(long id, String login) throws SQLException, NoRightsException {
         int killerId = checkUserNameAndKillerId(id, login);
-        PreparedStatement statement = connection.prepareStatement("delete from person where id = ?");
-        statement.setInt(1, killerId);
+        PreparedStatement statement;
         if (killerId != 0) {
+            statement = connection.prepareStatement("delete from person where id = ?");
+            statement.setInt(1, killerId);
             statement.execute();
         }
         statement = connection.prepareStatement("delete from dragons where id = ?");

@@ -72,7 +72,6 @@ public class DragonCollection {
         collection.add(dragon);
     }
 
-    // FIXME: totally wrong
     public void updateId(Long id, Dragon dragon, String login) throws NoSuchIdException,
             SQLException, NoRightsException {
         boolean idExists = collection.stream()

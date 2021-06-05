@@ -3,22 +3,24 @@ package utilities.dataBase;
 import exceptions.UserAlreadyExistsException;
 import exceptions.UserNotExistsException;
 import exceptions.WrongPasswordException;
+
+import java.io.Console;
 import java.sql.*;
 import java.util.Arrays;
 
 public class DataBaseConnection {
 
-//    private static final String hostName = "s313111";
-//    private static final String hostPassword = "ndw141";
-//    private static final String URL = "jdbc:postgresql://pg:5432/studs";
+    private static final String URL = "jdbc:postgresql://pg:5432/studs";
 
-    private static final String hostName = "postgres";
-    private static final String hostPassword = "ndw141";
-    private static final String URL = "jdbc:postgresql://localhost:1337/postgres";
 
-    private Connection connection;
+    private final Connection connection;
 
     protected DataBaseConnection() throws SQLException {
+        Console console = System.console();
+        System.out.print("Login for database: ");
+        String hostName = console.readLine();
+        System.out.print("Password for database: ");
+        String hostPassword = new String(console.readPassword());
         connection = DriverManager.getConnection(URL, hostName, hostPassword);
     }
 

@@ -31,10 +31,9 @@ abstract public class Input implements Serializable {
 
     public String inputPassword() {
         System.out.print("Password: ");
-//        Console console = System.console();
-//        char[] password = console.readPassword();
-//        return new String(password);
-        return sc.nextLine().trim();
+        Console console = System.console();
+        char[] password = console.readPassword();
+        return new String(password);
     }
 
     public boolean needRegistration() throws WrongInputFormatException {

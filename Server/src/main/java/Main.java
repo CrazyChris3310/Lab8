@@ -17,7 +17,7 @@ public class Main {
             System.out.println("Wrong data in the file");
             return;
         } catch (SQLException e) {
-            System.out.println("Error happened while connecting to database" + e.getMessage());
+            System.out.println("Error happened while connecting to database. " + e.getMessage());
             return;
         }
 

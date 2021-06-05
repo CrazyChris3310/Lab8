@@ -10,17 +10,18 @@ import java.util.Arrays;
 
 public class DataBaseConnection {
 
-    private static final String URL = "jdbc:postgresql://pg:5432/studs";
+    private static String hostName;
+    private static String hostPassword;
+    private static String URL = "jdbc:postgresql://pg:5432/studs";
 
+//    private static final String hostName = "postgres";
+//    private static final String hostPassword = "ndw141";
+//    private static final String URL = "jdbc:postgresql://localhost:1337/postgres";
 
-    private final Connection connection;
+    private Connection connection;
+    private static volatile DataBaseConnection instance;
 
     protected DataBaseConnection() throws SQLException {
-        Console console = System.console();
-        System.out.print("Login for database: ");
-        String hostName = console.readLine();
-        System.out.print("Password for database: ");
-        String hostPassword = new String(console.readPassword());
         connection = DriverManager.getConnection(URL, hostName, hostPassword);
     }
 
@@ -63,7 +64,20 @@ public class DataBaseConnection {
         return connection;
     }
 
-    public static DataBaseConnection getInstance() throws SQLException {
-        return new DataBaseConnection();
+    public static DataBaseConnection getInstance() {
+            if (instance == null) {
+                Console console = System.console();
+                System.out.print("Database login: ");
+                hostName = console.readLine();
+                System.out.print("Database password: ");
+                hostPassword = new String(console.readPassword());
+                try {
+                    instance = new DataBaseConnection();
+                } catch (SQLException e) {
+                    System.out.println("Error happened" + e.getMessage());
+                    System.exit(0);
+                }
+            }
+            return instance;
     }
 }

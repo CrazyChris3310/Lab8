@@ -31,7 +31,7 @@ public class DataBaseRequests {
             dragon.setCreationDate(ZonedDateTime.parse(set.getString("creationDateTime")));
             dragon.setCoordinates(new Coordinates(set.getLong("xCord"), set.getFloat("yCord")));
             dragon.setAge(set.getInt("age"));
-            dragon.setDescription(set.getString("description")) ;
+            dragon.setDescription(set.getString("description"));
             if (set.getLong("wingspan") == 0) {
                 dragon.setWingspan(null);
             } else {

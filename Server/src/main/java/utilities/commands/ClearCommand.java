@@ -23,8 +23,8 @@ public class ClearCommand extends Command {
     /**
      * Method removes everything from collection.
      *
-     * @return
      * @param login
+     * @return
      */
     @Override
     public Response execute(String login) throws NoSuchKillerException, NoSuchIdException, SQLException, NoRightsException {

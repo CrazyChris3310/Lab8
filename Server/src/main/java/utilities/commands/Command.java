@@ -39,8 +39,8 @@ abstract public class Command implements Serializable {
     /**
      * Executes command.
      *
-     * @return
      * @param login
+     * @return
      */
     abstract public Response execute(String login) throws NoSuchKillerException, NoSuchIdException, SQLException, NoRightsException;
 

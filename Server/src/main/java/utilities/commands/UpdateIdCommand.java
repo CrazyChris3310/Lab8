@@ -26,8 +26,8 @@ public class UpdateIdCommand extends Command {
     /**
      * Method inputs id and then changes fields of dragon with given id to new ones.
      *
-     * @return
      * @param login
+     * @return
      */
     @Override
     public Response execute(String login) throws NoSuchKillerException, NoSuchIdException, SQLException, NoRightsException {
@@ -37,7 +37,7 @@ public class UpdateIdCommand extends Command {
 //        dragon.setCreationDate(creation);
 //        drg.add(dragon);
 
-        drg.updateId(id, dragon,login);
+        drg.updateId(id, dragon, login);
 
         return new Response();
     }

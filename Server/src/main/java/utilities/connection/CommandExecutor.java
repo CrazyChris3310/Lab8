@@ -77,8 +77,7 @@ public class CommandExecutor implements Callable<Response> {
             response.setMessage("Unable to connect to database" + e.getMessage());
         } catch (NoRightsException e) {
             response.setMessage("You don't have rights to modify this dragon");
-        }
-        finally {
+        } finally {
             logger.info(command.getName() + " command executed");
             locker.unlock();
         }

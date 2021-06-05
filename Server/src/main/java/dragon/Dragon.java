@@ -23,19 +23,21 @@ public class Dragon implements Comparable<Dragon>, Serializable {
 
     private static final long serialVersionUID = 201L;
 
-    public Dragon() {}
+    public Dragon() {
+    }
 
     /**
      * Construct dragon with given parameters from the csv file.
-     * @param id dragon's id.
-     * @param name dragon's name.
-     * @param coordinates dragon's coordinates.
+     *
+     * @param id           dragon's id.
+     * @param name         dragon's name.
+     * @param coordinates  dragon's coordinates.
      * @param creationTime dragon's creation time.
-     * @param age dragon's age.
-     * @param description dragon's description.
-     * @param wingspan dragon's wingspan.
-     * @param type dragon's type.
-     * @param killer dragon's killer.
+     * @param age          dragon's age.
+     * @param description  dragon's description.
+     * @param wingspan     dragon's wingspan.
+     * @param type         dragon's type.
+     * @param killer       dragon's killer.
      */
     public Dragon(Long id, String name, Coordinates coordinates, String creationTime, int age, String description,
                   Long wingspan, DragonType type, Person killer) {
@@ -52,13 +54,14 @@ public class Dragon implements Comparable<Dragon>, Serializable {
 
     /**
      * Construct dragon with given parameters when it is created by commands.
-     * @param name dragon's name.
+     *
+     * @param name        dragon's name.
      * @param coordinates dragon's coordinates.
-     * @param age dragon's age.
+     * @param age         dragon's age.
      * @param description dragon's description.
-     * @param wingspan dragon's wingspan.
-     * @param type dragon's type.
-     * @param killer dragon's killer.
+     * @param wingspan    dragon's wingspan.
+     * @param type        dragon's type.
+     * @param killer      dragon's killer.
      */
     public Dragon(String name, Coordinates coordinates, int age, String description,
                   Long wingspan, DragonType type, Person killer) {
@@ -73,7 +76,6 @@ public class Dragon implements Comparable<Dragon>, Serializable {
     }
 
     /**
-     *
      * @return dragon's id.
      */
     public Long getId() {
@@ -102,7 +104,6 @@ public class Dragon implements Comparable<Dragon>, Serializable {
     }
 
     /**
-     *
      * @return dragon's creation date and time.
      */
     public ZonedDateTime getCreationDate() {
@@ -139,6 +140,7 @@ public class Dragon implements Comparable<Dragon>, Serializable {
 
     /**
      * Sets id to this dragon.
+     *
      * @param id id of the dragon.
      */
     public void setId(Long id) {
@@ -152,6 +154,7 @@ public class Dragon implements Comparable<Dragon>, Serializable {
 
     /**
      * Sets given creation date and time.
+     *
      * @param zdt date and time to be set.
      */
     public void setCreationDate(ZonedDateTime zdt) {
@@ -161,7 +164,7 @@ public class Dragon implements Comparable<Dragon>, Serializable {
     @Override
     public String toString() {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss xxxxx");
-        return  "id: " + id + "\n" +
+        return "id: " + id + "\n" +
                 "name: " + name + "\n" +
                 "coordinates: " + coordinates + "\n" +
                 "creationDate: " + fmt.format(creationDate) + "\n" +

@@ -14,6 +14,7 @@ public class Coordinates implements Serializable {
 
     /**
      * Defines coordinates of dragon.
+     *
      * @param x coordinate on x.
      * @param y coordinate on y.
      */
@@ -23,7 +24,6 @@ public class Coordinates implements Serializable {
     }
 
     /**
-     *
      * @return value of x coordinate.
      */
     public Long getX() {
@@ -31,7 +31,6 @@ public class Coordinates implements Serializable {
     }
 
     /**
-     *
      * @return value of x coordinate.
      */
     public float getY() {
@@ -40,7 +39,7 @@ public class Coordinates implements Serializable {
 
     @Override
     public String toString() {
-        return  "x = " + x + ", y = " + y;
+        return "x = " + x + ", y = " + y;
     }
 
     @Override

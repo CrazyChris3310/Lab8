@@ -32,7 +32,7 @@ public class DataReceiver implements Callable<Request> {
                 channel.read(buf);
             } while (buf.hasRemaining());
 
-            ((Buffer)buf).flip();
+            ((Buffer) buf).flip();
             int arraySize = buf.getInt();
 
             buf = ByteBuffer.allocate(arraySize);

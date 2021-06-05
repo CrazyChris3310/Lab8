@@ -24,8 +24,8 @@ public class ExecuteScriptCommand extends Command {
     /**
      * Method inputs file path to script and executes it if it's valid.
      *
-     * @return
      * @param login
+     * @return
      */
     @Override
     public Response execute(String login) throws NoSuchKillerException, NoSuchIdException, SQLException, NoRightsException {

@@ -25,8 +25,8 @@ public class PrintDescendingCommand extends Command {
     /**
      * Method prints elements of collection in descending order.
      *
-     * @return
      * @param login
+     * @return
      */
     @Override
     public Response execute(String login) throws NoSuchKillerException, NoSuchIdException, SQLException, NoRightsException {

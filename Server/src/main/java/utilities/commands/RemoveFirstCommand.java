@@ -23,8 +23,8 @@ public class RemoveFirstCommand extends Command {
     /**
      * Method removes first element from collection.
      *
-     * @return
      * @param login
+     * @return
      */
     @Override
     public Response execute(String login) throws NoSuchKillerException, NoSuchIdException, SQLException, NoRightsException {

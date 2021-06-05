@@ -25,8 +25,8 @@ public class RemoveAnyByKillerCommand extends Command {
     /**
      * Method inputs killer and removes an element with the same killer from collection.
      *
-     * @return
      * @param login
+     * @return
      */
     @Override
     public Response execute(String login) throws NoSuchKillerException, NoSuchIdException, SQLException, NoRightsException {

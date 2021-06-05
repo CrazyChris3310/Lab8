@@ -23,8 +23,8 @@ public class HistoryCommand extends Command {
     /**
      * Method shows 14 last commands.
      *
-     * @return
      * @param login
+     * @return
      */
     @Override
     public Response execute(String login) throws NoSuchKillerException, NoSuchIdException, SQLException, NoRightsException {

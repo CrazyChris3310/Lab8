@@ -24,8 +24,8 @@ public class RemoveByIdCommand extends Command {
     /**
      * Method inputs id and removes an element with the same id from collection.
      *
-     * @return
      * @param login
+     * @return
      */
     @Override
     public Response execute(String login) throws NoSuchKillerException, NoSuchIdException, SQLException, NoRightsException {

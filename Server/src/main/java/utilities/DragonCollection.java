@@ -174,7 +174,7 @@ public class DragonCollection {
     /**
      * Removes first element in collection.
      */
-    public void removeFirst(String login) throws SQLException, NoRightsException{
+    public void removeFirst(String login) throws SQLException, NoRightsException {
         Dragon toRemove = collection.peek();
         if (toRemove != null) {
             requests.removeById(toRemove.getId(), login);

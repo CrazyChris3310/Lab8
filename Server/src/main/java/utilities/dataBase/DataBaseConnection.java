@@ -12,7 +12,7 @@ public class DataBaseConnection {
 
     private static String hostName;
     private static String hostPassword;
-    private static String URL = "jdbc:postgresql://pg:5432/studs";
+    private static String URL = "jdbc:postgresql://pg:5432/";
 
 //    private static final String hostName = "postgres";
 //    private static final String hostPassword = "ndw141";
@@ -65,19 +65,21 @@ public class DataBaseConnection {
     }
 
     public static DataBaseConnection getInstance() {
-            if (instance == null) {
-                Console console = System.console();
-                System.out.print("Database login: ");
-                hostName = console.readLine();
-                System.out.print("Database password: ");
-                hostPassword = new String(console.readPassword());
-                try {
-                    instance = new DataBaseConnection();
-                } catch (SQLException e) {
-                    System.out.println("Error happened" + e.getMessage());
-                    System.exit(0);
-                }
+        if (instance == null) {
+            Console console = System.console();
+            System.out.print("Database name: ");
+            URL += console.readLine();
+            System.out.print("Database login: ");
+            hostName = console.readLine();
+            System.out.print("Database password: ");
+            hostPassword = new String(console.readPassword());
+            try {
+                instance = new DataBaseConnection();
+            } catch (SQLException e) {
+                System.out.println("Error happened" + e.getMessage());
+                System.exit(0);
             }
-            return instance;
+        }
+        return instance;
     }
 }

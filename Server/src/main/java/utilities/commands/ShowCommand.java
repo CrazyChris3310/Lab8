@@ -24,8 +24,8 @@ public class ShowCommand extends Command {
     /**
      * Method prints each element of collection.
      *
-     * @return
      * @param login
+     * @return
      */
     @Override
     public Response execute(String login) throws NoSuchKillerException, NoSuchIdException, SQLException, NoRightsException {

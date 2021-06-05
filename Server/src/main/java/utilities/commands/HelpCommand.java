@@ -27,8 +27,8 @@ public class HelpCommand extends Command {
     /**
      * Method shows information about all commands.
      *
-     * @return
      * @param login
+     * @return
      */
     @Override
     public Response execute(String login) throws NoSuchKillerException, NoSuchIdException, SQLException, NoRightsException {

@@ -24,7 +24,6 @@ public class Process {
     private ArrayList<SocketChannel> clients;
     private ArrayList<Future<Request>> receivedData;
     private ArrayList<Future<Response>> executedData;
-    private ArrayList<Future<SocketChannel>> readyChannels;
 
     private ExecutorService executor;
 
@@ -42,7 +41,6 @@ public class Process {
         clients = new ArrayList<>();
         receivedData = new ArrayList<>();
         executedData = new ArrayList<>();
-        readyChannels = new ArrayList<>();
 
         executor = Executors.newCachedThreadPool();
 
@@ -51,8 +49,6 @@ public class Process {
 
     public void run() {
         while (true) {
-            byte[] data;
-            Response response = new Response();
 
             try {
                 SocketChannel channel = accepter.accept();
@@ -65,7 +61,7 @@ public class Process {
                 logger.warn("IOException happened while trying to accept client", e);
             }
 
-            for (Iterator<SocketChannel> iterator = clients.iterator(); iterator.hasNext();) {
+            for (Iterator<SocketChannel> iterator = clients.iterator(); iterator.hasNext(); ) {
                 SocketChannel channel = iterator.next();
                 FutureTask<Request> result = new FutureTask<>(new DataReceiver(logger, channel));
                 receivedData.add(result);
@@ -73,13 +69,12 @@ public class Process {
                 iterator.remove();
             }
 
-            for (Iterator<Future<Request>> iterator = receivedData.iterator(); iterator.hasNext();) {
+            for (Iterator<Future<Request>> iterator = receivedData.iterator(); iterator.hasNext(); ) {
                 Future<Request> requestFuture = iterator.next();
                 if (requestFuture.isCancelled()) {
                     logger.warn("Receiving task was cancelled");
                     iterator.remove();
-                }
-                else if (requestFuture.isDone()) {
+                } else if (requestFuture.isDone()) {
                     try {
                         Request request = requestFuture.get();
                         FutureTask<Response> futureResponse = new FutureTask<>(new CommandExecutor(request, collection, logger));
@@ -94,17 +89,15 @@ public class Process {
                 }
             }
 
-            for (Iterator<Future<Response>> iterator = executedData.iterator(); iterator.hasNext();) {
+            for (Iterator<Future<Response>> iterator = executedData.iterator(); iterator.hasNext(); ) {
                 Future<Response> responseFuture = iterator.next();
                 if (responseFuture.isCancelled()) {
                     logger.warn("Sending was unsuccessful");
                     iterator.remove();
                 } else if (responseFuture.isDone()) {
                     try {
-                        response = responseFuture.get();
-                        FutureTask<SocketChannel> readyChannel = new FutureTask<>(new DataWriter(logger, response));
-                        readyChannels.add(readyChannel);
-                        new Thread(readyChannel).start();
+                        Response response = responseFuture.get();
+                        new Thread(new DataWriter(logger, response)).start();
                     } catch (ExecutionException e) {
                         logger.warn("Computation of receiving thread wasn't successful", e);
                     } catch (InterruptedException e) {
@@ -113,23 +106,6 @@ public class Process {
                     iterator.remove();
                 }
             }
-//
-//            for (Iterator<Future<SocketChannel>> iterator = readyChannels.iterator(); iterator.hasNext();) {
-//                Future<SocketChannel> futureChannel = iterator.next();
-//                try {
-//                    if (futureChannel.isCancelled()) {
-//                        logger.warn("Sending was cancelled");
-//                        iterator.remove();
-//                    } else if (futureChannel.isDone()) {
-//                        clients.add(futureChannel.get());
-//                        iterator.remove();
-//                    }
-//                } catch (InterruptedException e) {
-//                    logger.error("Thread interrupted.", e);
-//                } catch (ExecutionException e) {
-//                    logger.error("Error in execution", e);
-//                }
-//            }
 
         }
     }

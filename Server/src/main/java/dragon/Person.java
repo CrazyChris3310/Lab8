@@ -1,4 +1,5 @@
 package dragon;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,16 +19,18 @@ public class Person implements Serializable {
 
     private static final long serialVersionUID = 202L;
 
-    public Person() {}
+    public Person() {
+    }
 
     /**
      * Constructs a killer with given parameters.
-     * @param n name of the killer.
-     * @param time date and time of birth.
-     * @param eye eye color.
-     * @param hair hair color.
+     *
+     * @param n       name of the killer.
+     * @param time    date and time of birth.
+     * @param eye     eye color.
+     * @param hair    hair color.
      * @param country country of birth.
-     * @param loc location of killer.
+     * @param loc     location of killer.
      */
     public Person(String n, String time, Color eye, Color hair, Country country, Location loc) {
         name = n;
@@ -39,7 +42,6 @@ public class Person implements Serializable {
     }
 
     /**
-     *
      * @return time and date of birth.
      */
     public LocalDateTime getBirthday() {
@@ -47,7 +49,6 @@ public class Person implements Serializable {
     }
 
     /**
-     *
      * @return country of birth.
      */
     public Country getNationality() {
@@ -55,7 +56,6 @@ public class Person implements Serializable {
     }
 
     /**
-     *
      * @return hair color.
      */
     public Color getHairColor() {
@@ -63,7 +63,6 @@ public class Person implements Serializable {
     }
 
     /**
-     *
      * @return eye color
      */
     public Color getEyeColor() {
@@ -71,7 +70,6 @@ public class Person implements Serializable {
     }
 
     /**
-     *
      * @return name of the killer.
      */
     public String getName() {
@@ -79,7 +77,6 @@ public class Person implements Serializable {
     }
 
     /**
-     *
      * @return location of the killer.
      */
     public Location getLocation() {

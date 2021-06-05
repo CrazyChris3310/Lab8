@@ -27,8 +27,8 @@ public class PrintFieldDescendingAgeCommand extends Command {
     /**
      * Method prints age field of each element in descending error.
      *
-     * @return
      * @param login
+     * @return
      */
     @Override
     public Response execute(String login) throws NoSuchKillerException, NoSuchIdException, SQLException, NoRightsException {

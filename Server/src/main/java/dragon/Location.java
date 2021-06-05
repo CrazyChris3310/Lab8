@@ -21,7 +21,6 @@ public class Location implements Serializable {
     }
 
     /**
-     *
      * @return x coordinate
      */
     public int getX() {
@@ -29,7 +28,6 @@ public class Location implements Serializable {
     }
 
     /**
-     *
      * @return y coordinate
      */
     public Long getY() {
@@ -45,7 +43,7 @@ public class Location implements Serializable {
 
     @Override
     public String toString() {
-        return  String.format("x = %d, y = %d, z = %d", x, y, z);
+        return String.format("x = %d, y = %d, z = %d", x, y, z);
     }
 
     @Override

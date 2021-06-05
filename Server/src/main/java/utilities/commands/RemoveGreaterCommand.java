@@ -25,8 +25,8 @@ public class RemoveGreaterCommand extends Command {
     /**
      * Method inputs a dragon and removes each dragon that is greater that entered.
      *
-     * @return
      * @param login
+     * @return
      */
     @Override
     public Response execute(String login) throws NoSuchKillerException, NoSuchIdException, SQLException, NoRightsException {

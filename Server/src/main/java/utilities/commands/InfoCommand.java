@@ -25,8 +25,8 @@ public class InfoCommand extends Command {
     /**
      * Method shows information about collection.
      *
-     * @return
      * @param login
+     * @return
      */
     @Override
     public Response execute(String login) throws NoSuchKillerException, NoSuchIdException, SQLException, NoRightsException {

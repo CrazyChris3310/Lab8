@@ -10,7 +10,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.Callable;
 
-public class DataWriter implements Callable<SocketChannel> {
+public class DataWriter implements Runnable {
 
     Logger logger;
     Response response;
@@ -21,7 +21,7 @@ public class DataWriter implements Callable<SocketChannel> {
     }
 
     @Override
-    public SocketChannel call() {
+    public void run() {
 
         SocketChannel channel = response.getDestination();
         try {
@@ -38,10 +38,7 @@ public class DataWriter implements Callable<SocketChannel> {
             baos.close();
         } catch (IOException e) {
             logger.error("IOException happened while sending file. " + e.getMessage());
-            return channel;
         }
-
-        return channel;
 
     }
 }

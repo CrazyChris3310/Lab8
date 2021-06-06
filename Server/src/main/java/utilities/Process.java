@@ -3,6 +3,7 @@ package utilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utilities.connection.*;
+import utilities.dataBase.DataBaseConnection;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -14,6 +15,7 @@ import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Process {
 
@@ -26,10 +28,12 @@ public class Process {
     private ArrayList<Future<Response>> executedData;
 
     private ExecutorService executor;
+    private ReentrantLock locker;
 
     private static Logger logger = LogManager.getLogger();
+    private DataBaseConnection dbc;
 
-    public Process(DragonCollection drg, int port) throws AlreadyBoundException, IOException {
+    public Process(DragonCollection drg, DataBaseConnection dbc, int port) throws AlreadyBoundException, IOException {
         adr = new InetSocketAddress(port);
         collection = drg;
 
@@ -43,6 +47,8 @@ public class Process {
         executedData = new ArrayList<>();
 
         executor = Executors.newCachedThreadPool();
+        locker = new ReentrantLock();
+        this.dbc = dbc;
 
         logger.info("Server has started at " + serverSocketChannel.getLocalAddress());
     }
@@ -77,7 +83,8 @@ public class Process {
                 } else if (requestFuture.isDone()) {
                     try {
                         Request request = requestFuture.get();
-                        FutureTask<Response> futureResponse = new FutureTask<>(new CommandExecutor(request, collection, logger));
+                        FutureTask<Response> futureResponse = new FutureTask<>(
+                                new CommandExecutor(request, collection, logger, locker, dbc));
                         executedData.add(futureResponse);
                         executor.submit(futureResponse);
                     } catch (ExecutionException e) {
@@ -106,7 +113,6 @@ public class Process {
                     iterator.remove();
                 }
             }
-
         }
     }
 

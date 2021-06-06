@@ -12,6 +12,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import dragon.*;
+import utilities.dataBase.DataBaseConnection;
 import utilities.dataBase.DataBaseRequests;
 
 /**
@@ -30,12 +31,12 @@ public class DragonCollection {
     /**
      * Constructs collection and fills it from given file.
      */
-    public DragonCollection() throws IOException, SQLException {
+    public DragonCollection(DataBaseConnection dbc) throws IOException, SQLException {
         initDate = LocalDateTime.now();
         collection = new PriorityQueue<Dragon>();
         history = new LinkedList<>();
         scripts = new HashSet<Path>();
-        requests = new DataBaseRequests();
+        requests = new DataBaseRequests(dbc);
         requests.parseIntoCollection(collection);
     }
 

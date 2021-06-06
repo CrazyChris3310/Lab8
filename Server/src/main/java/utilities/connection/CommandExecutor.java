@@ -8,6 +8,8 @@ import utilities.Response;
 import utilities.commands.Command;
 import utilities.dataBase.DataBaseConnection;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.locks.ReentrantLock;
@@ -18,12 +20,14 @@ public class CommandExecutor implements Callable<Response> {
     private Logger logger;
     private Request request;
     private ReentrantLock locker;
+    DataBaseConnection dbc;
 
-    public CommandExecutor(Request request, DragonCollection drg, Logger logger) {
+    public CommandExecutor(Request request, DragonCollection drg, Logger logger, ReentrantLock locker, DataBaseConnection dbc) {
         this.request = request;
         this.collection = drg;
         this.logger = logger;
-        locker = new ReentrantLock();
+        this.locker = locker;
+        this.dbc = dbc;
     }
 
     @Override
@@ -32,11 +36,11 @@ public class CommandExecutor implements Callable<Response> {
         Response response = new Response();
 
         try {
-            DataBaseConnection connection = DataBaseConnection.getInstance();
+            byte[] hash = MessageDigest.getInstance("SHA-512").digest(request.getPassword().getBytes());
             if (request.isRegistering()) {
-                connection.register(request.getLogin(), request.getPassword());
+                dbc.register(request.getLogin(), hash);
             } else {
-                connection.signIn(request.getLogin(), request.getPassword());
+                dbc.signIn(request.getLogin(), hash);
             }
         } catch (WrongPasswordException e) {
             response.setMessage("Wrong password");
@@ -52,6 +56,11 @@ public class CommandExecutor implements Callable<Response> {
             return response;
         } catch (UserNotExistsException e) {
             response.setMessage("User with such login does not exists");
+            response.setDestination(request.getSource());
+            return response;
+        } catch (NoSuchAlgorithmException e) {
+            response.setMessage("Algorithm \"SHA-512\" not found");
+            logger.error("Algorithm \"SHA-512\" not found");
             response.setDestination(request.getSource());
             return response;
         }

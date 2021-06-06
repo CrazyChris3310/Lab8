@@ -4,24 +4,15 @@ import exceptions.UserAlreadyExistsException;
 import exceptions.UserNotExistsException;
 import exceptions.WrongPasswordException;
 
-import java.io.Console;
 import java.sql.*;
 import java.util.Arrays;
 
 public class DataBaseConnection {
 
-    private static String hostName;
-    private static String hostPassword;
-    private static String URL = "jdbc:postgresql://pg:5432/";
-
-//    private static final String hostName = "postgres";
-//    private static final String hostPassword = "ndw141";
-//    private static final String URL = "jdbc:postgresql://localhost:1337/postgres";
-
     private Connection connection;
-    private static volatile DataBaseConnection instance;
 
-    protected DataBaseConnection() throws SQLException {
+    public DataBaseConnection(String URL, String hostName, String hostPassword) throws SQLException, ClassNotFoundException {
+        Class.forName("org.postgresql.Driver");
         connection = DriverManager.getConnection(URL, hostName, hostPassword);
     }
 
@@ -62,24 +53,5 @@ public class DataBaseConnection {
 
     public Connection getConnection() {
         return connection;
-    }
-
-    public static DataBaseConnection getInstance() {
-        if (instance == null) {
-            Console console = System.console();
-            System.out.print("Database name: ");
-            URL += console.readLine();
-            System.out.print("Database login: ");
-            hostName = console.readLine();
-            System.out.print("Database password: ");
-            hostPassword = new String(console.readPassword());
-            try {
-                instance = new DataBaseConnection();
-            } catch (SQLException e) {
-                System.out.println("Error happened" + e.getMessage());
-                System.exit(0);
-            }
-        }
-        return instance;
     }
 }

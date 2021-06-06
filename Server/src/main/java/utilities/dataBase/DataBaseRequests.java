@@ -13,8 +13,8 @@ public class DataBaseRequests {
     DataBaseConnection dataBaseConnection;
     Connection connection;
 
-    public DataBaseRequests() throws SQLException {
-        dataBaseConnection = DataBaseConnection.getInstance();
+    public DataBaseRequests(DataBaseConnection dbc) {
+        dataBaseConnection = dbc;
         connection = dataBaseConnection.getConnection();
 
     }

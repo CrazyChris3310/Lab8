@@ -7,7 +7,7 @@ import java.nio.channels.SocketChannel;
 
 public class Request implements Serializable {
     private String login;
-    private byte[] password;
+    private String password;
     private Command command;
     private boolean registering;
     transient private SocketChannel source;
@@ -15,7 +15,7 @@ public class Request implements Serializable {
 
     private static final long serialVersionUID = 123456L;
 
-    public byte[] getPassword() {
+    public String getPassword() {
         return password;
     }
 

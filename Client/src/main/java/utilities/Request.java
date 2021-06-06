@@ -7,17 +7,17 @@ import java.nio.channels.SocketChannel;
 
 public class Request implements Serializable {
     private String login;
-    private byte[] password;
+    private String password;
     private Command command;
     private boolean registering;
     private static final long serialVersionUID = 123456L;
 
-    public Request(String login, byte[] password) {
+    public Request(String login, String password) {
         this.login = login;
         this.password = password;
     }
 
-    public byte[] getPassword() {
+    public String getPassword() {
         return password;
     }
 

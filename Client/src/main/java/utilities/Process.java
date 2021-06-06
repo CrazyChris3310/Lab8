@@ -21,7 +21,7 @@ public class Process {
     private ConnectionManager connectionManager;
 
     private String login;
-    private byte[] password;
+    private String password;
 
     /**
      * Constructs a {@code Process} with given collection and input source.
@@ -49,7 +49,7 @@ public class Process {
         commands.put("exit", new ExitCommand(input));
     }
 
-    public Process(Input source, ConnectionManager cm, String login, byte[] password) {
+    public Process(Input source, ConnectionManager cm, String login, String password) {
         this(source, cm);
         this.login = login;
         this.password = password;
@@ -92,12 +92,7 @@ public class Process {
         while (true) {
             boolean register = input.needRegistration();
             login = input.inputLogin();
-            try {
-                password = MessageDigest.getInstance("SHA-512").digest(input.inputPassword().getBytes());
-            } catch (NoSuchAlgorithmException e) {
-                System.out.println("Algorithm error");
-                System.exit(0);
-            }
+            password = input.inputPassword();
 
             Request request = new Request(login, password);
             request.setRegistering(register);
@@ -106,15 +101,16 @@ public class Process {
                 connectionManager.connect();
             } catch (ServerUnavailableException e) {
                 System.out.println("Server is temporarily unavailable");
+                continue;
             }
 
             try {
                 connectionManager.send(request);
             } catch (SocketException e) {
-                return;
+                continue;
             } catch (IOException e) {
                 System.out.println("IOException happened. Unable to send data. " + e.getMessage());
-                return;
+                continue;
             }
 
             try {
@@ -205,7 +201,7 @@ public class Process {
         return login;
     }
 
-    public byte[] getPassword() {
+    public String getPassword() {
         return password;
     }
 }

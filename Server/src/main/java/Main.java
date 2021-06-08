@@ -1,5 +1,3 @@
-import exceptions.WrongConfigurationDataException;
-import utilities.ConfigReader;
 import utilities.Process;
 import utilities.DragonCollection;
 import utilities.dataBase.DataBaseConnection;
@@ -7,6 +5,7 @@ import utilities.dataBase.DataBaseConnection;
 import java.io.*;
 import java.nio.channels.AlreadyBoundException;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.Scanner;
 
 public class Main {
@@ -16,16 +15,20 @@ public class Main {
         String login;
         String password;
 
+        File file = new File("config.txt");
+
         try {
-            ConfigReader cf = new ConfigReader();
-            URL = cf.readLine();
-            login = cf.readLine();
-            password = cf.readLine();
-        } catch (IOException e) {
-            System.out.println("Error happened while reading data from config file. " + e.getMessage());
+            Properties properties = new Properties();
+            properties.load(new FileReader(file));
+
+            URL = properties.getProperty("URL");
+            login = properties.getProperty("Login");
+            password = properties.getProperty("Password");
+        } catch (FileNotFoundException e) {
+            System.out.println("Configuration file not found in this directory: " + file.getAbsolutePath());
             return;
-        } catch (WrongConfigurationDataException e) {
-            System.out.println("Wrong format of configuration file");
+        } catch (IOException e) {
+            System.out.println("IOException happened while reading configuration file. " + e.getMessage());
             return;
         }
 

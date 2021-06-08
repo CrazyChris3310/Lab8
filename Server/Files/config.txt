@@ -1,3 +1,0 @@
-URL: jdbc:postgresql://localhost:1337/postgres
-Login: postgres
-Password: ndw141

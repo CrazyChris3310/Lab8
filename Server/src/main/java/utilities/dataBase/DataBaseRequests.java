@@ -49,7 +49,7 @@ public class DataBaseRequests {
                 ps.setInt(1, set.getInt("killerId"));
                 ResultSet rs = ps.executeQuery();
                 rs.next();
-                killer.setName(rs.getString(13));
+                killer.setName(rs.getString("name"));
                 killer.setBirthday(LocalDateTime.parse(rs.getString("birthday")));
                 killer.setEyeColor(Color.valueOf(rs.getString("eyeColor").toUpperCase()));
                 killer.setHairColor(Color.valueOf(rs.getString("hairColor").toUpperCase()));
@@ -137,9 +137,13 @@ public class DataBaseRequests {
     public void updateId(long id, Dragon dragon, String login) throws SQLException, NoRightsException {
 
         int killerId = checkUserNameAndKillerId(id, login);
+        Person killer = dragon.getKiller();
         PreparedStatement ps;
+        ResultSet rs = connection.prepareStatement("SELECT nextval(killerserial)").executeQuery();
+        int newKillerId = rs.getInt("nextval");
+
         ps = connection.prepareStatement("update dragons set name = ?, " +
-                "xcord = ?, yCord = ?, age = ?, description = ?, wingspan = ?, type = ? where id = ?");
+                "xcord = ?, yCord = ?, age = ?, description = ?, wingspan = ?, type = ?, killerid = ? where id = ?");
         ps.setString(1, dragon.getName());
         ps.setLong(2, dragon.getCoordinates().getX());
         ps.setFloat(3, dragon.getCoordinates().getY());
@@ -155,18 +159,23 @@ public class DataBaseRequests {
         } else {
             ps.setString(7, dragon.getType().name().toLowerCase());
         }
-        ps.setLong(8, id);
-        ps.execute();
+        ps.setLong(9, id);
 
-        Person killer = dragon.getKiller();
+        if (killer == null) {
+            ps.setNull(8, Types.INTEGER);
+        } else {
+            PreparedStatement preparedStatement = connection.prepareStatement("update person set name = ?, birthday = ?, eyecolor = ?, haircolor = ?," +
+                    "nationality = ?, xLocation = ?, yLocation = ?, zLocation = ? where id = ?");
 
-        if (killerId == 0) {
-            return;
+            if (killerId == 0) {
+                preparedStatement.setInt(9, newKillerId);
+                ps.setInt(9, newKillerId);
+            } else {
+                preparedStatement.setInt(9, killerId);
+                ps.setInt(9, killerId);
+            }
+            makeStatement(preparedStatement, killer);
         }
-        ps = connection.prepareStatement("update person set name = ?, birthday = ?, eyecolor = ?, haircolor = ?," +
-                "nationality = ?, xLocation = ?, yLocation = ?, zLocation = ? where id = ?");
-        ps.setInt(9, killerId);
-        makeStatement(ps, killer);
     }
 
     private int checkUserNameAndKillerId(long id, String login) throws SQLException, NoRightsException {

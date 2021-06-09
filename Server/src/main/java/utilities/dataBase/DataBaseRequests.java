@@ -139,8 +139,6 @@ public class DataBaseRequests {
         int killerId = checkUserNameAndKillerId(id, login);
         Person killer = dragon.getKiller();
         PreparedStatement ps;
-        ResultSet rs = connection.prepareStatement("SELECT nextval(killerserial)").executeQuery();
-        int newKillerId = rs.getInt("nextval");
 
         ps = connection.prepareStatement("update dragons set name = ?, " +
                 "xcord = ?, yCord = ?, age = ?, description = ?, wingspan = ?, type = ?, killerid = ? where id = ?");
@@ -164,18 +162,36 @@ public class DataBaseRequests {
         if (killer == null) {
             ps.setNull(8, Types.INTEGER);
         } else {
-            PreparedStatement preparedStatement = connection.prepareStatement("update person set name = ?, birthday = ?, eyecolor = ?, haircolor = ?," +
-                    "nationality = ?, xLocation = ?, yLocation = ?, zLocation = ? where id = ?");
+            PreparedStatement preparedStatement;
 
             if (killerId == 0) {
-                preparedStatement.setInt(9, newKillerId);
-                ps.setInt(9, newKillerId);
+                ResultSet rs = connection.prepareStatement("SELECT nextval('killerserial')").executeQuery();
+                rs.next();
+                int newKillerId = rs.getInt("nextval");
+                preparedStatement = connection.prepareStatement("insert into person values( ?, birthday ?," +
+                        " eyecolor = ?, haircolor = ?, nationality = ?, xLocation = ?, yLocation = ?, zLocation = ?, id = ?)");
+                preparedStatement = connection.prepareStatement("insert into person values(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                preparedStatement.setInt(1, newKillerId);
+                preparedStatement.setString(2, killer.getName());
+                preparedStatement.setString(3, killer.getBirthday().toString());
+                preparedStatement.setString(4, killer.getEyeColor().name());
+                preparedStatement.setString(5, killer.getHairColor().name());
+                preparedStatement.setString(6, killer.getNationality().name());
+                preparedStatement.setInt(7, killer.getLocation().getX());
+                preparedStatement.setLong(8, killer.getLocation().getY());
+                preparedStatement.setLong(9, killer.getLocation().getZ());
+                preparedStatement.executeUpdate();
+                ps.setInt(8, newKillerId);
             } else {
+                preparedStatement = connection.prepareStatement("update person set name = ?, birthday = ?," +
+                        " eyecolor = ?, haircolor = ?, nationality = ?, xLocation = ?, yLocation = ?, zLocation = ? where id = ?");
                 preparedStatement.setInt(9, killerId);
-                ps.setInt(9, killerId);
+                ps.setInt(8, killerId);
+                makeStatement(preparedStatement, killer);
             }
-            makeStatement(preparedStatement, killer);
         }
+
+        ps.executeUpdate();
     }
 
     private int checkUserNameAndKillerId(long id, String login) throws SQLException, NoRightsException {

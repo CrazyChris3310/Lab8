@@ -1,1 +1,17 @@
-execute_script Files/script.txt
+update 13
+nordik
+23
+21
+12
+
+
+air
+y
+flask
+1111-11-11 11:11:11
+red
+red
+italy
+2
+2
+4

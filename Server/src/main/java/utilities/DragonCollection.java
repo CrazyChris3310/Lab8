@@ -156,7 +156,7 @@ public class DragonCollection {
             NoRightsException, SQLException {
 
         ArrayList<Dragon> potentialRemoval = collection.stream()
-                .filter(dr -> dr.getKiller().equals(killer))
+                .filter(dr -> killer.equals(dr.getKiller()))
                 .collect(Collectors.toCollection(ArrayList::new));
         if (potentialRemoval.isEmpty())
             throw new NoSuchKillerException();

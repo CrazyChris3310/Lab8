@@ -11,13 +11,23 @@ import java.util.HashSet;
 
 public class ConnectionManager {
 
-    private final SocketAddress adr;
+    private SocketAddress adr;
     private Socket socket;
 
     private HashSet<Path> paths = new HashSet<>();
 
     public ConnectionManager(String ip, int port) {
         adr = new InetSocketAddress(ip, port); // address of server
+    }
+
+    public ConnectionManager() {}
+
+    public void setAdr(SocketAddress adr) {
+        this.adr = adr;
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
     }
 
     public HashSet<Path> getPaths() {

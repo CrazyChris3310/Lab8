@@ -1,11 +1,14 @@
 package utilities;
 
+import dragon.Dragon;
+
 import java.io.Serializable;
 import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 
 public class Response implements Serializable {
 
+    private ArrayList<Dragon> collection;
     private ArrayList<String> answer;
     private String message;
     private boolean toExit;
@@ -29,15 +32,23 @@ public class Response implements Serializable {
         toExit = flag;
     }
 
-    public void setCollection(ArrayList<String> collection) {
+    public void setAnswer(ArrayList<String> collection) {
         this.answer = collection;
+    }
+
+    public ArrayList<Dragon> getCollection() {
+        return collection;
+    }
+
+    public void setCollection(ArrayList<Dragon> collection) {
+        this.collection = collection;
     }
 
     public void setMessage(String message) {
         this.message = message;
     }
 
-    public ArrayList<String> getCollection() {
+    public ArrayList<String> getAnswer() {
         return answer;
     }
 

@@ -15,7 +15,8 @@ public class Main {
         String login;
         String password;
 
-        File file = new File("config.txt");
+//        File file = new File("config.txt");
+        File file = new File("Server\\Files\\config.txt");
 
         try {
             Properties properties = new Properties();

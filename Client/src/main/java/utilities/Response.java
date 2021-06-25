@@ -1,10 +1,13 @@
 package utilities;
 
+import dragon.Dragon;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Response implements Serializable {
 
+    private ArrayList<Dragon> collection;
     private ArrayList<String> answer;
     private String message;
     private boolean successfulConnect;
@@ -24,7 +27,7 @@ public class Response implements Serializable {
         this.answer = list;
     }
 
-    public void setCollection(ArrayList<String> collection) {
+    public void setAnswer(ArrayList<String> collection) {
         this.answer = collection;
     }
 
@@ -40,12 +43,16 @@ public class Response implements Serializable {
         return toExit;
     }
 
-    public ArrayList<String> getCollection() {
+    public ArrayList<String> getAnswer() {
         return answer;
     }
 
     public String getMessage() {
         return message;
+    }
+
+    public ArrayList<Dragon> getCollection() {
+        return collection;
     }
 
     public boolean isSuccessfulConnect() {

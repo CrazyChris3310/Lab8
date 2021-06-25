@@ -35,6 +35,8 @@ public class Person implements Serializable {
         location = loc;
     }
 
+    public Person() {}
+
     /**
      *
      * @return time and date of birth.
@@ -81,6 +83,30 @@ public class Person implements Serializable {
      */
     public Location getLocation() {
         return location;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBirthday(LocalDateTime birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setEyeColor(Color eyeColor) {
+        this.eyeColor = eyeColor;
+    }
+
+    public void setHairColor(Color hairColor) {
+        this.hairColor = hairColor;
+    }
+
+    public void setNationality(Country nationality) {
+        this.nationality = nationality;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     @Override

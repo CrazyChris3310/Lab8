@@ -12,4 +12,5 @@ public enum Color implements Serializable {
     RED,
     ORANGE,
     WHITE;
+
 }

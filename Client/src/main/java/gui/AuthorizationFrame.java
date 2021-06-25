@@ -1,9 +1,12 @@
 package gui;
 
+import input.ConsoleInput;
 import utilities.ConnectionManager;
+import utilities.Process;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class AuthorizationFrame extends JFrame {
 
@@ -11,9 +14,11 @@ public class AuthorizationFrame extends JFrame {
     JPasswordField passwordField;
 
     ConnectionManager connectionManager;
+    Process process;
 
     public AuthorizationFrame(ConnectionManager cm) {
         connectionManager = cm;
+        process = new Process(new ConsoleInput(), connectionManager);
 
         setTitle("Authorization Page");
 
@@ -37,7 +42,7 @@ public class AuthorizationFrame extends JFrame {
         loginField = new JTextField();
         passwordField = new JPasswordField();
 
-        loginField.setPreferredSize(new Dimension(100, 25));;
+        loginField.setPreferredSize(new Dimension(100, 25));
         passwordField.setPreferredSize(new Dimension(100, 25));
 
         JLabel loginLbl = new JLabel("Login: ");
@@ -59,10 +64,32 @@ public class AuthorizationFrame extends JFrame {
         JButton loginBtn = new JButton("Login");
         JButton signUpBtn = new JButton("SignUp");
 
+        loginBtn.addActionListener(e -> {
+            authorize(false);
+        });
+
+        signUpBtn.addActionListener(e -> {
+            authorize(true);
+        });
+
         buttons.add(loginBtn);
         buttons.add(signUpBtn);
 
         add(buttons);
+    }
+
+    private void authorize(boolean register) {
+        String login = loginField.getText();
+        String password = new String(passwordField.getPassword());
+        String errorMessage = process.authorize(register, login, password);
+        if (errorMessage != null) {
+            JOptionPane.showMessageDialog(this, errorMessage, "Error", JOptionPane.WARNING_MESSAGE);
+        } else {
+            process.setLogin(login);
+            process.setPassword(password);
+            dispose();
+            new MainFrame(process);
+        }
     }
 
 }

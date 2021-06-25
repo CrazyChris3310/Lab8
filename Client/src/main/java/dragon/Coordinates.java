@@ -38,6 +38,14 @@ public class Coordinates implements Serializable {
         return y;
     }
 
+    public void setX(Long x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
     @Override
     public String toString() {
         return  "x = " + x + ", y = " + y;

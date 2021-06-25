@@ -1,13 +1,13 @@
 package utilities;
 
+import dragon.Dragon;
 import exceptions.ServerUnavailableException;
 import utilities.commands.*;
 import input.*;
 
 import java.io.IOException;
 import java.net.SocketException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
@@ -19,6 +19,7 @@ public class Process {
     private HashMap<String, Command> commands = new HashMap<>();
     private Input input;
     private ConnectionManager connectionManager;
+    private ArrayList<Dragon> collection;
 
     private String login;
     private String password;
@@ -47,6 +48,7 @@ public class Process {
         commands.put("show", new ShowCommand(input));
         commands.put("update", new UpdateIdCommand(input));
         commands.put("exit", new ExitCommand(input));
+        collection = new ArrayList<>();
     }
 
     public Process(Input source, ConnectionManager cm, String login, String password) {
@@ -63,8 +65,6 @@ public class Process {
      * Method defines commands from console input and executes them.
      */
     public void defineCommand() {
-
-        authorize();
 
         String command;
 
@@ -87,48 +87,39 @@ public class Process {
         }
     }
 
-    private void authorize(){
-        Response response = new Response();
-        while (true) {
-            boolean register = input.needRegistration();
-            login = input.inputLogin();
-            password = input.inputPassword();
+    public String authorize(boolean register, String login, String password){
+        Response response;
 
-            Request request = new Request(login, password);
-            request.setRegistering(register);
+        Request request = new Request(login, password);
+        request.setRegistering(register);
 
-            try {
-                connectionManager.connect();
-            } catch (ServerUnavailableException e) {
-                System.out.println("Server is temporarily unavailable");
-                continue;
-            }
-
-            try {
-                connectionManager.send(request);
-            } catch (SocketException e) {
-                continue;
-            } catch (IOException e) {
-                System.out.println("IOException happened. Unable to send data. " + e.getMessage());
-                continue;
-            }
-
-            try {
-                response = connectionManager.receive();
-            } catch (ClassNotFoundException e) {
-                System.out.println("Class not found");
-            } catch (IOException e) {
-                System.out.println("IOException happened while receiving data");
-            }
-
-            if (response.isSuccessfulConnect()) {
-                break;
-            } else {
-                System.out.println(response.getMessage());
-            }
-
+        try {
+            connectionManager.connect();
+        } catch (ServerUnavailableException e) {
+            return "Server is temporarily unavailable";
         }
 
+        try {
+            connectionManager.send(request);
+        } catch (SocketException e) {
+            return "Socket Exception happened";
+        } catch (IOException e) {
+            return "IOException happened. Unable to send data. ";
+        }
+
+        try {
+            response = connectionManager.receive();
+        } catch (ClassNotFoundException e) {
+            return "Class not found";
+        } catch (IOException e) {
+            return "IOException happened while receiving data";
+        }
+
+        if (response.isSuccessfulConnect()) {
+            return null;
+        } else {
+            return response.getMessage();
+        }
     }
 
     /**
@@ -148,11 +139,9 @@ public class Process {
         }
     }
 
-    private void sendAndExecute(String command) {
+    public void sendAndExecute(String command) {
 
         Command com = commands.get(command);
-        if (!com.execute())
-            return;
 
         try {
             connectionManager.connect();
@@ -192,6 +181,9 @@ public class Process {
             System.exit(0);
         } else if (response.getCollection() != null) {
             response.getCollection().forEach(System.out::println);
+            collection = response.getCollection();
+        } else if (response.getAnswer() != null) {
+            response.getAnswer().forEach(System.out::println);
         } else {
             System.out.println(response.getMessage());
         }
@@ -203,5 +195,16 @@ public class Process {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public ArrayList<Dragon> getCollection() {
+        return collection;
     }
 }

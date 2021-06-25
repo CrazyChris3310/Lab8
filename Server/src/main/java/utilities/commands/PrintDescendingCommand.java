@@ -9,6 +9,7 @@ import utilities.Response;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.stream.Collectors;
 
 /**
  * Command "print_descending".
@@ -30,8 +31,10 @@ public class PrintDescendingCommand extends Command {
      */
     @Override
     public Response execute(String login) throws NoSuchKillerException, NoSuchIdException, SQLException, NoRightsException {
-        return new Response(drg.getCollection().stream()
+        Response response = new Response();
+        response.setCollection(drg.getCollection().stream()
                 .sorted(Comparator.reverseOrder())
-                .collect(ArrayList::new, (ls, o) -> ls.add(o.toString()), ArrayList::addAll));
+                .collect(Collectors.toCollection(ArrayList::new)));
+        return response;
     }
 }

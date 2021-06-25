@@ -10,16 +10,16 @@ import java.util.Objects;
  */
 public class Dragon implements Comparable<Dragon>, Serializable {
 
-    transient private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
-    transient private ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    private ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private int age; //Значение поля должно быть больше 0
     private String description; //Поле может быть null
     private Long wingspan; //Значение поля должно быть больше 0, Поле может быть null
     private DragonType type; //Поле может быть null
     private Person killer; //Поле может быть null
-    transient private String owner;
+    private String owner;
 
     private static final long serialVersionUID = 201L;
 

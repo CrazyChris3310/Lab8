@@ -2,8 +2,18 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
-public class RemovalFrame extends JFrame {
+import dragon.Dragon;
+import dragon.Person;
+import exceptions.NotEnoughDataException;
+import utilities.Process;
+import utilities.commands.Command;
+import utilities.commands.RemoveAnyByKillerCommand;
+import utilities.commands.RemoveByIdCommand;
+import utilities.commands.RemoveGreaterCommand;
+
+public class RemovalFrame extends JFrame implements Parent {
 
     JRadioButton rmById;
     JTextField idField;
@@ -11,7 +21,13 @@ public class RemovalFrame extends JFrame {
     JRadioButton removeGreater;
     JButton removeBtn;
 
-    public RemovalFrame() {
+    InputKillerFrame killerFrame;
+    InputDragonFrame dragonFrame;
+
+    Process process;
+
+    public RemovalFrame(Process process) {
+        this.process = process;
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocation(550, 200);
         setSize(300, 260);
@@ -26,6 +42,29 @@ public class RemovalFrame extends JFrame {
         createFields();
         setVisible(true);
 
+        rmByKiller.addActionListener(e -> {
+            killerFrame = new InputKillerFrame(this, process);
+            killerFrame.init();
+            if (dragonFrame != null) {
+                dragonFrame.dispose();
+            }
+        });
+
+        removeGreater.addActionListener(e -> {
+            dragonFrame = new InputDragonFrame(process, DataActions.REMOVE);
+            dragonFrame.init();
+            if (killerFrame != null) {
+                killerFrame.dispose();
+            }
+        });
+
+        rmById.addActionListener(e -> {
+            if (killerFrame != null) {
+                killerFrame.dispose();
+            } if (dragonFrame != null) {
+                dragonFrame.dispose();
+            }
+        });
 
     }
 
@@ -76,7 +115,34 @@ public class RemovalFrame extends JFrame {
         add(removeGreater);
         add(removeBtn);
 
+        removeBtn.addActionListener(this::mainButtonAction);
 
     }
 
+    // FIXME: Seems like removeById is not working
+    @Override
+    public void mainButtonAction(ActionEvent e) {
+        Command command;
+        if (rmById.isSelected()) {
+            Long id = Long.parseLong(idField.getText());
+            command = new RemoveByIdCommand(id);
+        } else if (rmByKiller.isSelected()) {
+            try {
+                Person killer = killerFrame.buildKiller();
+                command = new RemoveAnyByKillerCommand(killer);
+            } catch (NotEnoughDataException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(),
+                        "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        } else  {
+            dragonFrame.mainButtonAction(e);
+            dispose();
+            return;
+//            Dragon dragon = dragonFrame.buildDragon();
+//            command = new RemoveGreaterCommand(dragon);
+        }
+        process.sendAndExecute(command);
+        dispose();
+    }
 }

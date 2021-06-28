@@ -1,6 +1,7 @@
 package utilities.commands;
 
 import exceptions.IdException;
+import input.ConsoleInput;
 import input.Input;
 
 /**
@@ -15,6 +16,11 @@ public class RemoveByIdCommand extends Command{
         super(input);
         name = "remove_by_id id";
         description = "remove element with given id";
+    }
+
+    public RemoveByIdCommand(Long id) {
+        this(new ConsoleInput());
+        this.id = id;
     }
 
     /**

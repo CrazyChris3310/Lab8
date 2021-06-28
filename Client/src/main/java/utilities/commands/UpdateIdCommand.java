@@ -3,6 +3,7 @@ package utilities.commands;
 import dragon.Dragon;
 import exceptions.IdException;
 import exceptions.WrongInputFormatException;
+import input.ConsoleInput;
 import input.Input;
 
 /**
@@ -18,6 +19,12 @@ public class UpdateIdCommand extends Command{
         super(input);
         name = "update id {element}";
         description = "update the element with given id";
+    }
+
+    public UpdateIdCommand(Long id, Dragon dragon) {
+        this(new ConsoleInput());
+        this.id = id;
+        this.dragon = dragon;
     }
 
     /**

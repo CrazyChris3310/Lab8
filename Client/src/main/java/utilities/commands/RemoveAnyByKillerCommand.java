@@ -2,6 +2,7 @@ package utilities.commands;
 
 import dragon.Person;
 import exceptions.WrongInputFormatException;
+import input.ConsoleInput;
 import input.Input;
 
 /**
@@ -16,6 +17,11 @@ public class RemoveAnyByKillerCommand extends Command{
         super(input);
         name = "remove_any_by_killer killer";
         description = "remove from collection one element with given killer";
+    }
+
+    public RemoveAnyByKillerCommand(Person killer) {
+        this(new ConsoleInput());
+        this.killer = killer;
     }
 
     /**

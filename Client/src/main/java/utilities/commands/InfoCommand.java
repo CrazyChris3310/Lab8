@@ -1,5 +1,6 @@
 package utilities.commands;
 
+import input.ConsoleInput;
 import input.Input;
 
 /**
@@ -13,6 +14,10 @@ public class InfoCommand extends Command{
         super(input);
         name = "info";
         description = "show information about collection";
+    }
+
+    public InfoCommand() {
+        this(new ConsoleInput());
     }
 
     /**

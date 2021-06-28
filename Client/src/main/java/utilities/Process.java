@@ -2,9 +2,11 @@ package utilities;
 
 import dragon.Dragon;
 import exceptions.ServerUnavailableException;
+import gui.MainFrame;
 import utilities.commands.*;
 import input.*;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.SocketException;
 import java.util.ArrayList;
@@ -19,7 +21,8 @@ public class Process {
     private HashMap<String, Command> commands = new HashMap<>();
     private Input input;
     private ConnectionManager connectionManager;
-    private ArrayList<Dragon> collection;
+
+    private MainFrame mainFrame;
 
     private String login;
     private String password;
@@ -48,7 +51,7 @@ public class Process {
         commands.put("show", new ShowCommand(input));
         commands.put("update", new UpdateIdCommand(input));
         commands.put("exit", new ExitCommand(input));
-        collection = new ArrayList<>();
+//        collection = new ArrayList<>();
     }
 
     public Process(Input source, ConnectionManager cm, String login, String password) {
@@ -64,7 +67,7 @@ public class Process {
     /**
      * Method defines commands from console input and executes them.
      */
-    public void defineCommand() {
+    public void startProcess() {
 
         String command;
 
@@ -83,7 +86,50 @@ public class Process {
                 continue;
             }
 
-            sendAndExecute(command);
+            defineCommand(command);
+        }
+    }
+
+    public void defineCommand(String command) {
+        Command com = commands.get(command);
+        if (!com.execute())
+            return;
+        sendAndExecute(com);
+    }
+
+    // TODO: show message dialogs instead od usual console output
+    public void sendAndExecute(Command com) {
+
+        try {
+            connectionManager.connect();
+        } catch (ServerUnavailableException e) {
+            System.out.println("Server is temporarily unavailable");
+            if (com instanceof ExitCommand) {
+                System.exit(0);
+            }
+            return;
+        }
+
+        Request request = new Request(login, password);
+        request.setCommand(com);
+
+        try {
+            connectionManager.send(request);
+        } catch (SocketException e) {
+            return;
+        } catch (IOException e) {
+            System.out.println("IOException happened. Unable to send data");
+            e.printStackTrace();
+            return;
+        }
+
+        try {
+            Response response = connectionManager.receive();
+            processResult(response);
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class not found");
+        } catch (IOException e) {
+            System.out.println("IOException happened while receiving data");
         }
     }
 
@@ -131,7 +177,7 @@ public class Process {
             command = input.next();
 
             if (commands.containsKey(command)) {
-                sendAndExecute(command);
+                defineCommand(command);
             } else {
                 System.out.println("Wrong command!");
                 break;
@@ -139,54 +185,23 @@ public class Process {
         }
     }
 
-    public void sendAndExecute(String command) {
-
-        Command com = commands.get(command);
-
-        try {
-            connectionManager.connect();
-        } catch (ServerUnavailableException e) {
-            System.out.println("Server is temporarily unavailable");
-            if (com instanceof ExitCommand) {
-                System.exit(0);
-            }
-            return;
-        }
-
-        Request request = new Request(login, password);
-        request.setCommand(com);
-
-        try {
-            connectionManager.send(request);
-        } catch (SocketException e) {
-            return;
-        } catch (IOException e) {
-            System.out.println("IOException happened. Unable to send data");
-            e.printStackTrace();
-            return;
-        }
-
-        try {
-            Response response = connectionManager.receive();
-            processResult(response);
-        } catch (ClassNotFoundException e) {
-            System.out.println("Class not found");
-        } catch (IOException e) {
-            System.out.println("IOException happened while receiving data");
-        }
-    }
-
+    // FIXME: make Dialog frames open from GUI
     private void processResult(Response response) {
-        if (response.getToExit()) {
-            System.exit(0);
-        } else if (response.getCollection() != null) {
-            response.getCollection().forEach(System.out::println);
-            collection = response.getCollection();
-        } else if (response.getAnswer() != null) {
-            response.getAnswer().forEach(System.out::println);
-        } else {
-            System.out.println(response.getMessage());
-        }
+        mainFrame.informationReceived(response);
+//        if (response.getToExit()) {
+//            System.exit(0);
+//        } else if (response.getCollection() != null) {
+//            collection = response.getCollection();
+//
+//        } else if (response.getAnswer() != null) {
+//            StringBuilder builder = new StringBuilder();
+//            for (String str: response.getAnswer()) {
+//                builder.append(str).append("\n");
+//            }
+//            JOptionPane.showMessageDialog(null, builder.toString());
+//        } else {
+//            System.out.println(response.getMessage());
+//        }
     }
 
     public String getLogin() {
@@ -200,11 +215,20 @@ public class Process {
     public void setLogin(String login) {
         this.login = login;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public ArrayList<Dragon> getCollection() {
-        return collection;
+//    public ArrayList<Dragon> getCollection() {
+//        return collection;
+//    }
+
+    public ConnectionManager getConnectionManager() {
+        return connectionManager;
+    }
+
+    public void setMainFrame(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
     }
 }

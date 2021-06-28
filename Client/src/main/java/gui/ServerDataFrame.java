@@ -1,5 +1,6 @@
 package gui;
 
+import exceptions.ServerUnavailableException;
 import utilities.ConnectionManager;
 
 import javax.swing.*;
@@ -65,8 +66,14 @@ public class ServerDataFrame extends JFrame {
         cancelBtn.addActionListener(e -> dispose());
         connectBtn.addActionListener(e ->  {
             if (validatePort()) {
-                new AuthorizationFrame(connectionManager);
-                dispose();
+                try {
+                    connectionManager.connect();
+                    new AuthorizationFrame(connectionManager);
+                    dispose();
+                } catch (ServerUnavailableException exception) {
+                    JOptionPane.showMessageDialog(null, "Server is temporarily unavailable",
+                            "Connection Error", JOptionPane.WARNING_MESSAGE);
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Wrong port format", "Error", JOptionPane.ERROR_MESSAGE);
             }

@@ -6,7 +6,6 @@ import utilities.Process;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 public class AuthorizationFrame extends JFrame {
 
@@ -61,8 +60,8 @@ public class AuthorizationFrame extends JFrame {
     private void createButtons() {
         JPanel buttons = new JPanel(new FlowLayout());
 
-        JButton loginBtn = new JButton("Login");
-        JButton signUpBtn = new JButton("SignUp");
+        JButton loginBtn = new JButton("Log in");
+        JButton signUpBtn = new JButton("Sign Up");
 
         loginBtn.addActionListener(e -> {
             authorize(false);
@@ -87,8 +86,9 @@ public class AuthorizationFrame extends JFrame {
         } else {
             process.setLogin(login);
             process.setPassword(password);
+            MainFrame frame = new MainFrame(process);
+            process.setMainFrame(frame);
             dispose();
-            new MainFrame(process);
         }
     }
 

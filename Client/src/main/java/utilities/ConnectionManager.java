@@ -69,8 +69,4 @@ public class ConnectionManager {
         return (Response) ois.readObject();
     }
 
-    public Socket getSocket() {
-        return socket;
-    }
-
 }

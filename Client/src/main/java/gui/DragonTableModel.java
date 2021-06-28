@@ -88,6 +88,7 @@ public class DragonTableModel extends AbstractTableModel {
             case 7: return dragon.getWingspan();
             case 8: return dragon.getType();
             case 9: return killer != null;
+            case 18: return dragon.getOwner();
         }
 
         if (killer == null) {
@@ -96,13 +97,13 @@ public class DragonTableModel extends AbstractTableModel {
 
         switch (col) {
             case 10: return killer.getName();
-            case 12: return killer.getBirthday();
-            case 13: return killer.getEyeColor();
-            case 14: return killer.getHairColor();
-            case 15: return killer.getNationality();
-            case 16: return killer.getLocation().getX();
-            case 17: return killer.getLocation().getY();
-            case 18: return killer.getLocation().getZ();
+            case 11: return killer.getBirthday();
+            case 12: return killer.getEyeColor();
+            case 13: return killer.getHairColor();
+            case 14: return killer.getNationality();
+            case 15: return killer.getLocation().getX();
+            case 16: return killer.getLocation().getY();
+            case 17: return killer.getLocation().getZ();
         }
 
         return null;

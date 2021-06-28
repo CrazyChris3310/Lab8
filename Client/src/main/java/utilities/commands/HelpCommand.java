@@ -1,5 +1,6 @@
 package utilities.commands;
 
+import input.ConsoleInput;
 import input.Input;
 
 import java.util.HashMap;
@@ -17,6 +18,10 @@ public class HelpCommand extends Command{
         this.commands = commands;
         name = "help";
         description = "show information for available commands";
+    }
+
+    public HelpCommand(HashMap<String, Command> commands) {
+        this(new ConsoleInput(), commands);
     }
 
     /**

@@ -1,5 +1,6 @@
 package utilities.commands;
 
+import input.ConsoleInput;
 import input.Input;
 
 /**
@@ -8,6 +9,10 @@ import input.Input;
 public class ShowCommand extends Command{
 
     private static final long serialVersionUID = 102L;
+
+    public ShowCommand() {
+        this(new ConsoleInput());
+    }
 
     public ShowCommand(Input input) {
         super(input);

@@ -1,5 +1,6 @@
 package utilities.commands;
 
+import input.ConsoleInput;
 import input.Input;
 
 /**
@@ -13,6 +14,10 @@ public class HistoryCommand extends Command{
         super(input);
         name = "history";
         description = "show last 14 commands";
+    }
+
+    public HistoryCommand() {
+        this(new ConsoleInput());
     }
 
     /**

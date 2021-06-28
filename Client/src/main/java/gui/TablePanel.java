@@ -2,6 +2,8 @@ package gui;
 
 import dragon.Dragon;
 import utilities.Process;
+import utilities.commands.ShowCommand;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -49,39 +51,28 @@ public class TablePanel extends JPanel {
 
         add(paneWithTable, BorderLayout.CENTER);
 
-//        new Thread(() -> {
-//            while(true) {
-//                process.sendAndExecute("show");
-//                model.setCollection(process.getCollection());
+
+//        SwingWorker<ArrayList<Dragon>, Void> worker = new SwingWorker<ArrayList<Dragon>, Void>() {
+//            @Override
+//            protected ArrayList<Dragon> doInBackground() throws Exception {
+//                process.sendAndExecute(new ShowCommand());
+//                return process.getCollection();
+//            }
+//
+//            @Override
+//            protected void done() {
 //                try {
-//                    Thread.sleep(5000);
-//                } catch (InterruptedException e) {
-//                    JOptionPane.showMessageDialog(null, "Interrupted", "Error", JOptionPane.ERROR_MESSAGE);
+//                    model.setCollection(get());
+//                } catch (Exception e) {
+//                    JOptionPane.showMessageDialog(null, "Exception", "error", JOptionPane.ERROR_MESSAGE);
 //                }
 //            }
-//        }).start();
-
-        SwingWorker<ArrayList<Dragon>, Void> worker = new SwingWorker<ArrayList<Dragon>, Void>() {
-            @Override
-            protected ArrayList<Dragon> doInBackground() throws Exception {
-                process.sendAndExecute("show");
-                return process.getCollection();
-            }
-
-            @Override
-            protected void done() {
-                try {
-                    model.setCollection(get());
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Exception", "error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        };
-
-        Timer timer = new Timer(5000, (e)-> {
-            worker.execute();
-        });
-        timer.start();
+//        };
+//
+//        Timer timer = new Timer(5000, (e)-> {
+//            worker.execute();
+//        });
+//        timer.start();
 
 
     }
@@ -92,5 +83,9 @@ public class TablePanel extends JPanel {
 
     public void setTableCollection(ArrayList<Dragon> collection) {
         model.setCollection(collection);
+    }
+
+    public JTable getTable() {
+        return table;
     }
 }

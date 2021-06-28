@@ -2,14 +2,17 @@ package utilities.commands;
 
 import exceptions.WrongInputFormatException;
 import exceptions.WrongPathRightsException;
+import input.ConsoleInput;
 import input.FileInput;
 import input.Input;
 import utilities.ConnectionManager;
 import utilities.Process;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.NoSuchElementException;
 
 
@@ -21,6 +24,7 @@ public class ExecuteScriptCommand extends Command{
     private static final long serialVersionUID = 104L;
     transient ConnectionManager cManager;
     transient Process proc;
+    Path path;
 
     public ExecuteScriptCommand(Input input, ConnectionManager cm, Process process) {
         super(input);
@@ -28,6 +32,12 @@ public class ExecuteScriptCommand extends Command{
         proc = process;
         name = "execute_script file_name";
         description = "read and execute script from given file";
+        path = null;
+    }
+
+    public ExecuteScriptCommand(Process process, File file) {
+        this(new ConsoleInput(), process.getConnectionManager(), process);
+        path = file.toPath();
     }
 
     /**
@@ -36,18 +46,19 @@ public class ExecuteScriptCommand extends Command{
      */
     @Override
     public boolean execute() {
-        Path path;
-        try {
-            path = input.inputFilePath();
-        } catch (WrongInputFormatException e) {
-            System.out.println("Wrong script path format");
-            return false;
-        } catch (WrongPathRightsException e) {
-            System.out.println(e.getMessage());
-            return false;
-        } catch (InvalidPathException e) {
-            System.out.println("Invalid path");
-            return false;
+        if (path == null) {
+            try {
+                path = input.inputFilePath();
+            } catch (WrongInputFormatException e) {
+                System.out.println("Wrong script path format");
+                return false;
+            } catch (WrongPathRightsException e) {
+                System.out.println(e.getMessage());
+                return false;
+            } catch (InvalidPathException e) {
+                System.out.println("Invalid path");
+                return false;
+            }
         }
 
 
@@ -70,7 +81,7 @@ public class ExecuteScriptCommand extends Command{
         try {
             fileReader.defineFileCommand();
         } catch (NoSuchElementException e) {
-            System.out.println("Wrong data in the file");
+            System.out.println("Wrong data in the file." + e.getMessage());
         }
 
         cManager.getPaths().remove(path);

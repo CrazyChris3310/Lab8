@@ -129,6 +129,8 @@ public class DragonCollection {
      * @param command command name to add in history.
      */
     public void updateHistory(String command) {
+        if (command.equals("show"))
+            return;
         if (history.size() >= 14)
             history.removeFirst();
         history.add(command);

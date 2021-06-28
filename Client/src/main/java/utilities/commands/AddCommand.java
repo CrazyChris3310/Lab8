@@ -2,6 +2,7 @@ package utilities.commands;
 
 import dragon.Dragon;
 import exceptions.WrongInputFormatException;
+import input.ConsoleInput;
 import input.Input;
 
 /**
@@ -16,6 +17,11 @@ public class AddCommand extends Command {
         super(input);
         name = "add {element}";
         description = "add new element to collection";
+    }
+
+    public AddCommand(Dragon dragon) {
+        this(new ConsoleInput());
+        this.dragon = dragon;
     }
 
     /**

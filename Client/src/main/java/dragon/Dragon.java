@@ -69,6 +69,8 @@ public class Dragon implements Comparable<Dragon>, Serializable {
         this.creationDate = ZonedDateTime.now();
     }
 
+    public Dragon() {}
+
     /**
      *
      * @return dragon's id.

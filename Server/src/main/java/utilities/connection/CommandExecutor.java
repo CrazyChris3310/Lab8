@@ -6,6 +6,7 @@ import utilities.DragonCollection;
 import utilities.Request;
 import utilities.Response;
 import utilities.commands.Command;
+import utilities.commands.ShowCommand;
 import utilities.dataBase.DataBaseConnection;
 
 import java.security.MessageDigest;
@@ -34,6 +35,12 @@ public class CommandExecutor implements Callable<Response> {
     public Response call() {
 
         Response response = new Response();
+
+        if (request.getReceivingError() != null) {
+            response.setMessage(request.getReceivingError());
+            response.setDestination(request.getSource());
+            return response;
+        }
 
         try {
             byte[] hash = MessageDigest.getInstance("SHA-512").digest(request.getPassword().getBytes());
@@ -87,7 +94,8 @@ public class CommandExecutor implements Callable<Response> {
         } catch (NoRightsException e) {
             response.setMessage("You don't have rights to modify this dragon");
         } finally {
-            logger.info(command.getName() + " command executed");
+            if (!(command instanceof ShowCommand))
+                logger.info(command.getName() + " command executed");
             locker.unlock();
         }
         response.setDestination(request.getSource());

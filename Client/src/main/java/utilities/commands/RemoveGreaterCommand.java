@@ -2,6 +2,7 @@ package utilities.commands;
 
 import dragon.Dragon;
 import exceptions.WrongInputFormatException;
+import input.ConsoleInput;
 import input.Input;
 
 /**
@@ -16,6 +17,11 @@ public class RemoveGreaterCommand extends Command{
         super(input);
         name = "remove_greater {element}";
         description = "remove all elements, that are greater then given element";
+    }
+
+    public RemoveGreaterCommand(Dragon dragon) {
+        this(new ConsoleInput());
+        this.dragon = dragon;
     }
 
     /**

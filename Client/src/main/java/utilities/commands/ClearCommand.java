@@ -1,5 +1,6 @@
 package utilities.commands;
 
+import input.ConsoleInput;
 import input.Input;
 
 /**
@@ -12,6 +13,10 @@ public class ClearCommand extends Command{
         super(input);
         name = "clear";
         description = "remove everything from collection";
+    }
+
+    public ClearCommand() {
+        this(new ConsoleInput());
     }
 
     /**
